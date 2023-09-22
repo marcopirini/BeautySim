@@ -1,0 +1,38 @@
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\PDIDLLWrapperX64.dll
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\PDIDLLWrapperX86.dll
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\AcquisitionTest.exe.config
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\AcquisitionTest.exe
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\AcquisitionTest.pdb
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\Device.Polhemus.dll
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\Khymeia.Device.Motion.dll
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\USBClassLibrary.dll
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\Khymeia.Device.Motion.pdb
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\Device.Polhemus.pdb
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\USBClassLibrary.pdb
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\obj\Debug\AcquisitionTest.csprojAssemblyReference.cache
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\obj\Debug\AcquisitionTest.Form1.resources
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\obj\Debug\AcquisitionTest.Properties.Resources.resources
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\obj\Debug\AcquisitionTest.csproj.GenerateResource.cache
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\obj\Debug\AcquisitionTest.csproj.CoreCompileInputs.cache
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\obj\Debug\AcquisitionTest.csproj.CopyComplete
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\obj\Debug\AcquisitionTest.exe
+D:\DENIS\PROJECTS\MARCO PIRINI\2019 11 POLHEMUS\AcquisitionTest\obj\Debug\AcquisitionTest.pdb
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\PDIDLLWrapperX64.dll
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\PDIDLLWrapperX86.dll
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\AcquisitionTest.exe.config
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\AcquisitionTest.exe
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\AcquisitionTest.pdb
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\Device.Polhemus.dll
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\Khymeia.Device.Motion.dll
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\USBClassLibrary.dll
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\Khymeia.Device.Motion.pdb
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\Device.Polhemus.pdb
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\bin\Debug\USBClassLibrary.pdb
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\obj\Debug\AcquisitionTest.csprojAssemblyReference.cache
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\obj\Debug\AcquisitionTest.Form1.resources
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\obj\Debug\AcquisitionTest.Properties.Resources.resources
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\obj\Debug\AcquisitionTest.csproj.GenerateResource.cache
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\obj\Debug\AcquisitionTest.csproj.CoreCompileInputs.cache
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\obj\Debug\AcquisitionTest.csproj.CopyComplete
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\obj\Debug\AcquisitionTest.exe
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\AcquisitionTest\obj\Debug\AcquisitionTest.pdb

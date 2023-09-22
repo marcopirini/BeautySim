@@ -1,0 +1,194 @@
+﻿<Page x:Class="BeautySim2023.FunctionalitiesFrame"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:BeautySim2023"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:lang="clr-namespace:BeautySim.Globalization;assembly=BeautySim.Globalization"
+    Title="FunctionalitiesFrame" Background="Transparent">
+
+    <Page.Resources>
+    </Page.Resources>
+
+    <Grid Name="grMain" Grid.Row="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" BorderBrush="White" BorderThickness="2" Margin="25">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Name="tbFunc" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="30" Margin="20" VerticalAlignment="Center" Text="{x:Static lang:Language.str_management}"/>
+                <StackPanel Grid.Row="1">
+                    <Button Name="bManageStudents" Click="ManageStudents_Click" Grid.Column="0" Grid.Row="0"
+                          Margin="15"
+                          Height="60" Width="240">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="AccountMultipleOutline" HorizontalAlignment="Center" Height="40" Width="40" />
+                            <TextBlock VerticalAlignment="Center" Margin="10"
+                            Text="{x:Static lang:Language.str_manage_students}">
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Name="bSessionsArchive" Grid.Column="0" Grid.Row="1" Click="SessionsArchive_Click"
+                           Margin="15"
+                          Height="60" Width="240">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="DatabaseSearch" HorizontalAlignment="Center" Height="40" Width="40" />
+                            <TextBlock VerticalAlignment="Center" Margin="10"
+                            Text="{x:Static lang:Language.str_arch_res}">
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Name="bManageEvents"
+                           Margin="15"
+                          Height="60" Width="240"
+
+                          Click="ManageEvents_Click">
+
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="CalendarMultipleCheck" HorizontalAlignment="Center" Height="40" Width="40" />
+                            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap"  Margin="10"
+                            Text="{x:Static lang:Language.str_manage_evts}">
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Name="bManageTeachers"
+                           Margin="15"
+                          Height="60" Width="240"
+
+                          Click="ManageTeachers_Click">
+
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="AccountStar" HorizontalAlignment="Center" Height="40" Width="40" />
+                            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Margin="10"
+                            Text="{x:Static lang:Language.str_manage_teachers}">
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Name="bEditMyProfile"
+
+                          Click="EditProfile_Click"
+
+                     Margin="15"
+                          Height="60" Width="240">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="AccountEdit" HorizontalAlignment="Center" Height="40" Width="40" />
+                            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Margin="10"
+                            Text="{x:Static lang:Language.str_edit_profile}">
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Name="bSettings"
+
+                          Click="Settings_Click"
+
+                     Margin="35,100,35,100"
+                          Height="60" Width="240">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Settings" HorizontalAlignment="Center" Height="40" Width="40" />
+                            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Margin="10"
+                            Text="{x:Static lang:Language.str_settings}">
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <TextBlock VerticalAlignment="Center" Name="tbSerial" TextAlignment="Center" FontSize="15"  TextWrapping="Wrap" Margin="20"
+                            Text="">
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="1" BorderBrush="White" BorderThickness="2" Margin="25">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Name="tbIndications" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="30" Margin="20" VerticalAlignment="Center" Text="{x:Static lang:Language.str_clinical_cases}"/>
+
+                <Grid Name="grSelectCase" Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="6*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="10*" />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Row="0" Grid.Column="0" Margin="20,20,10,0" BorderBrush="#00bfa5" BorderThickness="5">
+                        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0">
+
+                            <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" FontSize="30" Margin="20,10,20,10" VerticalAlignment="Center" Text="{x:Static lang:Language.str_modules_title}"/>
+
+
+                        <ComboBox BorderBrush="#00bfa5" BorderThickness="10" Height="60" Width="200" Name="cbSelectModule" FontSize="18"
+                               HorizontalAlignment="Center" Margin="20,10,20,20"   VerticalAlignment="Top"
+                               SelectionChanged="cbSelectModule_SelectionChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DropDownOpened="cbSelectModule_DropDownOpened" DropDownClosed="cbSelectModule_DropDownClosed"  />
+                            <TextBlock Name="tbSelectCase"  TextWrapping="Wrap" HorizontalAlignment="Left" FontSize="30" Margin="20,10,20,10" VerticalAlignment="Center" Text="{x:Static lang:Language.str_cases_title}"/>
+                        <ComboBox  BorderBrush="#00bfa5" BorderThickness="10" Height="60" Width="200"  Name="cbSelectCase" FontSize="18"
+                               HorizontalAlignment="Center" Margin="20,10,20,10"   VerticalAlignment="Top"
+                               SelectionChanged="cbSelectCase_SelectionChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  DropDownOpened="cbSelectCase_DropDownOpened" DropDownClosed="cbSelectCase_DropDownClosed"/>
+
+                    </StackPanel>
+                     </Border>
+                    <Border Grid.Row="0" Grid.Column="1" Margin="10,20,20,0" BorderBrush="#00bfa5" BorderThickness="5">
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                                
+                            <ScrollViewer  Margin="20,20,20,20" VerticalAlignment="Stretch" Grid.Column="0">
+                                <TextBlock  Name="tbCaseInfo" TextWrapping="Wrap" Margin="10" FontSize="18" Text="{x:Static lang:Language.str_case_info_descr}"/>
+                            </ScrollViewer>
+
+
+
+                                <Border HorizontalAlignment="Center" Grid.Column="1" BorderBrush="#00bfa5" BorderThickness="3">
+                                    <Image Name="imCaseImage" />
+                                </Border>
+                            
+
+
+                        </Grid>
+                    </Border>
+
+                    <Button Click="bLoadCase_Click" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center"
+                                Margin="25" Name="bLoadCase"
+                                Height="60" Width="200">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="PlayCircle" HorizontalAlignment="Center" Height="40" Width="40" />
+                            <TextBlock Name="bLoadCaseText" VerticalAlignment="Center" Margin="10" Text="{x:Static lang:Language.str_load_case}">
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <Grid Grid.Row="1" Grid.Column="1" Name="grLoadCase" VerticalAlignment="Center">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+
+                        <ProgressBar Grid.Column="1" Grid.Row="0" Name="pbLoadCaseGeneral" Value="0" Maximum="100"
+                                 HorizontalAlignment="Stretch" Margin="35" Height="40" />
+                        <ProgressBar Grid.Column="1" Grid.Row="0" Name="pbLoadCaseSingleStep" Value="0" Maximum="100"
+                                 HorizontalAlignment="Stretch" Margin="35" Height="40" Foreground="RoyalBlue" />
+                        <TextBlock Grid.Column="0" Grid.Row="0" Name="tbInfoLoadCase" TextAlignment="Center" FontSize="22" VerticalAlignment="Center" Text="0%" />
+                        <TextBlock Name="tIndicationLoadText" Margin="40,0,0,0" TextAlignment="Justify" VerticalAlignment="Center" FontSize="22" Grid.Column="1" Grid.Row="1" Text="{x:Static lang:Language.str_press_load_case}" />
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

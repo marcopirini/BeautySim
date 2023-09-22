@@ -1,0 +1,80 @@
+﻿<Window x:Class="BeautySim2023.SelectStudent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:BeautySim2023"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:lang="clr-namespace:BeautySim.Globalization;assembly=BeautySim.Globalization"
+    Title="SelectStudent" WindowStyle="None" AllowsTransparency="True" Topmost="True" WindowState="Maximized" WindowStartupLocation="CenterScreen">
+
+    <Window.Background>
+        <RadialGradientBrush 
+          GradientOrigin="0.5,0.5" 
+          Center="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
+            <RadialGradientBrush.GradientStops>
+                <GradientStop Color="#99111111" Offset="0" />
+                <GradientStop Color="#DD111111" Offset="1" />
+            </RadialGradientBrush.GradientStops>
+        </RadialGradientBrush>
+    </Window.Background>
+    <Window.Resources>
+        <DataTemplate x:Key="UserTemplate">
+            <Border Margin="5" Height="65" BorderBrush="RoyalBlue" BorderThickness="4" CornerRadius="8" HorizontalAlignment="Stretch"
+                    Background="{Binding Selected, Converter={StaticResource SelectedBackgroundConverter}}">
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <Viewbox Height="35">
+                        <CheckBox Grid.Column="0" FontSize="20" VerticalAlignment="Center" IsChecked="{Binding Selected}"  ></CheckBox>
+                    </Viewbox>
+                    <Label Grid.Column="1" FontSize="20" VerticalAlignment="Center" Content="{Binding User.Name}"  ></Label>
+                    <Label Grid.Column="2" FontSize="20" VerticalAlignment="Center" Content="{Binding User.Surname}"></Label>
+                    <Label Grid.Column="3" FontSize="20" VerticalAlignment="Center" Content="{Binding User.Title}"></Label>
+                    <Label Grid.Column="4" FontSize="20" VerticalAlignment="Center" Content="{Binding User.Organization}"></Label>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </Window.Resources>
+    <Border HorizontalAlignment="Center" Margin="20" BorderThickness="3" BorderBrush="White" Height="650" Width="800"> 
+        <Border.Background >
+            <ImageBrush ImageSource="/BeautySim2023;component/Images/metal3.jpg" />
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+            <Border BorderBrush="#00bfa5" BorderThickness="5" CornerRadius="4" Grid.Row="0">
+                <ListBox Name="ListUsers"
+                     VirtualizingStackPanel.IsVirtualizing="False"
+                     ItemTemplate="{StaticResource UserTemplate}"
+                     Background="Transparent">
+                </ListBox>
+            </Border>
+
+
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Margin="15">
+                <Button x:Name="bApplyOk" Margin="10"  Height="60" Width="130" Click="bApplyOk_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Height="40" Width="38" />
+                        <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Width="60" Margin="10" Text="{x:Static lang:Language.str_apply_filt}">
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button
+                        x:Name="bRemoveFilter" Margin="10"  Height="60" Width="130" VerticalAlignment="Center" Click="bRemoveFilter_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Delete" HorizontalAlignment="Center" Height="40" Width="38" />
+                        <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Width="60" Margin="10" Text="{x:Static lang:Language.str_rem_filt}" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

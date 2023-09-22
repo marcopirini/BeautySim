@@ -1,0 +1,9 @@
+﻿  stdafx.cpp
+  dllmain.cpp
+  PDIDLLWrapper.cpp
+c:\lavoro\sourcetree\beautysim\beautysim\vstudio\pdidllwrapperx86\pdidllwrapper.h(23): warning C4800: 'BOOL': verrà forzato il valore booleano 'true' o 'false' (avviso sulle prestazioni)
+c:\lavoro\sourcetree\beautysim\beautysim\vstudio\pdidllwrapperx86\pdidllwrapper.h(102): warning C4800: 'BOOL': verrà forzato il valore booleano 'true' o 'false' (avviso sulle prestazioni)
+c:\lavoro\sourcetree\beautysim\beautysim\vstudio\pdidllwrapperx86\pdidllwrapper.h(122): warning C4800: 'BOOL': verrà forzato il valore booleano 'true' o 'false' (avviso sulle prestazioni)
+     Creazione della libreria C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\Debug\PDIDLLWrapperX86.lib e dell'oggetto C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\Debug\PDIDLLWrapperX86.exp
+  PDIDLLWrapperX86.vcxproj -> C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\Debug\PDIDLLWrapperX86.dll
+  PDIDLLWrapperX86.vcxproj -> C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\Debug\PDIDLLWrapperX86.pdb (Full PDB)

@@ -1,0 +1,133 @@
+﻿<Window x:Class="BeautySim2023.WindowTeacher"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lang="clr-namespace:BeautySim.Globalization;assembly=BeautySim.Globalization"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BeautySim2023"
+        mc:Ignorable="d"
+        xmlns:h="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:HelixToolkit="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:hx="http://helix-toolkit.org/wpf/SharpDX"
+        Title="BeautySim Teacher" Height="800" Width="1272.5" WindowState="Maximized"  WindowStyle="None" Closed="Window_Closed" Loaded="Window_Loaded">
+    <Window.Background>
+        <ImageBrush ImageSource="/BeautySim2023;component/Images/metal3.jpg" />
+    </Window.Background>
+    <Grid Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="90" />
+        </Grid.RowDefinitions>
+
+        <StackPanel VerticalAlignment="Center" Grid.Row="0">
+            <StackPanel.Background>
+                <SolidColorBrush Opacity="0.7" Color="Black" />
+            </StackPanel.Background>
+            <Grid Height="80">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="120" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Margin="20,0,0,0" Name="spTeacher" Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Label FontSize="13" FontFamily="Segoe UI" VerticalContentAlignment="Center" Foreground="White" Content="{x:Static lang:Language.str_teacher_upper}"/>
+                    <Label FontSize="13" FontFamily="Segoe UI" VerticalContentAlignment="Center" Foreground="White" Width="10"></Label>
+                    <TextBlock Name ="lTeacher" FontSize="13" Foreground="white" HorizontalAlignment="Center" VerticalAlignment="Center"  Text="" />
+                </StackPanel>
+
+                <StackPanel  Name="spStudent" Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Label FontSize="13" FontFamily="Segoe UI" VerticalContentAlignment="Center" Foreground="White" Content="{x:Static lang:Language.str_student_upper}"/>
+                    <Label FontSize="13" FontFamily="Segoe UI" VerticalContentAlignment="Center" Foreground="White" Width="10"></Label>
+                    <TextBlock Name ="lStudent" FontSize="13" Foreground="white" HorizontalAlignment="Center" VerticalAlignment="Center"  Text="" />
+                </StackPanel>
+                <StackPanel  Name="spEvent" Grid.Column="2" HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Label FontSize="13" FontFamily="Segoe UI" VerticalContentAlignment="Center" Foreground="White" Content="{x:Static lang:Language.str_event_upper}"/>
+                    <Label FontSize="13" FontFamily="Segoe UI" VerticalContentAlignment="Center" Foreground="White" Width="10"></Label>
+                    <TextBlock Name="lEvent" FontSize="13" Foreground="white" HorizontalAlignment="Center" VerticalAlignment="Center"  Text="" />
+                </StackPanel>
+                <StackPanel  Name="spCase" Grid.Column="3" HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Label FontSize="13" FontFamily="Segoe UI" VerticalContentAlignment="Center" Foreground="White" Content="{x:Static lang:Language.str_case_upper}"/>
+                    <Label FontSize="13" FontFamily="Segoe UI" VerticalContentAlignment="Center" Foreground="White" Width="10"></Label>
+                    <TextBlock Name="lCase" FontSize="13" Foreground="white" HorizontalAlignment="Center" VerticalAlignment="Center"  Text="" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="4"  Name="spSensors"  HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Ellipse Name="elSensors" Height="20" Width="20" Fill="Gray" ></Ellipse>
+                    <Label Width="80" FontSize="13" FontFamily="Segoe UI" VerticalContentAlignment="Center" Foreground="White" Content="{x:Static lang:Language.str_sensors_upper}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="5" Name="spSimulator"  HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Ellipse Name="elBeautySim" Height="20" Width="20" Fill="Gray" ></Ellipse>
+                    <Label Width="80" FontSize="13" FontFamily="Segoe UI" VerticalContentAlignment="Center" Foreground="White" Content="{x:Static lang:Language.str_beautysim_upper}"></Label>
+                </StackPanel>
+                <!--<StackPanel Width="170" Grid.Column="5" Name="spClock" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <local:Clock FontFamily="Arial" Foreground="White" FontWeight="Bold" FontSize="14" Grid.IsSharedSizeScope="False" />
+                </StackPanel>-->
+            </Grid>
+        </StackPanel>
+
+        <Frame Grid.Row="1" NavigationUIVisibility="Hidden" Name="PageContainer" />
+
+        <TextBox Name="tbDebugMode" Margin="10,0,0,0"  Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{x:Static lang:Language.str_debug_mode}">
+            
+        </TextBox>
+        
+        <Image  Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Source="/BeautySim2023;component/Images/logoAccurateCredits.png"
+
+                Height="40"
+                Margin="0,0,0,0"
+>
+        </Image>
+        <StackPanel Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,20,0">
+            <ComboBox BorderBrush="#00bfa5" BorderThickness="10" Height="60" Width="250" Grid.Row="0" Grid.Column="0" Name="cbSelectLanguage" FontSize="14"
+                               HorizontalAlignment="Center" Margin="5,15,15,5"   VerticalAlignment="Top"
+                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" SelectionChanged="CbSelectLanguage_SelectionChanged" />
+            <Button Name="bLogOut"
+                          Margin="5"
+                          Click="LogOut_Click"
+                          Width="170"
+                          Height="70">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Logout" HorizontalAlignment="Center" Height="40" Width="40" />
+                    <TextBlock VerticalAlignment="Center"
+                            Text="{x:Static lang:Language.str_log_out}" Margin="10">
+                    </TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Name="bBack"
+                          Margin="5"
+                          Click="Back_Click"
+                          Width="170"
+                          Height="70" Cursor="Hand">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Backburger" HorizontalAlignment="Center" Height="40" Width="40" />
+                    <TextBlock VerticalAlignment="Center"
+                            Text="{x:Static lang:Language.str_back}" Margin="10">
+                    </TextBlock>
+                </StackPanel>
+            </Button>
+
+
+            <Button Name="bClose"
+                          Margin="5"
+                          Click="Close_Click"
+
+                         Width="170"
+                          Height="70" Cursor="Hand">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Close" HorizontalAlignment="Center" Height="40" Width="40" />
+                    <TextBlock VerticalAlignment="Center"
+                            Text="{x:Static lang:Language.str_close}" Margin="10">
+                    </TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

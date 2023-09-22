@@ -1,0 +1,12 @@
+C:\Lavoro\SourceTree\BlockSim\VStudio\USBClassLibrary\bin\Release\USBClassLibrary.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\USBClassLibrary\bin\Release\USBClassLibrary.pdb
+C:\Lavoro\SourceTree\BlockSim\VStudio\USBClassLibrary\obj\Release\USBClassLibrary.csproj.CoreCompileInputs.cache
+C:\Lavoro\SourceTree\BlockSim\VStudio\USBClassLibrary\obj\Release\USBClassLibrary.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\USBClassLibrary\obj\Release\USBClassLibrary.pdb
+C:\Lavoro\SourceTree\BlockSim\VStudio\USBClassLibrary\obj\Release\USBClassLibrary.csproj.AssemblyReference.cache
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\USBClassLibrary\bin\Release\USBClassLibrary.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\USBClassLibrary\bin\Release\USBClassLibrary.pdb
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\USBClassLibrary\obj\Release\USBClassLibrary.csproj.AssemblyReference.cache
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\USBClassLibrary\obj\Release\USBClassLibrary.csproj.CoreCompileInputs.cache
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\USBClassLibrary\obj\Release\USBClassLibrary.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\USBClassLibrary\obj\Release\USBClassLibrary.pdb

@@ -1,0 +1,158 @@
+﻿<Page x:Class="BeautySim2023.ResultsManagerFrame"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:BeautySim2023"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+
+    xmlns:lang="clr-namespace:BeautySim.Globalization;assembly=BeautySim.Globalization"
+    Title="ResultsManagerFrame" Background="Transparent" Loaded="Page_Loaded"> 
+    <Page.Resources>
+        <DataTemplate x:Key="UserTemplate">
+            <Border Margin="5" Height="65" BorderBrush="RoyalBlue" BorderThickness="4" CornerRadius="8" HorizontalAlignment="Stretch"
+                Background="{Binding Selected, Converter={StaticResource SelectedBackgroundConverter}}">
+                
+                <Grid Name="mainGrid" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="45" />
+                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="170" />
+                        <ColumnDefinition Width="70" />
+                    </Grid.ColumnDefinitions>
+                    <Viewbox Height="25">
+                        <CheckBox Grid.Column="0" FontSize="20" VerticalAlignment="Center" IsChecked="{Binding Selected}" Checked="CheckBox_Checked"  ></CheckBox>
+                    </Viewbox>
+                    <Label Grid.Column="1" FontSize="15" VerticalAlignment="Center" Content="{Binding Student}"  ></Label>
+                    <Label Grid.Column="2" FontSize="15" VerticalAlignment="Center" Content="{Binding CaseResult}"></Label>
+                    <Label Grid.Column="3" FontSize="15" VerticalAlignment="Center" Content="{Binding Score}"></Label>
+                    <Label Grid.Column="4" FontSize="15" VerticalAlignment="Center" Content="{Binding DateTimeResult}"></Label>
+                    <Label Grid.Column="5" FontSize="15" VerticalAlignment="Center" Content="{Binding EventOrg}"></Label>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid Name="gMainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="4*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Name="spPresent"
+            Margin="10" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="13*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" BorderBrush="#00bfa5" BorderThickness="5" CornerRadius="4">
+                <ListBox Name="ListUsers"
+                     VirtualizingStackPanel.IsVirtualizing="False"
+                     ItemTemplate="{StaticResource UserTemplate}" 
+                     Background="Transparent">
+                </ListBox>
+            </Border>
+
+            <Label Name="tbUserSelect" VerticalAlignment="Center"  Grid.Row="1" Margin="5" FontSize="15"
+                            Content="{x:Static lang:Language.str_moreThenTen_notAllowed}" Visibility="Hidden" >
+            </Label>
+
+            <Grid Name="spCommands" Grid.Row="2" IsEnabled="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Name="bFilterByStudent" Click="bFilterByStudent_Click" Grid.Column="0"
+                                                Margin="5"  Height="50" Width="190">
+
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Account" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="38" />
+                        <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Width="110" Margin="5"
+                            Text="{x:Static lang:Language.str_filter_by_student}">
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Name="bFilterByDate" Click="bFilterByDate_Click" Grid.Column="1"  Margin="5"  Height="50" Width="190">
+
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Calendar" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="38" />
+                        <TextBlock Name="tbModify" VerticalAlignment="Center" TextWrapping="Wrap" Width="110" Margin="5"
+                            Text="{x:Static lang:Language.str_filter_by_date}">
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Name="bDelete" Click="bDelete_Click" Grid.Column="2"  Margin="5"  Height="50" Width="190">
+
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Delete" HorizontalAlignment="Center" Height="40" Width="38" />
+                        <TextBlock VerticalAlignment="Center"  Margin="5"
+                            Text="{x:Static lang:Language.str_delete}">
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Name="bSelect" Click="bSelect_Click" Grid.Column="3"  Margin="5"  Height="50" Width="190">
+
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="SelectAll" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="38" />
+                        <TextBlock Name="tbSelect" VerticalAlignment="Center" TextWrapping="Wrap"  Margin="5"
+                            Text="{x:Static lang:Language.str_get_pdf}">
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Grid>
+
+        <Grid Name="spViewer"
+            Margin="10" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <Border BorderBrush="#00bfa5" BorderThickness="5" CornerRadius="4" Grid.Row="0">
+                <WindowsFormsHost Name="wfHost">
+
+
+                </WindowsFormsHost>
+                <!--<DocumentViewer x:Name="DocumentViewer"/>-->
+                <!--<WebBrowser x:Name="pdfWebViewer"></WebBrowser>-->
+                <!--<mpp:MoonPdfPanel Background="Transparent" ViewType="SinglePage" PageRowDisplay="ContinuousPageRows" PageMargin="0,2,4,2" AllowDrop="True" x:Name="moonPdfPanel" x:FieldModifier="private" />-->
+                <!--<TextBox IsEnabled="False" Text="PDF VIEWER" FontSize="80" HorizontalAlignment="Center" VerticalAlignment="Center">
+                     
+                </TextBox>-->
+            </Border>
+
+            <Grid Name="grViewer" Grid.Row="1" IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+
+                </Grid.ColumnDefinitions>
+
+                <!--<Button Name="bPrint" Click="bFilterByStudent_Click" Grid.Column="0"
+                                                Margin="10"  Height="70" Width="130">
+
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Printer" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="38" />
+                        <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Width="50" Margin="10"
+                            Text="print">
+                        </TextBlock>
+                    </StackPanel>
+                </Button>-->
+                <Button IsEnabled="true" Name="bSave" Click="bSave_Click"  Grid.Column="1"  Margin="5"  Height="50" Width="190">
+
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="ContentSave" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="38" />
+                        <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Width="50" Margin="5"
+                            Text="{x:Static lang:Language.str_save}">
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

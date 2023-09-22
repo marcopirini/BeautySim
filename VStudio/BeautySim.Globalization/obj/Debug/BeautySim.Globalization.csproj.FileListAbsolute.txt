@@ -1,0 +1,17 @@
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\bin\Debug\BeautySim.Globalization.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\bin\Debug\BeautySim.Globalization.pdb
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\bin\Debug\fr-FR\BeautySim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\bin\Debug\it-IT\BeautySim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\bin\Debug\zh-CN\BeautySim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\obj\Debug\BeautySim.Globalization.csproj.AssemblyReference.cache
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\obj\Debug\BeautySim.Globalization.Language.resources
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\obj\Debug\BeautySim.Globalization.Language.fr-FR.resources
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\obj\Debug\BeautySim.Globalization.Language.it-IT.resources
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\obj\Debug\BeautySim.Globalization.Language.zh-CN.resources
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\obj\Debug\BeautySim.Globalization.csproj.GenerateResource.cache
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\obj\Debug\BeautySim.Globalization.csproj.CoreCompileInputs.cache
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\obj\Debug\fr-FR\BeautySim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\obj\Debug\it-IT\BeautySim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\obj\Debug\zh-CN\BeautySim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\obj\Debug\BeautySim.Globalization.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\obj\Debug\BeautySim.Globalization.pdb

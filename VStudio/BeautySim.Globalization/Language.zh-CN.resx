@@ -1,0 +1,1233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="str_a" xml:space="preserve">
+    <value>A</value>
+  </data>
+  <data name="str_acceleration" xml:space="preserve">
+    <value>加速</value>
+  </data>
+  <data name="str_accept" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="str_additional_info" xml:space="preserve">
+    <value>点击显示/隐藏其他信息</value>
+  </data>
+  <data name="str_add_new" xml:space="preserve">
+    <value>新建</value>
+  </data>
+  <data name="str_alpha" xml:space="preserve">
+    <value>阿尔法：</value>
+  </data>
+  <data name="str_ang_needle_plane" xml:space="preserve">
+    <value>穿刺针与平面的角度：</value>
+  </data>
+  <data name="str_anomaly" xml:space="preserve">
+    <value>异常：病例开始前，穿刺针已插入</value>
+  </data>
+  <data name="str_apply_filt" xml:space="preserve">
+    <value>应用筛选</value>
+  </data>
+  <data name="str_arch_res" xml:space="preserve">
+    <value>数据存档</value>
+  </data>
+  <data name="str_arg_val_must" xml:space="preserve">
+    <value>参数值必须是 VectorMath.Half.</value>
+  </data>
+  <data name="str_assessment" xml:space="preserve">
+    <value>评估</value>
+  </data>
+  <data name="str_a_col" xml:space="preserve">
+    <value>A:</value>
+  </data>
+  <data name="str_a_new_teacher" xml:space="preserve">
+    <value>新导师</value>
+  </data>
+  <data name="str_b" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="str_back" xml:space="preserve">
+    <value>后退</value>
+  </data>
+  <data name="str_beautysim_info" xml:space="preserve">
+    <value>点击显示/隐藏产品信息</value>
+  </data>
+  <data name="str_beautysim_upper" xml:space="preserve">
+    <value>神经阻滞</value>
+  </data>
+  <data name="str_blue" xml:space="preserve">
+    <value>蓝色：</value>
+  </data>
+  <data name="str_by" xml:space="preserve">
+    <value>制造商</value>
+  </data>
+  <data name="str_b_col" xml:space="preserve">
+    <value>B:</value>
+  </data>
+  <data name="str_c" xml:space="preserve">
+    <value>C</value>
+  </data>
+  <data name="str_camera_model_err" xml:space="preserve">
+    <value>摄像模式错误</value>
+  </data>
+  <data name="str_cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="str_cant_del_user" xml:space="preserve">
+    <value>该用户无法删除</value>
+  </data>
+  <data name="str_cant_read_port_name" xml:space="preserve">
+    <value>无法读取设备的注册表值端口名</value>
+  </data>
+  <data name="str_case" xml:space="preserve">
+    <value>训练病例</value>
+  </data>
+  <data name="str_case_completed" xml:space="preserve">
+    <value>训练完成</value>
+  </data>
+  <data name="str_case_info_descr" xml:space="preserve">
+    <value>病例信息-此处将显示详细的病例信息，以告知用户所选病例的信息</value>
+  </data>
+  <data name="str_case_loaded" xml:space="preserve">
+    <value>病例加载中</value>
+  </data>
+  <data name="str_case_name" xml:space="preserve">
+    <value>病例名称</value>
+  </data>
+  <data name="str_case_upper" xml:space="preserve">
+    <value>病例</value>
+  </data>
+  <data name="str_change_lang" xml:space="preserve">
+    <value>重启后，语言将被更改。繼續？</value>
+  </data>
+  <data name="str_chinese" xml:space="preserve">
+    <value>中文</value>
+  </data>
+  <data name="str_clinical_cases" xml:space="preserve">
+    <value>临床病例</value>
+  </data>
+  <data name="str_close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="str_close_beautysim" xml:space="preserve">
+    <value>是否关闭软件？</value>
+  </data>
+  <data name="str_complete_name" xml:space="preserve">
+    <value>请确认名称</value>
+  </data>
+  <data name="str_confirm_pwd" xml:space="preserve">
+    <value>请确认密码</value>
+  </data>
+  <data name="str_cont_ins" xml:space="preserve">
+    <value>请继续穿刺操作，当到达目标区域请注入麻醉剂</value>
+  </data>
+  <data name="str_convex" xml:space="preserve">
+    <value>凸阵探头</value>
+  </data>
+  <data name="str_created" xml:space="preserve">
+    <value>已创建</value>
+  </data>
+  <data name="str_curr_case" xml:space="preserve">
+    <value>选择病例：无</value>
+  </data>
+  <data name="str_c_col" xml:space="preserve">
+    <value>C:</value>
+  </data>
+  <data name="str_debug_mode" xml:space="preserve">
+    <value>测试模式</value>
+  </data>
+  <data name="str_define_needle_len" xml:space="preserve">
+    <value>全球普遍穿刺针长度（针与接口），单位mm，长度范围80 - 300</value>
+  </data>
+  <data name="str_def_base_view_mod" xml:space="preserve">
+    <value>默认基础视图模型</value>
+  </data>
+  <data name="str_def_password" xml:space="preserve">
+    <value>默认密码</value>
+  </data>
+  <data name="str_def_username" xml:space="preserve">
+    <value>默认用户名</value>
+  </data>
+  <data name="str_delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="str_demo_helix" xml:space="preserve">
+    <value>样机(HelixToolkitDX)</value>
+  </data>
+  <data name="str_description" xml:space="preserve">
+    <value>说明</value>
+  </data>
+  <data name="str_dest_arr_must" xml:space="preserve">
+    <value>目标数组的长度必须与源数组的长度相同或更大。</value>
+  </data>
+  <data name="str_direction" xml:space="preserve">
+    <value>方向：</value>
+  </data>
+  <data name="str_dist_from_needle" xml:space="preserve">
+    <value>穿刺时，针与目标距离</value>
+  </data>
+  <data name="str_dist_tip_plane" xml:space="preserve">
+    <value>针与水平线距离</value>
+  </data>
+  <data name="str_d_col" xml:space="preserve">
+    <value>D:</value>
+  </data>
+  <data name="str_edit_profile" xml:space="preserve">
+    <value>编辑用户信息</value>
+  </data>
+  <data name="str_english" xml:space="preserve">
+    <value>英语</value>
+  </data>
+  <data name="str_esp" xml:space="preserve">
+    <value>竖脊平面</value>
+  </data>
+  <data name="str_esp_descr" xml:space="preserve">
+    <value>年龄：35，性别：男；止痛治疗：患者因病理性肥胖需进行胃袖状切除术。</value>
+  </data>
+  <data name="str_esp_name" xml:space="preserve">
+    <value>病例：超声引导下脊旁神经阻滞</value>
+  </data>
+  <data name="str_esp_ph1_1" xml:space="preserve">
+    <value>筋膜定位和注射-横向</value>
+  </data>
+  <data name="str_esp_ph1_2" xml:space="preserve">
+    <value>沿横向移动，扫查脊旁区域</value>
+  </data>
+  <data name="str_esp_ph2_1" xml:space="preserve">
+    <value>筋膜定位和注射-纵向</value>
+  </data>
+  <data name="str_esp_ph2_2" xml:space="preserve">
+    <value>穿刺注射综合性说明</value>
+  </data>
+  <data name="str_event" xml:space="preserve">
+    <value>项目：</value>
+  </data>
+  <data name="str_event_upper" xml:space="preserve">
+    <value>项目</value>
+  </data>
+  <data name="str_exec_time" xml:space="preserve">
+    <value>操作时间</value>
+  </data>
+  <data name="str_exp_not_neg" xml:space="preserve">
+    <value>指数不能为负</value>
+  </data>
+  <data name="str_fail_device_info" xml:space="preserve">
+    <value>无法获取COM端口的设备信息</value>
+  </data>
+  <data name="str_fail_reg_key" xml:space="preserve">
+    <value>无法打开设备特定配置信息的注册表项</value>
+  </data>
+  <data name="str_fascia_targeted" xml:space="preserve">
+    <value>目标筋膜</value>
+  </data>
+  <data name="str_nerve_targeted" xml:space="preserve">
+    <value>Nerve targeted</value>
+  </data>
+  <data name="str_fc" xml:space="preserve">
+    <value>帧数</value>
+  </data>
+  <data name="str_filter_by_date" xml:space="preserve">
+    <value>时间筛选</value>
+  </data>
+  <data name="str_filter_by_student" xml:space="preserve">
+    <value>用户筛选</value>
+  </data>
+  <data name="str_final_score" xml:space="preserve">
+    <value>最终成绩</value>
+  </data>
+  <data name="str_find_correct_view" xml:space="preserve">
+    <value>找到正确的入针视图</value>
+  </data>
+  <data name="str_fin_date" xml:space="preserve">
+    <value>完成日期</value>
+  </data>
+  <data name="str_firmware" xml:space="preserve">
+    <value>固件：</value>
+  </data>
+  <data name="str_flip_horiz" xml:space="preserve">
+    <value>水平翻转</value>
+  </data>
+  <data name="str_flip_vert" xml:space="preserve">
+    <value>纵向翻转</value>
+  </data>
+  <data name="str_flux" xml:space="preserve">
+    <value>流量</value>
+  </data>
+  <data name="str_from" xml:space="preserve">
+    <value>起始日期</value>
+  </data>
+  <data name="str_g4_dll_path" xml:space="preserve">
+    <value>G4\u DLL\u路径不存在</value>
+  </data>
+  <data name="str_get_pdf" xml:space="preserve">
+    <value>获取pdf文件</value>
+  </data>
+  <data name="str_glob_score" xml:space="preserve">
+    <value>全球得分</value>
+  </data>
+  <data name="str_go_ahead" xml:space="preserve">
+    <value>请继续，插入穿刺针</value>
+  </data>
+  <data name="str_great" xml:space="preserve">
+    <value>完美！已完成操作！请尝试</value>
+  </data>
+  <data name="str_green" xml:space="preserve">
+    <value>绿色：</value>
+  </data>
+  <data name="str_guest_mode" xml:space="preserve">
+    <value>游客模式</value>
+  </data>
+  <data name="str_hide_student" xml:space="preserve">
+    <value>隐藏学生端信息</value>
+  </data>
+  <data name="str_idx_img" xml:space="preserve">
+    <value>索引：</value>
+  </data>
+  <data name="str_indices_color3" xml:space="preserve">
+    <value>Color3的索引从0到2（包括0和2）。</value>
+  </data>
+  <data name="str_indices_color4" xml:space="preserve">
+    <value>Color4的索引从0到3（包括0和3）。</value>
+  </data>
+  <data name="str_indices_matrix" xml:space="preserve">
+    <value>Matrix的索引从0到15（包括0和15）。</value>
+  </data>
+  <data name="str_indices_plane" xml:space="preserve">
+    <value>Plane的索引从0到3（包括0和3）。</value>
+  </data>
+  <data name="str_indices_quat" xml:space="preserve">
+    <value>Quaternion的索引从0到3（包括0和3）。</value>
+  </data>
+  <data name="str_indices_v2" xml:space="preserve">
+    <value>Vector2的索引从0到1（包括0和1）。</value>
+  </data>
+  <data name="str_indices_v3" xml:space="preserve">
+    <value>Vector3的索引从0到2（包括0和2）。</value>
+  </data>
+  <data name="str_indices_v4" xml:space="preserve">
+    <value>Vector4的索引从0到3（包括0和3）。</value>
+  </data>
+  <data name="str_inflate" xml:space="preserve">
+    <value>膨胀</value>
+  </data>
+  <data name="str_insert_a" xml:space="preserve">
+    <value>插入模块A</value>
+  </data>
+  <data name="str_insert_d" xml:space="preserve">
+    <value>插入模块D</value>
+  </data>
+  <data name="str_insert_b" xml:space="preserve">
+    <value>插入模块B</value>
+  </data>
+  <data name="str_insert_c" xml:space="preserve">
+    <value>插入模块C</value>
+  </data>
+  <data name="str_inst_err" xml:space="preserve">
+    <value>软件安装有误，请重新安装，或联系代理商。</value>
+  </data>
+  <data name="str_inv_cast_char" xml:space="preserve">
+    <value>Invalid cast from VectorMath.Half to System.Char.</value>
+  </data>
+  <data name="str_inv_cast_datetime" xml:space="preserve">
+    <value>Invalid cast from VectorMath.Half to System.DateTime.</value>
+  </data>
+  <data name="str_inv_half_format" xml:space="preserve">
+    <value>Invalid half format.</value>
+  </data>
+  <data name="str_italian" xml:space="preserve">
+    <value>意大利文</value>
+  </data>
+  <data name="str_item" xml:space="preserve">
+    <value>项目</value>
+  </data>
+  <data name="str_linear" xml:space="preserve">
+    <value>线性探头</value>
+  </data>
+  <data name="str_loading" xml:space="preserve">
+    <value>加载中</value>
+  </data>
+  <data name="str_loading_case" xml:space="preserve">
+    <value>加载病例中</value>
+  </data>
+  <data name="str_loading_case_dots" xml:space="preserve">
+    <value>加载病例中</value>
+  </data>
+  <data name="str_loading_phase" xml:space="preserve">
+    <value>加载进程</value>
+  </data>
+  <data name="str_load_case" xml:space="preserve">
+    <value>加载病例</value>
+  </data>
+  <data name="str_location" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="str_log_in" xml:space="preserve">
+    <value>登陆</value>
+  </data>
+  <data name="str_log_out" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="str_lt_3min" xml:space="preserve">
+    <value>&lt; 3分钟，合格</value>
+  </data>
+  <data name="str_lumbar" xml:space="preserve">
+    <value>腰椎</value>
+  </data>
+  <data name="str_lumb_descr" xml:space="preserve">
+    <value>年龄：80，性别：男；急诊手术治疗股骨骨折，需进行腰丛位置的坐骨神经阻滞。</value>
+  </data>
+  <data name="str_lumb_name" xml:space="preserve">
+    <value>腰椎病例</value>
+  </data>
+  <data name="str_axillary_name" xml:space="preserve">
+    <value>AXILLARY Case</value>
+  </data>
+  <data name="str_axillary_descr" xml:space="preserve">
+    <value>AXILLARY descr</value>
+  </data>
+  <data name="str_sciaticgluteal_name" xml:space="preserve">
+    <value>SCIATIC GLUTEAL Case</value>
+  </data>
+  <data name="str_sciaticgluteal_descr" xml:space="preserve">
+    <value>SCIATIC GLUTEAL descr</value>
+  </data>
+  <data name="str_sciaticpopliteal_name" xml:space="preserve">
+    <value>SCIATIC POPLITEAL Case</value>
+  </data>
+  <data name="str_sciaticpopliteal_descr" xml:space="preserve">
+    <value>SCIATIC POPLITEAL descr</value>
+  </data>
+  <data name="str_infraclavicular_name" xml:space="preserve">
+    <value>INFRACLAVICULAR Case</value>
+  </data>
+  <data name="str_infraclavicular_descr" xml:space="preserve">
+    <value>INFRACLAVICULAR descr</value>
+  </data>
+  <data name="str_supraclavicular_name" xml:space="preserve">
+    <value>SUPRACLAVICULAR Case</value>
+  </data>
+  <data name="str_supraclavicular_descr" xml:space="preserve">
+    <value>SUPRACLAVICULAR descr</value>
+  </data>
+  <data name="str_interscalene_name" xml:space="preserve">
+    <value>INTERSCALENE Case</value>
+  </data>
+  <data name="str_interscalene_descr" xml:space="preserve">
+    <value>INTERSCALENE descr</value>
+  </data>
+  <data name="str_lumbarplexus_name" xml:space="preserve">
+    <value>LUMBAR PLEXUS Case</value>
+  </data>
+  <data name="str_lumbarplexus_descr" xml:space="preserve">
+    <value>LUMBAR PLEXUS descr</value>
+  </data>
+  <data name="str_adductorcanal_name" xml:space="preserve">
+    <value>ADDUCTOR CANAL Case</value>
+  </data>
+  <data name="str_adductorcanal_descr" xml:space="preserve">
+    <value>ADDUCTOR CANAL descr</value>
+  </data>
+  <data name="str_femural_name" xml:space="preserve">
+    <value>FEMURAL Case</value>
+  </data>
+  <data name="str_femural_descr" xml:space="preserve">
+    <value>FEMURAL descr</value>
+  </data>
+  <data name="str_lumb_ph1_1" xml:space="preserve">
+    <value>肌肉阻滞定位与注射</value>
+  </data>
+  <data name="str_lumb_ph1_2" xml:space="preserve">
+    <value>穿刺注射综合性说明</value>
+  </data>
+  <data name="str_general_hotspot_1" xml:space="preserve">
+    <value>localization of a relevant point</value>
+  </data>
+  <data name="str_general_hotspot_2" xml:space="preserve">
+    <value>localization of a relevant point - description</value>
+  </data>
+  <data name="str_blocknerve_1" xml:space="preserve">
+    <value>localization and injection on nervous block</value>
+  </data>
+  <data name="str_blocknerve_2" xml:space="preserve">
+    <value>localization and injection on nervous block</value>
+  </data>
+  <data name="str_general_trajectory_1" xml:space="preserve">
+    <value>relevant path to be explored</value>
+  </data>
+  <data name="str_general_trajectory_2" xml:space="preserve">
+    <value>relevant path to be explored - descritption</value>
+  </data>
+  <data name="str_management" xml:space="preserve">
+    <value>管理</value>
+  </data>
+  <data name="str_manage_evts" xml:space="preserve">
+    <value>管理项目</value>
+  </data>
+  <data name="str_manage_students" xml:space="preserve">
+    <value>管理学生</value>
+  </data>
+  <data name="str_manage_teachers" xml:space="preserve">
+    <value>管理导师</value>
+  </data>
+  <data name="str_mandatory_cname" xml:space="preserve">
+    <value>全名称为必填项</value>
+  </data>
+  <data name="str_mandatory_name" xml:space="preserve">
+    <value>名称为必填项</value>
+  </data>
+  <data name="str_mandatory_password" xml:space="preserve">
+    <value>密码为必填项</value>
+  </data>
+  <data name="str_mandatory_sname" xml:space="preserve">
+    <value>简称为必填项</value>
+  </data>
+  <data name="str_mandatory_surname" xml:space="preserve">
+    <value>姓氏为必填项</value>
+  </data>
+  <data name="str_mandatory_username" xml:space="preserve">
+    <value>用户名为必填项</value>
+  </data>
+  <data name="str_modify" xml:space="preserve">
+    <value>修改</value>
+  </data>
+  <data name="str_must_four" xml:space="preserve">
+    <value>Color4必须有四个且仅有四个输入值。</value>
+  </data>
+  <data name="str_must_four_plane" xml:space="preserve">
+    <value>Plane必须有四个且仅有四个输入值。</value>
+  </data>
+  <data name="str_must_four_quat" xml:space="preserve">
+    <value>Quaternion必须有四个且仅有四个输入值。</value>
+  </data>
+  <data name="str_must_four_v4" xml:space="preserve">
+    <value>Vector4必须有四个且仅有四个输入值。</value>
+  </data>
+  <data name="str_must_half2" xml:space="preserve">
+    <value>Half2必须有2个且仅有2个输入值。</value>
+  </data>
+  <data name="str_must_half3" xml:space="preserve">
+    <value>Half3必须有3个且仅有3个输入值。</value>
+  </data>
+  <data name="str_must_half4" xml:space="preserve">
+    <value>Half4必须有四个且仅有四个输入值。</value>
+  </data>
+  <data name="str_must_sixteen" xml:space="preserve">
+    <value>Matrix必须有16个且仅有16个输入值。</value>
+  </data>
+  <data name="str_must_three" xml:space="preserve">
+    <value>Color3必须有3个且仅有3个输入值。</value>
+  </data>
+  <data name="str_must_three_v3" xml:space="preserve">
+    <value>Vector3必须有3个且仅有3个输入值。</value>
+  </data>
+  <data name="str_must_two" xml:space="preserve">
+    <value>Vector2必须有2个且仅有2个输入值。</value>
+  </data>
+  <data name="str_name" xml:space="preserve">
+    <value>姓名</value>
+  </data>
+  <data name="str_needle_aligned" xml:space="preserve">
+    <value>穿刺针校准</value>
+  </data>
+  <data name="str_needle_inserted" xml:space="preserve">
+    <value>插入穿刺针</value>
+  </data>
+  <data name="str_needle_insertions" xml:space="preserve">
+    <value>插入穿刺针</value>
+  </data>
+  <data name="str_needle_on_skin" xml:space="preserve">
+    <value>针扎入皮肤</value>
+  </data>
+  <data name="str_needle_pt_plane" xml:space="preserve">
+    <value>平面上的针点</value>
+  </data>
+  <data name="str_needle_pt_pos" xml:space="preserve">
+    <value>针尖位置：</value>
+  </data>
+  <data name="str_needle_pt_ypr" xml:space="preserve">
+    <value>针尖YPR：</value>
+  </data>
+  <data name="str_needle_puntures" xml:space="preserve">
+    <value>针孔</value>
+  </data>
+  <data name="str_needle_tip" xml:space="preserve">
+    <value>针尖在平面上</value>
+  </data>
+  <data name="str_next" xml:space="preserve">
+    <value>下一步</value>
+  </data>
+  <data name="str_no" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="str_no_evt" xml:space="preserve">
+    <value>无项目</value>
+  </data>
+  <data name="str_no_file" xml:space="preserve">
+    <value>未找到文件</value>
+  </data>
+  <data name="str_no_orient_available" xml:space="preserve">
+    <value>模型无可调整的方位</value>
+  </data>
+  <data name="str_no_student_sel" xml:space="preserve">
+    <value>未选择学生；如继续，将不会保存结果。是否继续？</value>
+  </data>
+  <data name="str_no_teachers" xml:space="preserve">
+    <value>没有输入信息相关的教师，请使用有效信息登录或以来宾身份登录</value>
+  </data>
+  <data name="str_no_upper" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="str_num_of_ins" xml:space="preserve">
+    <value>穿刺次数</value>
+  </data>
+  <data name="str_num_sens" xml:space="preserve">
+    <value>探头编号：</value>
+  </data>
+  <data name="str_offset_pos" xml:space="preserve">
+    <value>偏移位置</value>
+  </data>
+  <data name="str_oh_no" xml:space="preserve">
+    <value>您偏离了目标，请重试！</value>
+  </data>
+  <data name="str_ok" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="str_org" xml:space="preserve">
+    <value>部门</value>
+  </data>
+  <data name="str_org_by" xml:space="preserve">
+    <value>部门负责人</value>
+  </data>
+  <data name="str_ori" xml:space="preserve">
+    <value>方位</value>
+  </data>
+  <data name="str_orientation" xml:space="preserve">
+    <value>方向：</value>
+  </data>
+  <data name="str_orient_ok" xml:space="preserve">
+    <value>模型方向：确认</value>
+  </data>
+  <data name="str_orient_ok_pad" xml:space="preserve">
+    <value>模型方向：确认，请确认穿刺块方向，保持与图片中一致。</value>
+  </data>
+  <data name="str_orient_wrong" xml:space="preserve">
+    <value>模型方向：错误</value>
+  </data>
+  <data name="str_pad_to_be_used" xml:space="preserve">
+    <value>需要使用的穿刺块：</value>
+  </data>
+  <data name="str_params_of_case" xml:space="preserve">
+    <value>病例相关参数</value>
+  </data>
+  <data name="str_param_fc_gt_zero" xml:space="preserve">
+    <value>参数“firstColumn”必须大于或等于零。</value>
+  </data>
+  <data name="str_param_fc_lt_three" xml:space="preserve">
+    <value>参数“firstColumn”必须小于或等于3。</value>
+  </data>
+  <data name="str_param_fr_gt_zero" xml:space="preserve">
+    <value>参数“firstRow”必须大于或等于零。</value>
+  </data>
+  <data name="str_param_fr_lt_three" xml:space="preserve">
+    <value>参数“firstRow”必须小于或等于3。</value>
+  </data>
+  <data name="str_param_sc_gt_zero" xml:space="preserve">
+    <value>参数“secondColumn”必须大于或等于零。</value>
+  </data>
+  <data name="str_param_sc_lt_three" xml:space="preserve">
+    <value>参数“secondColumn”必须小于或等于3。</value>
+  </data>
+  <data name="str_param_sr_gt_zero" xml:space="preserve">
+    <value>参数“secondRow”必须大于或等于零。</value>
+  </data>
+  <data name="str_param_sr_lt_three" xml:space="preserve">
+    <value>参数“secondRow”必须小于或等于3。</value>
+  </data>
+  <data name="str_parasternal" xml:space="preserve">
+    <value>胸骨旁</value>
+  </data>
+  <data name="str_parast_descr" xml:space="preserve">
+    <value>年龄：45，性别：女；全乳房切除术术后止痛治疗，需进行Ⅱ型胸神经 (PECS II) 阻滞</value>
+  </data>
+  <data name="str_parast_name" xml:space="preserve">
+    <value>胸骨旁病例</value>
+  </data>
+  <data name="str_parast_ph1_1" xml:space="preserve">
+    <value>横切面穿刺部位评估</value>
+  </data>
+  <data name="str_parast_ph1_2" xml:space="preserve">
+    <value>通过横向移动扫查胸骨旁结构</value>
+  </data>
+  <data name="str_parast_ph2_1" xml:space="preserve">
+    <value>筋膜定位和注射-第2肋</value>
+  </data>
+  <data name="str_parast_ph2_2" xml:space="preserve">
+    <value>穿刺注射综合性说明</value>
+  </data>
+  <data name="str_parast_ph3_1" xml:space="preserve">
+    <value>筋膜定位和注射-第4肋</value>
+  </data>
+  <data name="str_parast_ph3_2" xml:space="preserve">
+    <value>穿刺注射综合性说明</value>
+  </data>
+  <data name="str_parav" xml:space="preserve">
+    <value>椎旁</value>
+  </data>
+  <data name="str_parav_descr" xml:space="preserve">
+    <value>年龄：70，性别：男性；患者右胸需切开，可进行胸椎旁阻滞</value>
+  </data>
+  <data name="str_parav_name" xml:space="preserve">
+    <value>椎旁病例</value>
+  </data>
+  <data name="str_parav_ph1_1" xml:space="preserve">
+    <value>矢状方向穿刺部位评估</value>
+  </data>
+  <data name="str_parav_ph1_2" xml:space="preserve">
+    <value>沿矢状方向移动扫查椎旁结构</value>
+  </data>
+  <data name="str_parav_ph2_1" xml:space="preserve">
+    <value>沿横向穿刺部位评估</value>
+  </data>
+  <data name="str_parav_ph2_2" xml:space="preserve">
+    <value>沿横向移动扫查椎旁结构</value>
+  </data>
+  <data name="str_parav_ph3_1" xml:space="preserve">
+    <value>椎旁间隙定位及注射-斜入路</value>
+  </data>
+  <data name="str_parav_ph3_2" xml:space="preserve">
+    <value>穿刺注射综合性说明</value>
+  </data>
+  <data name="str_password" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="str_password_lower" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="str_pdf_files" xml:space="preserve">
+    <value>pdf文件</value>
+  </data>
+  <data name="str_pecs1" xml:space="preserve">
+    <value>pecs1</value>
+  </data>
+  <data name="str_pecs1_descr" xml:space="preserve">
+    <value>年龄：67，性别：女；患者（155 cm，50 kg）进行了乳房切除术并放置了扩张器，需进行术后镇痛。</value>
+  </data>
+  <data name="str_pecs1_name" xml:space="preserve">
+    <value>PECs I 病例</value>
+  </data>
+  <data name="str_pecs1_ph1_1" xml:space="preserve">
+    <value>筋膜定位与注射</value>
+  </data>
+  <data name="str_pecs1_ph1_2" xml:space="preserve">
+    <value>穿刺注射综合性说明</value>
+  </data>
+  <data name="str_pecs2" xml:space="preserve">
+    <value>pecs2</value>
+  </data>
+  <data name="str_pecs2_descr" xml:space="preserve">
+    <value>年龄：50，性别：女；患者进行了乳房切除术，需进行术后镇痛。</value>
+  </data>
+  <data name="str_pecs2_name" xml:space="preserve">
+    <value>PECs II 病例</value>
+  </data>
+  <data name="str_pecs2_ph1_1" xml:space="preserve">
+    <value>第2至第5肋间穿刺部位评估</value>
+  </data>
+  <data name="str_pecs2_ph1_2" xml:space="preserve">
+    <value>沿头尾方向移动，扫查肋骨间隙</value>
+  </data>
+  <data name="str_pecs2_ph2_1" xml:space="preserve">
+    <value>筋膜定位与注射</value>
+  </data>
+  <data name="str_pecs2_ph2_2" xml:space="preserve">
+    <value>穿刺注射综合性说明</value>
+  </data>
+  <data name="str_pitch" xml:space="preserve">
+    <value>俯仰角（欧拉角）</value>
+  </data>
+  <data name="str_pos" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="str_position" xml:space="preserve">
+    <value>位置：</value>
+  </data>
+  <data name="str_press_load_case" xml:space="preserve">
+    <value>点击加载病例</value>
+  </data>
+  <data name="str_proceed" xml:space="preserve">
+    <value>继续</value>
+  </data>
+  <data name="str_pwd_not_confirmed" xml:space="preserve">
+    <value>密码不正确</value>
+  </data>
+  <data name="str_qlb" xml:space="preserve">
+    <value>腰方肌</value>
+  </data>
+  <data name="str_qlb_descr" xml:space="preserve">
+    <value>年龄：60，性别：女；髋关节置换术后，患者需要镇痛治疗。</value>
+  </data>
+  <data name="str_qlb_name" xml:space="preserve">
+    <value>腰丛神经病例</value>
+  </data>
+  <data name="str_qlb_ph1_1" xml:space="preserve">
+    <value>腰丛神经 1 定位与穿刺</value>
+  </data>
+  <data name="str_qlb_ph1_2" xml:space="preserve">
+    <value>穿刺注射综合性说明</value>
+  </data>
+  <data name="str_qlb_ph2_1" xml:space="preserve">
+    <value>腰丛神经 2 定位与穿刺</value>
+  </data>
+  <data name="str_qlb_ph2_2" xml:space="preserve">
+    <value>穿刺注射综合性说明</value>
+  </data>
+  <data name="str_qlb_ph3_1" xml:space="preserve">
+    <value>腰丛神经 3 定位与穿刺</value>
+  </data>
+  <data name="str_qlb_ph3_2" xml:space="preserve">
+    <value>穿刺注射综合性说明</value>
+  </data>
+  <data name="str_rc_matrix" xml:space="preserve">
+    <value>矩阵的行和列从0到3（包括0和3）。</value>
+  </data>
+  <data name="str_red" xml:space="preserve">
+    <value>红：</value>
+  </data>
+  <data name="str_rem_filt" xml:space="preserve">
+    <value>删除搜索筛选器</value>
+  </data>
+  <data name="str_report_author" xml:space="preserve">
+    <value>软件反馈系统管理</value>
+  </data>
+  <data name="str_report_paragraph" xml:space="preserve">
+    <value>软件反馈</value>
+  </data>
+  <data name="str_report_subject" xml:space="preserve">
+    <value>反馈</value>
+  </data>
+  <data name="str_report_title" xml:space="preserve">
+    <value>软件反馈</value>
+  </data>
+  <data name="str_role" xml:space="preserve">
+    <value>行政人员</value>
+  </data>
+  <data name="str_roll" xml:space="preserve">
+    <value>滚转角（欧拉角）</value>
+  </data>
+  <data name="str_save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="str_score_set_to_zero" xml:space="preserve">
+    <value>分数设置为0</value>
+  </data>
+  <data name="str_select" xml:space="preserve">
+    <value>选择</value>
+  </data>
+  <data name="str_sel_load_case" xml:space="preserve">
+    <value>选择病例并加载</value>
+  </data>
+  <data name="str_sensors_info" xml:space="preserve">
+    <value>点击显示/隐藏探头信息</value>
+  </data>
+  <data name="str_sensors_upper" xml:space="preserve">
+    <value>探头</value>
+  </data>
+  <data name="str_sensor_1" xml:space="preserve">
+    <value>探头1：</value>
+  </data>
+  <data name="str_sensor_2" xml:space="preserve">
+    <value>探头2：</value>
+  </data>
+  <data name="str_sensor_abbr" xml:space="preserve">
+    <value>探头</value>
+  </data>
+  <data name="str_serial" xml:space="preserve">
+    <value>序列号：</value>
+  </data>
+  <data name="str_serratum" xml:space="preserve">
+    <value>前锯肌平面</value>
+  </data>
+  <data name="str_serr_descr" xml:space="preserve">
+    <value>年龄：21，性别：男；交通事故，患者有创伤性气胸，需进行胸腔引流与镇痛治疗。</value>
+  </data>
+  <data name="str_serr_name" xml:space="preserve">
+    <value>前锯肌平面病例</value>
+  </data>
+  <data name="str_serr_ph1_1" xml:space="preserve">
+    <value>筋膜定位与注射</value>
+  </data>
+  <data name="str_serr_ph1_2" xml:space="preserve">
+    <value>穿刺注射综合性说明</value>
+  </data>
+  <data name="str_settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="str_set_up" xml:space="preserve">
+    <value>安装</value>
+  </data>
+  <data name="str_short_name" xml:space="preserve">
+    <value>简称</value>
+  </data>
+  <data name="str_show_info_stud" xml:space="preserve">
+    <value>向学生显示信息</value>
+  </data>
+  <data name="str_show_needle_col" xml:space="preserve">
+    <value>显示穿刺轨迹：</value>
+  </data>
+  <data name="str_show_needle_traj" xml:space="preserve">
+    <value>显示穿刺轨迹</value>
+  </data>
+  <data name="str_show_target_pos" xml:space="preserve">
+    <value>显示目标位置</value>
+  </data>
+  <data name="str_show_target_pos_col" xml:space="preserve">
+    <value>显示目标位置：</value>
+  </data>
+  <data name="str_sim_not_conn" xml:space="preserve">
+    <value>模型未连接</value>
+  </data>
+  <data name="str_sponsor_by" xml:space="preserve">
+    <value>主办单位</value>
+  </data>
+  <data name="str_start_date" xml:space="preserve">
+    <value>开始时间</value>
+  </data>
+  <data name="str_step_3_3" xml:space="preserve">
+    <value>共3个步骤</value>
+  </data>
+  <data name="str_student" xml:space="preserve">
+    <value>学生：</value>
+  </data>
+  <data name="str_student_upper" xml:space="preserve">
+    <value>学生</value>
+  </data>
+  <data name="str_studio" xml:space="preserve">
+    <value>工作室</value>
+  </data>
+  <data name="str_sure_cancel_evt" xml:space="preserve">
+    <value>是否确认取消项目？此操作将删除项目相关的结果信息等</value>
+  </data>
+  <data name="str_sure_cancel_student" xml:space="preserve">
+    <value>是否确认取消该学生？此操作将删除该学生相关的结果信息等</value>
+  </data>
+  <data name="str_sure_cancel_teacher" xml:space="preserve">
+    <value>是否确认取消该老师？此操作将删除该老师相关的所有学生的信息</value>
+  </data>
+  <data name="str_sure_delete_res" xml:space="preserve">
+    <value>是否确认删除选中的结果？</value>
+  </data>
+  <data name="str_sure_stop_case" xml:space="preserve">
+    <value>是否确认终止该病例？结果将无法保存</value>
+  </data>
+  <data name="str_surname" xml:space="preserve">
+    <value>姓氏为必填项</value>
+  </data>
+  <data name="str_switch_ctrl" xml:space="preserve">
+    <value>开关控制</value>
+  </data>
+  <data name="str_tap" xml:space="preserve">
+    <value>点击</value>
+  </data>
+  <data name="str_tap_descr" xml:space="preserve">
+    <value>年龄：32，性别：女；患者（162cm，80kg）剖腹产术后镇痛治疗。</value>
+  </data>
+  <data name="str_tap_name" xml:space="preserve">
+    <value>腹横肌平面</value>
+  </data>
+  <data name="str_tap_ph1_1" xml:space="preserve">
+    <value>矢状方向穿刺部位评估</value>
+  </data>
+  <data name="str_tap_ph1_2" xml:space="preserve">
+    <value>沿矢状方向移动，扫查腹横肌平面结构</value>
+  </data>
+  <data name="str_tap_ph2_1" xml:space="preserve">
+    <value>前后方向穿刺部位评估</value>
+  </data>
+  <data name="str_tap_ph2_2" xml:space="preserve">
+    <value>沿前后方向移动，扫查腹横肌平面结构</value>
+  </data>
+  <data name="str_tap_ph3_1" xml:space="preserve">
+    <value>筋膜定位与注射</value>
+  </data>
+  <data name="str_tap_ph3_2" xml:space="preserve">
+    <value>穿刺注射综合性说明</value>
+  </data>
+  <data name="str_target_present" xml:space="preserve">
+    <value>框架内为目标</value>
+  </data>
+  <data name="str_teacher" xml:space="preserve">
+    <value>导师：</value>
+  </data>
+  <data name="str_teacher_upper" xml:space="preserve">
+    <value>导师</value>
+  </data>
+  <data name="str_tip_dist" xml:space="preserve">
+    <value>针尖与目标的距离（毫米）</value>
+  </data>
+  <data name="str_title" xml:space="preserve">
+    <value>标题</value>
+  </data>
+  <data name="str_to" xml:space="preserve">
+    <value>至</value>
+  </data>
+  <data name="str_too_lengthy" xml:space="preserve">
+    <value>操作时间太长，分数下降</value>
+  </data>
+  <data name="str_too_many_ins" xml:space="preserve">
+    <value>穿刺次数太多，分数下降</value>
+  </data>
+  <data name="str_type_serializ" xml:space="preserve">
+    <value>类型需可序列化</value>
+  </data>
+  <data name="str_unselect" xml:space="preserve">
+    <value>未选中</value>
+  </data>
+  <data name="str_username" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="str_user_name" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="str_value" xml:space="preserve">
+    <value>数值</value>
+  </data>
+  <data name="str_view" xml:space="preserve">
+    <value>视图</value>
+  </data>
+  <data name="str_view_ctrls" xml:space="preserve">
+    <value>单击以显示/隐藏视图控制键</value>
+  </data>
+  <data name="str_volume" xml:space="preserve">
+    <value>体积：</value>
+  </data>
+  <data name="str_w" xml:space="preserve">
+    <value>W:</value>
+  </data>
+  <data name="str_waiting_case_load" xml:space="preserve">
+    <value>等待病例载入</value>
+  </data>
+  <data name="str_within_range" xml:space="preserve">
+    <value>在范围内，最佳值</value>
+  </data>
+  <data name="str_with_admin_rights" xml:space="preserve">
+    <value>具有管理员权限</value>
+  </data>
+  <data name="str_x" xml:space="preserve">
+    <value>X轴</value>
+  </data>
+  <data name="str_y" xml:space="preserve">
+    <value>Y轴</value>
+  </data>
+  <data name="str_yaw" xml:space="preserve">
+    <value>偏航角（欧拉角）</value>
+  </data>
+  <data name="str_yes" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="str_yes_upper" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="str_z" xml:space="preserve">
+    <value>Z轴</value>
+  </data>
+  <data name="str_zero_vol" xml:space="preserve">
+    <value>0容积</value>
+  </data>
+  <data name="str_align_slice" xml:space="preserve">
+    <value>對齊切片寬度（毫米）：</value>
+  </data>
+  <data name="str_french" xml:space="preserve">
+    <value>法語</value>
+  </data>
+  <data name="str_moreThenTen_notAllowed" xml:space="preserve">
+    <value>用户选择的结果不能超过10个</value>
+  </data>
+  <data name="str_cases_title" xml:space="preserve">
+    <value>cases</value>
+  </data>
+  <data name="str_fasciailiaca_descr" xml:space="preserve">
+    <value>Age 78 y - Old female*Intertrochanteric fracture of the right femur</value>
+  </data>
+  <data name="str_fasciailiaca_name" xml:space="preserve">
+    <value>SUPRAINGUINAL FASCIA ILIACA Case</value>
+  </data>
+  <data name="str_modules_title" xml:space="preserve">
+    <value>modules</value>
+  </data>
+  <data name="str_hint_notatarget" xml:space="preserve">
+    <value>not a target</value>
+  </data>
+  <data name="str_hint_target" xml:space="preserve">
+    <value>target</value>
+  </data>
+  <data name="str_hint_vascular_area" xml:space="preserve">
+    <value>vascular area</value>
+  </data>
+  <data name="str_report_hit" xml:space="preserve">
+    <value>Hit</value>
+  </data>
+  <data name="str_report_score_targetwrongInjection_explanation" xml:space="preserve">
+    <value>Score dimished by 10 for each wrong injection</value>
+  </data>
+  <data name="str_report_score_targetwrongnerveareas_explanation" xml:space="preserve">
+    <value>wrong nerve areas. Score dimished by 50 for each wrong hit.</value>
+  </data>
+  <data name="str_report_score_targetwrongvascularareas_explanation" xml:space="preserve">
+    <value>vascular areas. Score set to 0.</value>
+  </data>
+  <data name="str_report_score_target_explanation" xml:space="preserve">
+    <value>Score attributed proportionally to number of targets correctly hit</value>
+  </data>
+  <data name="str_report_target_nerves" xml:space="preserve">
+    <value>Target nerves</value>
+  </data>
+  <data name="str_report_total_wrong_injections" xml:space="preserve">
+    <value>Total number of wrong injections</value>
+  </data>
+  <data name="str_report_wrong_nerve_hits" xml:space="preserve">
+    <value>Wrong nerve hits</value>
+  </data>
+  <data name="str_report_wrong_vascular_hits" xml:space="preserve">
+    <value>Wrong vascular hits</value>
+  </data>
+  <data name="str_generalTargetlocationInjection_CranioCaudal" xml:space="preserve">
+    <value>Target localization and injection – cranio-caudal scan</value>
+  </data>
+  <data name="str_generalTargetlocationInjection_MedioLateral" xml:space="preserve">
+    <value>Target localization and injection – medio-lateral scan</value>
+  </data>
+  <data name="str_generalTargetlocation_CranioCaudal" xml:space="preserve">
+    <value>Target localization – cranio-caudal scan</value>
+  </data>
+  <data name="str_infrafasciailiaca_descr" xml:space="preserve">
+    <value>INFRAINGUINAL FASCIA ILIACA Description</value>
+  </data>
+  <data name="str_infrafasciailiaca_name" xml:space="preserve">
+    <value>INFRAINGUINAL FASCIA ILIACA Case</value>
+  </data>
+  <data name="str_peng_descr" xml:space="preserve">
+    <value>PENG Description</value>
+  </data>
+  <data name="str_peng_name" xml:space="preserve">
+    <value>PENG Case</value>
+  </data>
+  <data name="str_needle_info" xml:space="preserve">
+    <value>Needle information</value>
+  </data>
+</root>

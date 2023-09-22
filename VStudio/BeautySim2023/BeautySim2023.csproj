@@ -1,0 +1,577 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EmguCV.3.1.0.1\build\EmguCV.props" Condition="Exists('..\packages\EmguCV.3.1.0.1\build\EmguCV.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6B3E1E72-ED09-4122-BF50-A5D6BFE1112A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>BeautySim2023</RootNamespace>
+    <AssemblyName>BeautySim2023</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>BEAUTYSIM.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.8.9\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Cyotek.Drawing.BitmapFont, Version=1.0.0.0, Culture=neutral, PublicKeyToken=58daa28b0b2de221, processorArchitecture=MSIL">
+      <HintPath>..\packages\Cyotek.Drawing.BitmapFont.2.0.4\lib\net472\Cyotek.Drawing.BitmapFont.dll</HintPath>
+    </Reference>
+    <Reference Include="devDept.Eyeshot.Control.Wpf.v12, Version=12.0.520.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files\devDept Software\Eyeshot Ultimate 12\Bin\devDept.Eyeshot.Control.Wpf.v12.dll</HintPath>
+    </Reference>
+    <Reference Include="devDept.Geometry.v12, Version=12.0.520.0, Culture=neutral, PublicKeyToken=9440825e8b4733bc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files\devDept Software\Eyeshot Ultimate 12\Bin\devDept.Geometry.v12.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.UI, Version=3.1.0.2282, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <HintPath>..\packages\EmguCV.3.1.0.1\lib\net30\Emgu.CV.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.UI.GL, Version=3.1.0.2282, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <HintPath>..\packages\EmguCV.3.1.0.1\lib\net30\Emgu.CV.UI.GL.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.World, Version=3.1.0.2282, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <HintPath>..\packages\EmguCV.3.1.0.1\lib\net30\Emgu.CV.World.dll</HintPath>
+    </Reference>
+    <Reference Include="GemBox.Pdf, Version=17.0.0.1371, Culture=neutral, PublicKeyToken=b1b72c69714d4847, processorArchitecture=MSIL">
+      <HintPath>..\packages\GemBox.Pdf.17.0.1371\lib\net461\GemBox.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="HelixToolkit, Version=2.24.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>..\packages\HelixToolkit.2.24.0\lib\netstandard2.0\HelixToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="HelixToolkit.Wpf, Version=2.24.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>..\packages\HelixToolkit.Wpf.2.24.0\lib\net462\HelixToolkit.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="HelixToolkit.Wpf.SharpDX, Version=2.24.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>..\packages\HelixToolkit.Wpf.SharpDX.2.24.0\lib\net462\HelixToolkit.Wpf.SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="LiteDB, Version=5.0.0.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.5.0.0-alpha\lib\net45\LiteDB.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.2.3.948, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.2.3-ci948\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=3.1.0.948, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.3.1.0-ci948\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.5.0.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Interaction.3.0.40218.0\lib\net46\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=7.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.7.0.1\lib\net462\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.DocumentObjectModel-WPF">
+      <HintPath>.\MigraDoc.DocumentObjectModel-WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.Rendering-WPF">
+      <HintPath>.\MigraDoc.Rendering-WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.RtfRendering-WPF">
+      <HintPath>.\MigraDoc.RtfRendering-WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="MouseKeyboardActivityMonitor, Version=4.0.5150.10665, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MouseKeyboardActivityMonitor.4.0.5150.10665\lib\net20\MouseKeyboardActivityMonitor.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenTK.1.1.2225.0\lib\net20\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenTK.GLControl.1.1.2225.0\lib\net20\OpenTK.GLControl.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp-WPF">
+      <HintPath>.\PdfSharp-WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting-WPF">
+      <HintPath>.\PdfSharp.Charting-WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Pkcs11Interop, Version=5.1.1.0, Culture=neutral, PublicKeyToken=c10e9c2d8c006d2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pkcs11Interop.5.1.1\lib\net45\Pkcs11Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="ReachFramework" />
+    <Reference Include="SharpDX, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.4.2.0\lib\net45\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.D3DCompiler, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.D3DCompiler.4.2.0\lib\net45\SharpDX.D3DCompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct2D1, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Direct2D1.4.2.0\lib\net45\SharpDX.Direct2D1.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Direct3D11.4.2.0\lib\net45\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D9, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Direct3D9.4.2.0\lib\net45\SharpDX.Direct3D9.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.DXGI.4.2.0\lib\net45\SharpDX.DXGI.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Mathematics, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Mathematics.4.2.0\lib\net45\SharpDX.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Pdf, Version=8.6.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSpire.PDFViewer.7.6.0\lib\net46\Spire.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.PdfViewer.Asp, Version=7.6.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSpire.PDFViewer.7.6.0\lib\net46\Spire.PdfViewer.Asp.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.PdfViewer.Forms, Version=7.6.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSpire.PDFViewer.7.6.0\lib\net46\Spire.PdfViewer.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Interaction.3.0.40218.0\lib\net46\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="ZedGraph, Version=5.1.7.430, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZedGraph.5.1.7\lib\net35-Client\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Classes\AdditionalIndication.cs" />
+    <Compile Include="Classes\BitmapUtils.cs" />
+    <Compile Include="Classes\Calculator.cs" />
+    <Compile Include="Classes\ClinicalCaseStep_Message.cs" />
+    <Compile Include="Classes\EntranceData.cs" />
+    <Compile Include="Classes\ExtensionMethods.cs" />
+    <Compile Include="Classes\PointHit.cs" />
+    <Compile Include="Classes\Question.cs" />
+    <Compile Include="Classes\ClassExtension.cs" />
+    <Compile Include="Classes\ClinicalCase.cs" />
+    <Compile Include="Classes\ClinicalCaseStep_AnalysisStaticFace.cs" />
+    <Compile Include="Classes\ClinicalCaseStep_DidacticDynamicFace.cs" />
+    <Compile Include="Classes\ClinicalCaseStep_Face3DInteraction.cs" />
+    <Compile Include="Classes\ClinicalCaseStep_Questionnaire.cs" />
+    <Compile Include="Classes\ClinicalCaseStep.cs" />
+    <Compile Include="Classes\CompressibleImage.cs" />
+    <Compile Include="Controls\CustomBorder.cs" />
+    <Compile Include="Enums\Enum_StateCollision.cs" />
+    <Compile Include="Enums\Enum_StepFace3DInteraction.cs" />
+    <Compile Include="Enums\Enum_Languages.cs" />
+    <Compile Include="Enums\Enum_CaseState.cs" />
+    <Compile Include="Enums\Enum_ClinicalCaseStepType.cs" />
+    <Compile Include="Enums\Enum_Modules.cs" />
+    <Compile Include="Enums\Enum_StepDynamicAnalysis.cs" />
+    <Compile Include="Enums\Enum_StepQuestionnaire.cs" />
+    <Compile Include="Enums\Enum_TypeLimit.cs" />
+    <Compile Include="Enums\Enum_UserVisualizationMode.cs" />
+    <Compile Include="Enums\Enum_VariableTypeLimit.cs" />
+    <Compile Include="Classes\LimitDefinition.cs" />
+    <Compile Include="Classes\ResultToSave.cs" />
+    <Compile Include="Classes\XMLBase.cs" />
+    <Compile Include="Encryption.cs" />
+    <Compile Include="Enums\Enum_DeformationState.cs" />
+    <Compile Include="Enums\Enum_ResultType.cs" />
+    <Compile Include="Classes\Converters.cs" />
+    <Compile Include="DataModel\Cases.cs" />
+    <Compile Include="DataModel\DBConnector.cs" />
+    <Compile Include="DataModel\Events.cs" />
+    <Compile Include="DataModel\Results.cs" />
+    <Compile Include="DataModel\Users.cs" />
+    <Compile Include="Enums\Enum_MessageType.cs" />
+    <Compile Include="MessageBox.xaml.cs">
+      <DependentUpon>MessageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ModulesLicence.cs" />
+    <Compile Include="Classes\NotifyClass.cs" />
+    <Compile Include="ObjectRecord.cs" />
+    <Compile Include="OrderedPoint.cs" />
+    <Compile Include="PageFramesApplication\CaseStudentFrame.xaml.cs">
+      <DependentUpon>CaseStudentFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageFramesApplication\Visualization3DFrameStudent.xaml.cs">
+      <DependentUpon>Visualization3DFrameStudent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageFramesApplication\Visualization3DFrame.xaml.cs">
+      <DependentUpon>Visualization3DFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageFramesApplication\InteractionFrame.xaml.cs">
+      <DependentUpon>InteractionFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageFramesApplication\SettingsFrame.xaml.cs">
+      <DependentUpon>SettingsFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageFramesApplication\CaseTeacherFrame.xaml.cs">
+      <DependentUpon>CaseTeacherFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageFramesApplication\EventsManagerFrame.xaml.cs">
+      <DependentUpon>EventsManagerFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageFramesApplication\FunctionalitiesFrame.xaml.cs">
+      <DependentUpon>FunctionalitiesFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageFramesApplication\MessageFrameS.xaml.cs">
+      <DependentUpon>MessageFrameS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageFramesApplication\MessageVoid.xaml.cs">
+      <DependentUpon>MessageVoid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageFramesApplication\ResultsManagerFrame.xaml.cs">
+      <DependentUpon>ResultsManagerFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageFramesApplication\StartPageFrame.xaml.cs">
+      <DependentUpon>StartPageFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageFramesApplication\UsersManagerFrame.xaml.cs">
+      <DependentUpon>UsersManagerFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsManager.cs" />
+    <Compile Include="SelectDate.xaml.cs">
+      <DependentUpon>SelectDate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelectStudent.xaml.cs">
+      <DependentUpon>SelectStudent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppControl.cs" />
+    <Compile Include="Controls\MultipleChoiceControl.xaml.cs">
+      <DependentUpon>MultipleChoiceControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewEvent.cs" />
+    <Compile Include="ViewResult.cs" />
+    <Compile Include="ViewUser.cs" />
+    <Compile Include="WindowStudent.xaml.cs">
+      <DependentUpon>WindowStudent.xaml</DependentUpon>
+    </Compile>
+    <Page Include="DictionaryConverters.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MessageBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageFramesApplication\CaseStudentFrame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageFramesApplication\Visualization3DFrameStudent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageFramesApplication\Visualization3DFrame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageFramesApplication\InteractionFrame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageFramesApplication\SettingsFrame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageFramesApplication\CaseTeacherFrame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageFramesApplication\EventsManagerFrame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageFramesApplication\FunctionalitiesFrame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageFramesApplication\MessageFrameS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageFramesApplication\MessageVoid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageFramesApplication\ResultsManagerFrame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageFramesApplication\StartPageFrame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageFramesApplication\UsersManagerFrame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SelectDate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SelectStudent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\MultipleChoiceControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowTeacher.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WindowTeacher.xaml.cs">
+      <DependentUpon>WindowTeacher.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="WindowStudent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Documentation\NotaTecnica_utlizzoLibreriePolhemus.docx" />
+    <None Include="MoonPdfLib\README" />
+    <None Include="OpenTK.dll.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BeautySim.Common\BeautySim.Common.csproj">
+      <Project>{E559C120-E490-4771-9F9D-7BA6150543EF}</Project>
+      <Name>BeautySim.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeautySim.Globalization\BeautySim.Globalization.csproj">
+      <Project>{dcb2be06-a454-449f-8d50-fa8f273c40ea}</Project>
+      <Name>BeautySim.Globalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Device.BeautySim\Device.BeautySim.csproj">
+      <Project>{fae08b67-45d0-4de8-8422-d3bd09710752}</Project>
+      <Name>Device.BeautySim</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Device.Motion\Device.Motion.csproj">
+      <Project>{144D2426-3DF2-4BAB-9C0F-D001FF7718E7}</Project>
+      <Name>Device.Motion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Device.Polhemus\Device.Polhemus.csproj">
+      <Project>{8903EFBE-5976-4B6B-BE65-CCC34B9EAD39}</Project>
+      <Name>Device.Polhemus</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\arrowDown.png" />
+    <Resource Include="Images\arrowRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\arrowRotate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\BlockSim.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="filler.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <None Include="scacchiera.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\scacchiera.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\logoAccurateCredits.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\metal3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\logoAccurate.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\BKS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="libmupdf.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="filler2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AdditionalFiles>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\needleImage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Version.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="BEAUTYSIM.ico" />
+    <Resource Include="Images\en-EN.png" />
+    <Resource Include="Images\it-IT.png" />
+    <Resource Include="Images\needleImage.png" />
+    <Resource Include="Images\zh-CN.png" />
+    <Resource Include="Images\fr-FR.png" />
+    <None Include="Images\BTY.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Resource Include="Images\BeautySim.png" />
+    <Resource Include="License-LGPL.txt" />
+    <Content Include="Mask.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Windows\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.HLSL.CSharpVB.1.0.2\build\Microsoft.HLSL.CSharpVB.targets" Condition="Exists('..\packages\Microsoft.HLSL.CSharpVB.1.0.2\build\Microsoft.HLSL.CSharpVB.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Questo progetto fa riferimento a uno o più pacchetti NuGet che non sono presenti in questo computer. Usare lo strumento di ripristino dei pacchetti NuGet per scaricarli. Per altre informazioni, vedere http://go.microsoft.com/fwlink/?LinkID=322105. Il file mancante è {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.HLSL.CSharpVB.1.0.2\build\Microsoft.HLSL.CSharpVB.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.HLSL.CSharpVB.1.0.2\build\Microsoft.HLSL.CSharpVB.targets'))" />
+    <Error Condition="!Exists('..\packages\MaterialDesignThemes.3.1.0-ci948\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MaterialDesignThemes.3.1.0-ci948\build\MaterialDesignThemes.targets'))" />
+    <Error Condition="!Exists('..\packages\EmguCV.3.1.0.1\build\EmguCV.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EmguCV.3.1.0.1\build\EmguCV.props'))" />
+    <Error Condition="!Exists('..\packages\EmguCV.3.1.0.1\build\EmguCV.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EmguCV.3.1.0.1\build\EmguCV.targets'))" />
+    <Error Condition="!Exists('..\packages\GemBox.Pdf.17.0.1371\build\netstandard2.0\GemBox.Pdf.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GemBox.Pdf.17.0.1371\build\netstandard2.0\GemBox.Pdf.targets'))" />
+  </Target>
+  <Import Project="..\packages\MaterialDesignThemes.3.1.0-ci948\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.1.0-ci948\build\MaterialDesignThemes.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release (
+   "$(ProjectDir)..\..\PostBuildTools\signtool.exe" sign /n "Accurate s.r.l." /t http://timestamp.comodoca.com "$(ProjectDir)bin\$(ConfigurationName)\BlockSim2020.exe"
+   "$(ProjectDir)..\..\PostBuildTools\signtool.exe" sign /n "Accurate s.r.l." /tr http://timestamp.comodoca.com?td=sha256 /td sha256 /fd sha256 /as "$(ProjectDir)bin\$(ConfigurationName)\BlockSim2020.exe"
+   rmdir /q /s "$(ProjectDir)..\..\dist\BlockSim\Program"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\Images" "$(ProjectDir)..\..\dist\BlockSim\Program\Images\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\it-IT" "$(ProjectDir)..\..\dist\BlockSim\Program\it-IT\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\zh-CN" "$(ProjectDir)..\..\dist\BlockSim\Program\zh-CN\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\fr-FR" "$(ProjectDir)..\..\dist\BlockSim\Program\fr-FR\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\de" "$(ProjectDir)..\..\dist\BlockSim\Program\de\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\es" "$(ProjectDir)..\..\dist\BlockSim\Program\es\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\fr" "$(ProjectDir)..\..\dist\BlockSim\Program\fr\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\hu" "$(ProjectDir)..\..\dist\BlockSim\Program\hu\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\it" "$(ProjectDir)..\..\dist\BlockSim\Program\it\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\ja" "$(ProjectDir)..\..\dist\BlockSim\Program\ja\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\pt" "$(ProjectDir)..\..\dist\BlockSim\Program\pt\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\ru" "$(ProjectDir)..\..\dist\BlockSim\Program\ru\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\sk" "$(ProjectDir)..\..\dist\BlockSim\Program\sk\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\sv" "$(ProjectDir)..\..\dist\BlockSim\Program\sv\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\tr" "$(ProjectDir)..\..\dist\BlockSim\Program\tr\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\zh-tw" "$(ProjectDir)..\..\dist\BlockSim\Program\zh-tw\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\x86" "$(ProjectDir)..\..\dist\BlockSim\Program\x86\*"
+   xcopy /E /Y "$(ProjectDir)bin\$(ConfigurationName)\x64" "$(ProjectDir)..\..\dist\BlockSim\Program\x64\*"
+   xcopy /Y "$(ProjectDir)bin\$(ConfigurationName)\*.exe" "$(ProjectDir)..\..\dist\BlockSim\Program\"
+   xcopy /Y "$(ProjectDir)bin\$(ConfigurationName)\*.dll" "$(ProjectDir)..\..\dist\BlockSim\Program\"
+   xcopy /Y "$(ProjectDir)bin\$(ConfigurationName)\*.config" "$(ProjectDir)..\..\dist\BlockSim\Program\"
+   xcopy /Y "$(ProjectDir)bin\$(ConfigurationName)\*.jpg" "$(ProjectDir)..\..\dist\BlockSim\Program\"
+   xcopy /Y "$(ProjectDir)bin\$(ConfigurationName)\*.png" "$(ProjectDir)..\..\dist\BlockSim\Program\"
+)</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\EmguCV.3.1.0.1\build\EmguCV.targets" Condition="Exists('..\packages\EmguCV.3.1.0.1\build\EmguCV.targets')" />
+  <Import Project="..\packages\GemBox.Pdf.17.0.1371\build\netstandard2.0\GemBox.Pdf.targets" Condition="Exists('..\packages\GemBox.Pdf.17.0.1371\build\netstandard2.0\GemBox.Pdf.targets')" />
+</Project>

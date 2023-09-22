@@ -1,0 +1,12 @@
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\Device.BeautySim\bin\Debug\Device.BeautySim.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\Device.BeautySim\bin\Debug\Device.BeautySim.pdb
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\Device.BeautySim\bin\Debug\BeautySim.Globalization.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\Device.BeautySim\bin\Debug\BeautySim.Globalization.pdb
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\Device.BeautySim\bin\Debug\fr-FR\BeautySim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\Device.BeautySim\bin\Debug\it-IT\BeautySim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\Device.BeautySim\bin\Debug\zh-CN\BeautySim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\Device.BeautySim\obj\Debug\Device.BeautySim.csproj.AssemblyReference.cache
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\Device.BeautySim\obj\Debug\Device.BeautySim.csproj.CoreCompileInputs.cache
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\Device.BeautySim\obj\Debug\Device.BeautySim.csproj.CopyComplete
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\Device.BeautySim\obj\Debug\Device.BeautySim.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\Device.BeautySim\obj\Debug\Device.BeautySim.pdb

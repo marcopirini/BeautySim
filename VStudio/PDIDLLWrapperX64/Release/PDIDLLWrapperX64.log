@@ -1,0 +1,2 @@
+﻿  PDIDLLWrapper.cpp
+c:\blocksim2\code2\pdidllwrapperx86\pdidllwrapper.h(2): fatal error C1083: Non è possibile aprire il file inclusione: 'PDI.h': No such file or directory

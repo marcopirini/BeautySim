@@ -1,0 +1,40 @@
+﻿  PDIDLLWrapper.cpp
+     Creazione della libreria C:\Lavoro\SourceTree\BlockSim\VStudio\Debug\PDIDLLWrapperX64.lib e dell'oggetto C:\Lavoro\SourceTree\BlockSim\VStudio\Debug\PDIDLLWrapperX64.exp
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: __thiscall CPDIdev::CPDIdev(void)" (__imp_??0CPDIdev@@QAE@XZ) non risolto nella funzione _Create
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: virtual __thiscall CPDIdev::~CPDIdev(void)" (__imp_??1CPDIdev@@UAE@XZ) non risolto nella funzione "public: virtual void * __thiscall CPDIdev::`scalar deleting destructor'(unsigned int)" (??_GCPDIdev@@UAEPAXI@Z)
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: int __thiscall CPDIdev::ConnectUSB(int)" (__imp_?ConnectUSB@CPDIdev@@QAEHH@Z) non risolto nella funzione _Connect
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: int __thiscall CPDIdev::ClearPnoBuffer(void)" (__imp_?ClearPnoBuffer@CPDIdev@@QAEHXZ) non risolto nella funzione _ClearPnoBuffer
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: int __thiscall CPDIdev::LastPnoPtr(unsigned char * &,unsigned long &)" (__imp_?LastPnoPtr@CPDIdev@@QAEHAAPAEAAK@Z) non risolto nella funzione _LastPnoPtr
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: int __thiscall CPDIdev::ResetPnoPtr(void)" (__imp_?ResetPnoPtr@CPDIdev@@QAEHXZ) non risolto nella funzione _ResetPnoPtr
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: int __thiscall CPDIdev::SetPnoBuffer(unsigned char *,unsigned long)" (__imp_?SetPnoBuffer@CPDIdev@@QAEHPAEK@Z) non risolto nella funzione _SetPnoBuffer
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: int __thiscall CPDIdev::LastHostFrameCount(unsigned long &)" (__imp_?LastHostFrameCount@CPDIdev@@QAEHAAK@Z) non risolto nella funzione _LastHostFrameCount
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: int __thiscall CPDIdev::ReadSinglePno(struct HWND__ *)" (__imp_?ReadSinglePno@CPDIdev@@QAEHPAUHWND__@@@Z) non risolto nella funzione _ReadSinglePno
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: int __thiscall CPDIdev::ReadSinglePnoBuf(unsigned char * &,unsigned long &)" (__imp_?ReadSinglePnoBuf@CPDIdev@@QAEHAAPAEAAK@Z) non risolto nella funzione _ReadSinglePnoBuf
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: int __thiscall CPDIdev::StartContPno(struct HWND__ *)" (__imp_?StartContPno@CPDIdev@@QAEHPAUHWND__@@@Z) non risolto nella funzione _StartContPno
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: int __thiscall CPDIdev::StopContPno(void)" (__imp_?StopContPno@CPDIdev@@QAEHXZ) non risolto nella funzione _StopContPno
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: enum ePiErrCode __thiscall CPDIdev::GetLastResult(void)" (__imp_?GetLastResult@CPDIdev@@QAE?AW4ePiErrCode@@XZ) non risolto nella funzione _GetLastResult
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: __thiscall CPDImdat::CPDImdat(void)" (__imp_??0CPDImdat@@QAE@XZ) non risolto nella funzione _SetDataList
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: virtual __thiscall CPDImdat::~CPDImdat(void)" (__imp_??1CPDImdat@@UAE@XZ) non risolto nella funzione _SetDataList
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: void __thiscall CPDImdat::Append(enum ePDIMotionData)" (__imp_?Append@CPDImdat@@QAEXW4ePDIMotionData@@@Z) non risolto nella funzione _SetDataList
+PDIDLLWrapper.obj : error LNK2019: riferimento al simbolo esterno "__declspec(dllimport) public: void __thiscall CPDImdat::Empty(void)" (__imp_?Empty@CPDImdat@@QAEXXZ) non risolto nella funzione _SetDataList
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::ClearSBoresight(int)" (?ClearSBoresight@CPDIdev@@UAEHH@Z) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::CnxReady(void)" (?CnxReady@CPDIdev@@UAEHXZ) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::Disconnect(void)" (?Disconnect@CPDIdev@@UAEHXZ) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual enum ePiCommType __thiscall CPDIdev::DiscoverCnx(int)" (?DiscoverCnx@CPDIdev@@UAE?AW4ePiCommType@@H@Z) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::GetAttFilter(class CPDIfilter &)" (?GetAttFilter@CPDIdev@@UAEHAAVCPDIfilter@@@Z) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::GetFrameRate(enum ePiFrameRate &)" (?GetFrameRate@CPDIdev@@UAEHAAW4ePiFrameRate@@@Z) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::GetMetric(int &)" (?GetMetric@CPDIdev@@UAEHAAH@Z) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::GetPosFilter(class CPDIfilter &)" (?GetPosFilter@CPDIdev@@UAEHAAVCPDIfilter@@@Z) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::GetSBoresight(int,float (&)[3])" (?GetSBoresight@CPDIdev@@UAEHHAAY02M@Z) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::GetSDataList(int,class CPDImdat &)" (?GetSDataList@CPDIdev@@UAEHHAAVCPDImdat@@@Z) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::GetSourceFrame(float (&)[3])" (?GetSourceFrame@CPDIdev@@UAEHAAY02M@Z) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::GetStationMap(unsigned long &)" (?GetStationMap@CPDIdev@@UAEHAAK@Z) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::ResetTracker(void)" (?ResetTracker@CPDIdev@@UAEHXZ) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::SetAttFilter(class CPDIfilter const &)" (?SetAttFilter@CPDIdev@@UAEHABVCPDIfilter@@@Z) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::SetMetric(int)" (?SetMetric@CPDIdev@@UAEHH@Z) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::SetPosFilter(class CPDIfilter const &)" (?SetPosFilter@CPDIdev@@UAEHABVCPDIfilter@@@Z) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::SetSBoresight(int,float const (&)[3],int)" (?SetSBoresight@CPDIdev@@UAEHHAAY02$$CBMH@Z) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::SetSDataList(int,class CPDImdat const &)" (?SetSDataList@CPDIdev@@UAEHHABVCPDImdat@@@Z) non risolto
+PDIDLLWrapper.obj : error LNK2001: simbolo esterno "public: virtual int __thiscall CPDIdev::SetSourceFrame(float const (&)[3])" (?SetSourceFrame@CPDIdev@@UAEHAAY02$$CBM@Z) non risolto
+C:\SDKs\Polhemus\PDI\PDI_140\Lib\x64\pdi.lib : warning LNK4272: il tipo 'x64' del computer della libreria è in conflitto con il tipo 'x86' del computer di destinazione
+C:\Lavoro\SourceTree\BlockSim\VStudio\Debug\PDIDLLWrapperX64.dll : fatal error LNK1120: 36 esterni non risolti

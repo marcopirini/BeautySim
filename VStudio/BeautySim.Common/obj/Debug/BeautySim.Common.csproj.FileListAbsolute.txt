@@ -1,0 +1,6 @@
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Common\bin\Debug\BeautySim.Common.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Common\bin\Debug\BeautySim.Common.pdb
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Common\obj\Debug\BeautySim.Common.csproj.AssemblyReference.cache
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Common\obj\Debug\BeautySim.Common.csproj.CoreCompileInputs.cache
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Common\obj\Debug\BeautySim.Common.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Common\obj\Debug\BeautySim.Common.pdb

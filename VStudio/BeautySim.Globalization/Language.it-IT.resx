@@ -1,0 +1,1242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="str_a" xml:space="preserve">
+    <value>A</value>
+  </data>
+  <data name="str_acceleration" xml:space="preserve">
+    <value>Acc:</value>
+  </data>
+  <data name="str_accept" xml:space="preserve">
+    <value>Accetta</value>
+  </data>
+  <data name="str_additional_info" xml:space="preserve">
+    <value>clicca per mostrare/nascondere ulteriori informazioni...</value>
+  </data>
+  <data name="str_add_new" xml:space="preserve">
+    <value>Aggiungi nuovo</value>
+  </data>
+  <data name="str_alpha" xml:space="preserve">
+    <value>Alfa:</value>
+  </data>
+  <data name="str_ang_needle_plane" xml:space="preserve">
+    <value>Angolo dell'ago rispetto al piano:</value>
+  </data>
+  <data name="str_anomaly" xml:space="preserve">
+    <value>anomalia: probabilmente l'ago era già inserito quando il caso è stato avviato</value>
+  </data>
+  <data name="str_apply_filt" xml:space="preserve">
+    <value>applica filtro</value>
+  </data>
+  <data name="str_arch_res" xml:space="preserve">
+    <value>archivia risultati</value>
+  </data>
+  <data name="str_arg_val_must" xml:space="preserve">
+    <value>L'argomento deve essere di tipo VectorMath.Half.</value>
+  </data>
+  <data name="str_assessment" xml:space="preserve">
+    <value>valutazione</value>
+  </data>
+  <data name="str_a_col" xml:space="preserve">
+    <value>A:</value>
+  </data>
+  <data name="str_a_new_teacher" xml:space="preserve">
+    <value>Un nuovo istruttore</value>
+  </data>
+  <data name="str_b" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="str_back" xml:space="preserve">
+    <value>indietro</value>
+  </data>
+  <data name="str_beautysim_info" xml:space="preserve">
+    <value>clicca per mostrare/nascondere le informazioni sul BeautySim</value>
+  </data>
+  <data name="str_beautysim_upper" xml:space="preserve">
+    <value>BEAUTYSIM</value>
+  </data>
+  <data name="str_blue" xml:space="preserve">
+    <value>Blu:</value>
+  </data>
+  <data name="str_by" xml:space="preserve">
+    <value>da</value>
+  </data>
+  <data name="str_b_col" xml:space="preserve">
+    <value>B:</value>
+  </data>
+  <data name="str_c" xml:space="preserve">
+    <value>C</value>
+  </data>
+  <data name="str_camera_model_err" xml:space="preserve">
+    <value>Errore del modello della fotocamera.</value>
+  </data>
+  <data name="str_cancel" xml:space="preserve">
+    <value>cancella</value>
+  </data>
+  <data name="str_cant_del_user" xml:space="preserve">
+    <value>Questo utente non può essere cancellato</value>
+  </data>
+  <data name="str_cant_read_port_name" xml:space="preserve">
+    <value>Non è possibile leggere il valore di registro 'PortName' per il dispositivo</value>
+  </data>
+  <data name="str_case" xml:space="preserve">
+    <value>Caso:</value>
+  </data>
+  <data name="str_case_completed" xml:space="preserve">
+    <value>Caso Completato</value>
+  </data>
+  <data name="str_case_info_descr" xml:space="preserve">
+    <value>Informazioni sul caso. Questa tabella rappresenta le informazioni sul caso. Qui verranno inserite una serie di informazioni per informare l'utente sul caso indicato</value>
+  </data>
+  <data name="str_case_loaded" xml:space="preserve">
+    <value>Caso Caricato.</value>
+  </data>
+  <data name="str_case_name" xml:space="preserve">
+    <value>nome del caso</value>
+  </data>
+  <data name="str_case_upper" xml:space="preserve">
+    <value>CASO</value>
+  </data>
+  <data name="str_clinical_cases" xml:space="preserve">
+    <value>caso clinico</value>
+  </data>
+  <data name="str_close_beautysim" xml:space="preserve">
+    <value>Si desidera chiudere l'applicazione BeautySim?</value>
+  </data>
+  <data name="str_complete_name" xml:space="preserve">
+    <value>NOME COMPLETO*</value>
+  </data>
+  <data name="str_confirm_pwd" xml:space="preserve">
+    <value>CONFERMA PASSWORD</value>
+  </data>
+  <data name="str_cont_ins" xml:space="preserve">
+    <value>Continua l'inserimento dell'ago. Rilascia l'anestetico quando raggiungi l'obiettivo</value>
+  </data>
+  <data name="str_convex" xml:space="preserve">
+    <value>Convessa</value>
+  </data>
+  <data name="str_created" xml:space="preserve">
+    <value>è stato creato.</value>
+  </data>
+  <data name="str_curr_case" xml:space="preserve">
+    <value>Caso Selezionato: nessuno</value>
+  </data>
+  <data name="str_c_col" xml:space="preserve">
+    <value>C:</value>
+  </data>
+  <data name="str_debug_mode" xml:space="preserve">
+    <value>MODALITA' DI DEBUG</value>
+  </data>
+  <data name="str_define_needle_len" xml:space="preserve">
+    <value>definire la lunghezza globale dell'ago in uso (ago e connettore), in mm. i valori devono essere compresi tra 80 e 300</value>
+  </data>
+  <data name="str_def_base_view_mod" xml:space="preserve">
+    <value>Modello di visualizzazione di base predefinito</value>
+  </data>
+  <data name="str_def_password" xml:space="preserve">
+    <value>Password di default:</value>
+  </data>
+  <data name="str_def_username" xml:space="preserve">
+    <value>Nome utente di default:</value>
+  </data>
+  <data name="str_delete" xml:space="preserve">
+    <value>elimina</value>
+  </data>
+  <data name="str_demo_helix" xml:space="preserve">
+    <value>Demo (HelixToolkitDX)</value>
+  </data>
+  <data name="str_description" xml:space="preserve">
+    <value>descrizione</value>
+  </data>
+  <data name="str_dest_arr_must" xml:space="preserve">
+    <value>Il vettore di destinazione deve essere della stessa lunghezza o di lunghezza maggiore rispetto al vettore originale.</value>
+  </data>
+  <data name="str_direction" xml:space="preserve">
+    <value>Direzione:</value>
+  </data>
+  <data name="str_dist_from_needle" xml:space="preserve">
+    <value>Distanza dall'ago al blocco durante il targeting</value>
+  </data>
+  <data name="str_dist_tip_plane" xml:space="preserve">
+    <value>Distanza tra punta e piano:</value>
+  </data>
+  <data name="str_d_col" xml:space="preserve">
+    <value>D:</value>
+  </data>
+  <data name="str_edit_profile" xml:space="preserve">
+    <value>modifica il mio profilo</value>
+  </data>
+  <data name="str_esp" xml:space="preserve">
+    <value>esp</value>
+  </data>
+  <data name="str_esp_descr" xml:space="preserve">
+    <value>Età: 35 - Sesso: maschio * Terapia antalgica: per un paziente di 35 anni operato con gastrectomia a manica per obesità patologica.</value>
+  </data>
+  <data name="str_esp_name" xml:space="preserve">
+    <value>Caso ESP</value>
+  </data>
+  <data name="str_esp_ph1_1" xml:space="preserve">
+    <value>localizzazione e iniezione della fascia - trasversale</value>
+  </data>
+  <data name="str_esp_ph1_2" xml:space="preserve">
+    <value>Esplora lo spazio esp muovendoti lungo la direzione trasversale</value>
+  </data>
+  <data name="str_esp_ph2_1" xml:space="preserve">
+    <value>localizzazione e iniezione della fascia - longitudinale</value>
+  </data>
+  <data name="str_esp_ph2_2" xml:space="preserve">
+    <value>Descrizione composta dell'iniezione</value>
+  </data>
+  <data name="str_event" xml:space="preserve">
+    <value>Evento:</value>
+  </data>
+  <data name="str_event_upper" xml:space="preserve">
+    <value>EVENTO</value>
+  </data>
+  <data name="str_exec_time" xml:space="preserve">
+    <value>Tempo di esecuzione</value>
+  </data>
+  <data name="str_exp_not_neg" xml:space="preserve">
+    <value>L'esponente non può essere negativo.</value>
+  </data>
+  <data name="str_fail_device_info" xml:space="preserve">
+    <value>Impossibile ottenere le informazioni sul dispositivo impostate per le porte COM</value>
+  </data>
+  <data name="str_fail_reg_key" xml:space="preserve">
+    <value>Impossibile aprire la chiave di registro per le informazioni di configurazione specifiche del dispositivo</value>
+  </data>
+  <data name="str_fascia_targeted" xml:space="preserve">
+    <value>Mirato alla fascia</value>
+  </data>
+  <data name="str_nerve_targeted" xml:space="preserve">
+    <value>Nerve targeted</value>
+  </data>
+  <data name="str_fc" xml:space="preserve">
+    <value>FC:</value>
+  </data>
+  <data name="str_filter_by_date" xml:space="preserve">
+    <value>filtra per data</value>
+  </data>
+  <data name="str_filter_by_student" xml:space="preserve">
+    <value>filtra per discente</value>
+  </data>
+  <data name="str_final_score" xml:space="preserve">
+    <value>Punteggio finale</value>
+  </data>
+  <data name="str_find_correct_view" xml:space="preserve">
+    <value>Trova la vista corretta per l'inserimento dell'ago</value>
+  </data>
+  <data name="str_fin_date" xml:space="preserve">
+    <value>data di fine</value>
+  </data>
+  <data name="str_firmware" xml:space="preserve">
+    <value>Firmware:</value>
+  </data>
+  <data name="str_flip_horiz" xml:space="preserve">
+    <value>capovolgi orizzontalmente</value>
+  </data>
+  <data name="str_flip_vert" xml:space="preserve">
+    <value>capovolgi verticalmente</value>
+  </data>
+  <data name="str_flux" xml:space="preserve">
+    <value>Flusso:</value>
+  </data>
+  <data name="str_from" xml:space="preserve">
+    <value>DA</value>
+  </data>
+  <data name="str_g4_dll_path" xml:space="preserve">
+    <value>G4_DLL_PATH non esiste</value>
+  </data>
+  <data name="str_get_pdf" xml:space="preserve">
+    <value>ottieni pdf</value>
+  </data>
+  <data name="str_glob_score" xml:space="preserve">
+    <value>Punteggio Totale:</value>
+  </data>
+  <data name="str_go_ahead" xml:space="preserve">
+    <value>Vai avanti e inserisci l'ago</value>
+  </data>
+  <data name="str_great" xml:space="preserve">
+    <value>Grande! Hai preso di mira il blocco! Prova un'altra procedura!</value>
+  </data>
+  <data name="str_green" xml:space="preserve">
+    <value>Verde:</value>
+  </data>
+  <data name="str_guest_mode" xml:space="preserve">
+    <value>modalità ospite</value>
+  </data>
+  <data name="str_hide_student" xml:space="preserve">
+    <value>nascondi info al discente</value>
+  </data>
+  <data name="str_idx_img" xml:space="preserve">
+    <value>IndiceImmagine:</value>
+  </data>
+  <data name="str_indices_color3" xml:space="preserve">
+    <value>Gli indici per Color3 vanno da 0 a 2, compresi.</value>
+  </data>
+  <data name="str_indices_color4" xml:space="preserve">
+    <value>Gli indici per Color4 vanno da 0 a 3, compresi.</value>
+  </data>
+  <data name="str_indices_matrix" xml:space="preserve">
+    <value>Gli indici per Matrix vanno da 0 a 15, compresi.</value>
+  </data>
+  <data name="str_indices_plane" xml:space="preserve">
+    <value>Gli indici per Plane vanno da 0 a 3, compresi.</value>
+  </data>
+  <data name="str_indices_quat" xml:space="preserve">
+    <value>Gli indici per Quaternion vanno da 0 a 3, compresi.</value>
+  </data>
+  <data name="str_indices_v2" xml:space="preserve">
+    <value>Gli indici per Vector2 vanno da 0 a 1, compresi.</value>
+  </data>
+  <data name="str_indices_v3" xml:space="preserve">
+    <value>Gli indici per Vector3 vanno da 0 a 2, compresi.</value>
+  </data>
+  <data name="str_indices_v4" xml:space="preserve">
+    <value>Gli indici per Vector4 vanno da 0 a 3, compresi.</value>
+  </data>
+  <data name="str_inflate" xml:space="preserve">
+    <value>inietta</value>
+  </data>
+  <data name="str_insert_a" xml:space="preserve">
+    <value>Inserto A</value>
+  </data>
+  <data name="str_insert_d" xml:space="preserve">
+    <value>Inserto D</value>
+  </data>
+  <data name="str_insert_b" xml:space="preserve">
+    <value>Inserto B</value>
+  </data>
+  <data name="str_insert_c" xml:space="preserve">
+    <value>Inserto C</value>
+  </data>
+  <data name="str_inst_err" xml:space="preserve">
+    <value>Il software non è stato installato correttamente. Prova a reinstallare il software o contatta il supporto tecnico.</value>
+  </data>
+  <data name="str_inv_cast_char" xml:space="preserve">
+    <value>Cast non valido da VectorMath.Half a System.Char.</value>
+  </data>
+  <data name="str_inv_cast_datetime" xml:space="preserve">
+    <value>Cast non valido da VectorMath.Half a System.DateTime.</value>
+  </data>
+  <data name="str_inv_half_format" xml:space="preserve">
+    <value>Formato half non valido.</value>
+  </data>
+  <data name="str_item" xml:space="preserve">
+    <value>elemento</value>
+  </data>
+  <data name="str_linear" xml:space="preserve">
+    <value>Lineare</value>
+  </data>
+  <data name="str_loading" xml:space="preserve">
+    <value>In caricamento...</value>
+  </data>
+  <data name="str_loading_case" xml:space="preserve">
+    <value>Caso in caricamento:</value>
+  </data>
+  <data name="str_loading_case_dots" xml:space="preserve">
+    <value>caso in caricamento...</value>
+  </data>
+  <data name="str_loading_phase" xml:space="preserve">
+    <value>Fase in caricamento</value>
+  </data>
+  <data name="str_load_case" xml:space="preserve">
+    <value>carica caso</value>
+  </data>
+  <data name="str_location" xml:space="preserve">
+    <value>POSIZIONE*</value>
+  </data>
+  <data name="str_log_in" xml:space="preserve">
+    <value>accedi</value>
+  </data>
+  <data name="str_log_out" xml:space="preserve">
+    <value>disconnetti</value>
+  </data>
+  <data name="str_lt_3min" xml:space="preserve">
+    <value>&lt; 3 min, ok</value>
+  </data>
+  <data name="str_lumbar" xml:space="preserve">
+    <value>lombare</value>
+  </data>
+  <data name="str_lumb_descr" xml:space="preserve">
+    <value>Età: 80 - Sesso: maschio * Intervento chirurgico urgente per un paziente di 80 anni con frattura del femore in trattamento anticoagulante. Viene eseguito un blocco chirurgico del plesso lombare associato al blocco del nervo sciatico.</value>
+  </data>
+  <data name="str_lumb_name" xml:space="preserve">
+    <value>Caso LOMBARE</value>
+  </data>
+  <data name="str_axillary_name" xml:space="preserve">
+    <value>Caso ASCELLARE</value>
+  </data>
+  <data name="str_axillary_descr" xml:space="preserve">
+    <value>Età: 57 - Sesso: maschio *Paziente con rotture della cuffia dei rotatori precedentemente sottoposto a riparazione artroscopica della cuffia dei rotatori.</value>
+  </data>
+  <data name="str_sciaticgluteal_name" xml:space="preserve">
+    <value>Caso SCIATICO GLUTEALE</value>
+  </data>
+  <data name="str_sciaticgluteal_descr" xml:space="preserve">
+    <value>Età: 50 - Sesso: maschile *Paziente sottoposto a intervento chirurgico al ginocchio.</value>
+  </data>
+  <data name="str_sciaticpopliteal_name" xml:space="preserve">
+    <value>Caso SCIATICO AL POPLITE</value>
+  </data>
+  <data name="str_sciaticpopliteal_descr" xml:space="preserve">
+    <value>Età: 70 - Sesso: femminile *Terapia analgesica postoperatoria per la riduzione aperta unilaterale e la fissazione interna della frattura del calcagno.</value>
+  </data>
+  <data name="str_infraclavicular_name" xml:space="preserve">
+    <value>Caso INFRACLAVICOLARE</value>
+  </data>
+  <data name="str_infraclavicular_descr" xml:space="preserve">
+    <value>Età: 55 - Sesso: maschio * Paziente sottoposto a fissazione della frattura del radio distale.</value>
+  </data>
+  <data name="str_supraclavicular_name" xml:space="preserve">
+    <value>Caso SOPRACLAVICOLARE</value>
+  </data>
+  <data name="str_supraclavicular_descr" xml:space="preserve">
+    <value>Età: 53 - Sesso: maschile *Blocco sopraclavicolare eseguito su un paziente sottoposto a intervento chirurgico per frattura della clavicola.</value>
+  </data>
+  <data name="str_interscalene_name" xml:space="preserve">
+    <value>Caso INTERSCALENO</value>
+  </data>
+  <data name="str_interscalene_descr" xml:space="preserve">
+    <value>Età: 31 - Sesso: femminile *Tecnica analgesica per un paziente durante un intervento di chirurgia artroscopica della spalla.</value>
+  </data>
+  <data name="str_lumbarplexus_name" xml:space="preserve">
+    <value>Caso PLESSO LOMBARE</value>
+  </data>
+  <data name="str_lumbarplexus_descr" xml:space="preserve">
+    <value>Età: 46 - Sesso: maschio *Un uomo di 46 anni necessita di fissazione di un chiodo endomidollare nell'estremità inferiore sinistra. Inoltre, si era rotto l'arto inferiore sinistro dopo una recente caduta.</value>
+  </data>
+  <data name="str_adductorcanal_name" xml:space="preserve">
+    <value>Caso CANALI ADDUTTORI</value>
+  </data>
+  <data name="str_adductorcanal_descr" xml:space="preserve">
+    <value>Età: 60 - Sesso: maschile *Analgesia post-operatoria del ginocchio per un paziente dopo artroplastica totale del ginocchio.</value>
+  </data>
+  <data name="str_femural_name" xml:space="preserve">
+    <value>Caso NERVO FEMORALE</value>
+  </data>
+  <data name="str_femural_descr" xml:space="preserve">
+    <value>Età: 45 - Sesso: femminile *Blocco del nervo femorale per il controllo del dolore postoperatorio in un paziente sottoposto a ricostruzione del legamento crociato anteriore (LCA).</value>
+  </data>
+  <data name="str_lumb_ph1_1" xml:space="preserve">
+    <value>localizzazione e iniezione del blocco muscolare</value>
+  </data>
+  <data name="str_lumb_ph1_2" xml:space="preserve">
+    <value>Descrizione composta dell'iniezione</value>
+  </data>
+  <data name="str_general_hotspot_1" xml:space="preserve">
+    <value>localizzazione di una area rilevante</value>
+  </data>
+  <data name="str_general_hotspot_2" xml:space="preserve">
+    <value>localizzazione di una area rilevante - descrizione</value>
+  </data>
+  <data name="str_blocknerve_1" xml:space="preserve">
+    <value>localizzazione e iniezione presso blocco nervoso</value>
+  </data>
+  <data name="str_blocknerve_2" xml:space="preserve">
+    <value>localizzazione e iniezione presso blocco nervoso</value>
+  </data>
+  <data name="str_general_trajectory_1" xml:space="preserve">
+    <value>percorso rilevante da esplorare</value>
+  </data>
+  <data name="str_general_trajectory_2" xml:space="preserve">
+    <value>percorso rilevante da esplorare - descrizione</value>
+  </data>
+  <data name="str_management" xml:space="preserve">
+    <value>gestione</value>
+  </data>
+  <data name="str_manage_evts" xml:space="preserve">
+    <value>gestisci eventi</value>
+  </data>
+  <data name="str_manage_students" xml:space="preserve">
+    <value>gestisci discenti</value>
+  </data>
+  <data name="str_manage_teachers" xml:space="preserve">
+    <value>gestisci istruttori</value>
+  </data>
+  <data name="str_mandatory_cname" xml:space="preserve">
+    <value>Il nome completo è un campo obbligatorio</value>
+  </data>
+  <data name="str_mandatory_name" xml:space="preserve">
+    <value>Il nome è un campo obbligatorio</value>
+  </data>
+  <data name="str_mandatory_password" xml:space="preserve">
+    <value>La password è un campo obbligatorio</value>
+  </data>
+  <data name="str_mandatory_sname" xml:space="preserve">
+    <value>Il nome breve è un campo obbligatorio</value>
+  </data>
+  <data name="str_mandatory_surname" xml:space="preserve">
+    <value>Il cognome è un campo obbligatorio</value>
+  </data>
+  <data name="str_mandatory_username" xml:space="preserve">
+    <value>Il nome utente è un campo obbligatorio</value>
+  </data>
+  <data name="str_modify" xml:space="preserve">
+    <value>modifica</value>
+  </data>
+  <data name="str_must_four" xml:space="preserve">
+    <value>Ci devono essere quattro e solo quattro valori di input per Color4.</value>
+  </data>
+  <data name="str_must_four_plane" xml:space="preserve">
+    <value>Ci devono essere quattro e solo quattro valori di input per Plane.</value>
+  </data>
+  <data name="str_must_four_quat" xml:space="preserve">
+    <value>Ci devono essere quattro e solo quattro valori di input per Quaternion.</value>
+  </data>
+  <data name="str_must_four_v4" xml:space="preserve">
+    <value>Devono esserci quattro e solo quattro valori di input per Vector4.</value>
+  </data>
+  <data name="str_must_half2" xml:space="preserve">
+    <value>Devono esserci due e solo due valori di input per Half2.</value>
+  </data>
+  <data name="str_must_half3" xml:space="preserve">
+    <value>Ci devono essere tre e solo tre valori di input per Half3.</value>
+  </data>
+  <data name="str_must_half4" xml:space="preserve">
+    <value>Ci devono essere quattro e solo quattro valori di input per Half4.</value>
+  </data>
+  <data name="str_must_sixteen" xml:space="preserve">
+    <value>Devono esserci sedici e solo sedici valori di input per Matrix.</value>
+  </data>
+  <data name="str_must_three" xml:space="preserve">
+    <value>Ci devono essere tre e solo tre valori di input per Color3.</value>
+  </data>
+  <data name="str_must_three_v3" xml:space="preserve">
+    <value>Devono essere presenti tre e solo tre valori di input per Vector3.</value>
+  </data>
+  <data name="str_must_two" xml:space="preserve">
+    <value>Devono esserci due e solo due valori di input per Vector2.</value>
+  </data>
+  <data name="str_name" xml:space="preserve">
+    <value>NOME</value>
+  </data>
+  <data name="str_needle_aligned" xml:space="preserve">
+    <value>ago allineato</value>
+  </data>
+  <data name="str_needle_inserted" xml:space="preserve">
+    <value>ago inserito</value>
+  </data>
+  <data name="str_needle_insertions" xml:space="preserve">
+    <value>Inserimenti dell'Ago</value>
+  </data>
+  <data name="str_needle_on_skin" xml:space="preserve">
+    <value>Ago sulla Pelle</value>
+  </data>
+  <data name="str_needle_pt_plane" xml:space="preserve">
+    <value>Punta dell'ago sul Piano</value>
+  </data>
+  <data name="str_needle_pt_pos" xml:space="preserve">
+    <value>Posizione Ago:</value>
+  </data>
+  <data name="str_needle_pt_ypr" xml:space="preserve">
+    <value>YPR Ago:</value>
+  </data>
+  <data name="str_needle_puntures" xml:space="preserve">
+    <value>Punture d'Ago</value>
+  </data>
+  <data name="str_needle_tip" xml:space="preserve">
+    <value>punta dell'ago sul piano</value>
+  </data>
+  <data name="str_next" xml:space="preserve">
+    <value>avanti</value>
+  </data>
+  <data name="str_no" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="str_no_evt" xml:space="preserve">
+    <value>nessun evento</value>
+  </data>
+  <data name="str_no_file" xml:space="preserve">
+    <value>Nessun file trovato</value>
+  </data>
+  <data name="str_no_orient_available" xml:space="preserve">
+    <value>Non è disponibile nessun orientamento per il BeautySim</value>
+  </data>
+  <data name="str_no_student_sel" xml:space="preserve">
+    <value>Non hai selezionato nessun discente. Se continui con il caso, nessun risultato verrà salvato. Continuare?</value>
+  </data>
+  <data name="str_no_teachers" xml:space="preserve">
+    <value>Non sono presenti Istruttori con le credenziali inserite. Accedi con un profilo valido o accedi come ospite.</value>
+  </data>
+  <data name="str_no_upper" xml:space="preserve">
+    <value>NO</value>
+  </data>
+  <data name="str_num_of_ins" xml:space="preserve">
+    <value># di inserimenti</value>
+  </data>
+  <data name="str_num_sens" xml:space="preserve">
+    <value>Numero di Sensori:</value>
+  </data>
+  <data name="str_offset_pos" xml:space="preserve">
+    <value>posizione di offset</value>
+  </data>
+  <data name="str_oh_no" xml:space="preserve">
+    <value>Oh no, hai mancato l'obiettivo ... Riprova!</value>
+  </data>
+  <data name="str_ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="str_org" xml:space="preserve">
+    <value>ORGANIZZAZIONE</value>
+  </data>
+  <data name="str_org_by" xml:space="preserve">
+    <value>ORGANIZZATO DA</value>
+  </data>
+  <data name="str_ori" xml:space="preserve">
+    <value>ORI:</value>
+  </data>
+  <data name="str_orientation" xml:space="preserve">
+    <value>Orientamento:</value>
+  </data>
+  <data name="str_orient_ok" xml:space="preserve">
+    <value>Orientamento BeautySim: OK</value>
+  </data>
+  <data name="str_orient_ok_pad" xml:space="preserve">
+    <value>Orientamento BeautySim: OK, controlla soltanto che la direzione del pad sia la stessa della foto</value>
+  </data>
+  <data name="str_orient_wrong" xml:space="preserve">
+    <value>Orientamento BeautySim: errato!</value>
+  </data>
+  <data name="str_pad_to_be_used" xml:space="preserve">
+    <value>pad da usare:</value>
+  </data>
+  <data name="str_params_of_case" xml:space="preserve">
+    <value>Parametri del caso</value>
+  </data>
+  <data name="str_param_fc_gt_zero" xml:space="preserve">
+    <value>Il parametro 'firstColumn' deve essere maggiore o uguale a zero.</value>
+  </data>
+  <data name="str_param_fc_lt_three" xml:space="preserve">
+    <value>Il parametro 'firstColumn' deve essere minore o uguale a tre.</value>
+  </data>
+  <data name="str_param_fr_gt_zero" xml:space="preserve">
+    <value>Il parametro 'firstRow' deve essere maggiore o uguale a zero.</value>
+  </data>
+  <data name="str_param_fr_lt_three" xml:space="preserve">
+    <value>Il parametro 'firstRow' deve essere minore o uguale a tre.</value>
+  </data>
+  <data name="str_param_sc_gt_zero" xml:space="preserve">
+    <value>Il parametro 'secondColumn' deve essere maggiore o uguale a zero.</value>
+  </data>
+  <data name="str_param_sc_lt_three" xml:space="preserve">
+    <value>Il parametro 'secondColumn' deve essere minore o uguale a tre.</value>
+  </data>
+  <data name="str_param_sr_gt_zero" xml:space="preserve">
+    <value>Il parametro 'secondRow' deve essere maggiore o uguale a zero.</value>
+  </data>
+  <data name="str_param_sr_lt_three" xml:space="preserve">
+    <value>Il parametro 'secondRow' deve essere minore o uguale a tre.</value>
+  </data>
+  <data name="str_parasternal" xml:space="preserve">
+    <value>parasternale</value>
+  </data>
+  <data name="str_parast_descr" xml:space="preserve">
+    <value>Età: 45 - Sesso: femmina * Terapia analgesica post-operatoria per mastectomia totale nel carcinoma mammario totale, in una paziente di 45 anni associata a PEC II.</value>
+  </data>
+  <data name="str_parast_name" xml:space="preserve">
+    <value>Caso PARASTERNALE</value>
+  </data>
+  <data name="str_parast_ph1_1" xml:space="preserve">
+    <value>valutazione del sito di puntura sul piano trasversale</value>
+  </data>
+  <data name="str_parast_ph1_2" xml:space="preserve">
+    <value>Esplora lo spazio parasternale muovendoti lungo la direzione trasversale</value>
+  </data>
+  <data name="str_parast_ph2_1" xml:space="preserve">
+    <value>localizzazione della fascia e iniezione - 2a costola</value>
+  </data>
+  <data name="str_parast_ph2_2" xml:space="preserve">
+    <value>Descrizione composta dell'iniezione</value>
+  </data>
+  <data name="str_parast_ph3_1" xml:space="preserve">
+    <value>localizzazione della fascia e iniezione - 4a costola</value>
+  </data>
+  <data name="str_parast_ph3_2" xml:space="preserve">
+    <value>Descrizione composta dell'iniezione</value>
+  </data>
+  <data name="str_parav" xml:space="preserve">
+    <value>parav</value>
+  </data>
+  <data name="str_parav_descr" xml:space="preserve">
+    <value>Età: 70 - Sesso: maschio * Blocco paravertebrale toracico eseguito su un paziente sottoposto a toracotomia destra.</value>
+  </data>
+  <data name="str_parav_name" xml:space="preserve">
+    <value>Caso PARAVERTEBRALE</value>
+  </data>
+  <data name="str_parav_ph1_1" xml:space="preserve">
+    <value>valutazione del sito di puntura lungo la direzione sagittale</value>
+  </data>
+  <data name="str_parav_ph1_2" xml:space="preserve">
+    <value>Esplora lo spazio paravertebrale muovendoti lungo la direzione sagittale</value>
+  </data>
+  <data name="str_parav_ph2_1" xml:space="preserve">
+    <value>valutazione del sito di puntura lungo la direzione trasversale</value>
+  </data>
+  <data name="str_parav_ph2_2" xml:space="preserve">
+    <value>Esplora lo spazio paravertebrale muovendoti lungo la direzione trasversale</value>
+  </data>
+  <data name="str_parav_ph3_1" xml:space="preserve">
+    <value>localizzazione dello spazio paravertebrale e iniezione - approccio obliquo</value>
+  </data>
+  <data name="str_parav_ph3_2" xml:space="preserve">
+    <value>Descrizione composta dell'iniezione</value>
+  </data>
+  <data name="str_password" xml:space="preserve">
+    <value>PASSWORD</value>
+  </data>
+  <data name="str_password_lower" xml:space="preserve">
+    <value>password</value>
+  </data>
+  <data name="str_pdf_files" xml:space="preserve">
+    <value>file pdf</value>
+  </data>
+  <data name="str_pecs1" xml:space="preserve">
+    <value>pecs1</value>
+  </data>
+  <data name="str_pecs1_descr" xml:space="preserve">
+    <value>Età: 67 - Sesso: femmina * Analgesia post-operatoria per una paziente di 67 anni (155 cm, 50 kg) dopo mastectomia e posizionamento di un espansore.</value>
+  </data>
+  <data name="str_pecs1_name" xml:space="preserve">
+    <value>Caso PECs I</value>
+  </data>
+  <data name="str_pecs1_ph1_1" xml:space="preserve">
+    <value>localizzazione della fascia e iniezione</value>
+  </data>
+  <data name="str_pecs1_ph1_2" xml:space="preserve">
+    <value>Descrizione composta dell'iniezione</value>
+  </data>
+  <data name="str_pecs2" xml:space="preserve">
+    <value>pecs2</value>
+  </data>
+  <data name="str_pecs2_descr" xml:space="preserve">
+    <value>Età: 50 - Sesso: femmina * Terapia analgesica post-operatoria per una paziente di 50 anni dopo quadrantectomia per mastectomia.</value>
+  </data>
+  <data name="str_pecs2_name" xml:space="preserve">
+    <value>Caso PECs II</value>
+  </data>
+  <data name="str_pecs2_ph1_1" xml:space="preserve">
+    <value>valutazione del sito di puntura dalla 2a alla 5a costola</value>
+  </data>
+  <data name="str_pecs2_ph1_2" xml:space="preserve">
+    <value>Esplora lo spazio delle costole muovendoti in direzione cranio-caudale</value>
+  </data>
+  <data name="str_pecs2_ph2_1" xml:space="preserve">
+    <value>localizzazione della fascia e iniezione</value>
+  </data>
+  <data name="str_pecs2_ph2_2" xml:space="preserve">
+    <value>Descrizione composta dell'iniezione</value>
+  </data>
+  <data name="str_pitch" xml:space="preserve">
+    <value>PITCH:</value>
+  </data>
+  <data name="str_pos" xml:space="preserve">
+    <value>POS:</value>
+  </data>
+  <data name="str_position" xml:space="preserve">
+    <value>Posizione:</value>
+  </data>
+  <data name="str_press_load_case" xml:space="preserve">
+    <value>Premi Carica Caso</value>
+  </data>
+  <data name="str_proceed" xml:space="preserve">
+    <value>procedi</value>
+  </data>
+  <data name="str_pwd_not_confirmed" xml:space="preserve">
+    <value>La password non è stata confermata correttamente</value>
+  </data>
+  <data name="str_qlb" xml:space="preserve">
+    <value>qlb</value>
+  </data>
+  <data name="str_qlb_descr" xml:space="preserve">
+    <value>Età: 60 - Sesso: femmina * Analgesia post-operatoria per una paziente di 60 anni dopo artroplastica dell'anca (coxartrosi).</value>
+  </data>
+  <data name="str_qlb_name" xml:space="preserve">
+    <value>Caso QLB</value>
+  </data>
+  <data name="str_qlb_ph1_1" xml:space="preserve">
+    <value>QLB 1 localizzazione e iniezione</value>
+  </data>
+  <data name="str_qlb_ph1_2" xml:space="preserve">
+    <value>Descrizione composta dell'iniezione</value>
+  </data>
+  <data name="str_qlb_ph2_1" xml:space="preserve">
+    <value>QLB 2 localizzazione e iniezione</value>
+  </data>
+  <data name="str_qlb_ph2_2" xml:space="preserve">
+    <value>Descrizione composta dell'iniezione</value>
+  </data>
+  <data name="str_qlb_ph3_1" xml:space="preserve">
+    <value>QLB 3 localizzazione e iniezione</value>
+  </data>
+  <data name="str_qlb_ph3_2" xml:space="preserve">
+    <value>Descrizione composta dell'iniezione</value>
+  </data>
+  <data name="str_rc_matrix" xml:space="preserve">
+    <value>Righe e colonne per le matrici vanno da 0 a 3, compresi.</value>
+  </data>
+  <data name="str_red" xml:space="preserve">
+    <value>Rosso:</value>
+  </data>
+  <data name="str_rem_filt" xml:space="preserve">
+    <value>elimina filtro</value>
+  </data>
+  <data name="str_report_author" xml:space="preserve">
+    <value>Gestore del SISTEMA DI REPORTISTICA del BeautySim</value>
+  </data>
+  <data name="str_report_paragraph" xml:space="preserve">
+    <value>Report del BeautySim</value>
+  </data>
+  <data name="str_report_subject" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="str_report_title" xml:space="preserve">
+    <value>REPORT del BeautySim</value>
+  </data>
+  <data name="str_role" xml:space="preserve">
+    <value>AMMINISTRATORE</value>
+  </data>
+  <data name="str_roll" xml:space="preserve">
+    <value>ROLL:</value>
+  </data>
+  <data name="str_save" xml:space="preserve">
+    <value>salva</value>
+  </data>
+  <data name="str_score_set_to_zero" xml:space="preserve">
+    <value>Punteggio impostato a 0</value>
+  </data>
+  <data name="str_select" xml:space="preserve">
+    <value>seleziona</value>
+  </data>
+  <data name="str_sel_load_case" xml:space="preserve">
+    <value>Seleziona un caso e premi Carica Caso</value>
+  </data>
+  <data name="str_sensors_info" xml:space="preserve">
+    <value>clicca per mostrare/nascondere le informazioni sui sensori...</value>
+  </data>
+  <data name="str_sensors_upper" xml:space="preserve">
+    <value>SENSORI</value>
+  </data>
+  <data name="str_sensor_1" xml:space="preserve">
+    <value>S1:</value>
+  </data>
+  <data name="str_sensor_2" xml:space="preserve">
+    <value>S2:</value>
+  </data>
+  <data name="str_sensor_abbr" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="str_serial" xml:space="preserve">
+    <value>Seriale:</value>
+  </data>
+  <data name="str_serratum" xml:space="preserve">
+    <value>serratum</value>
+  </data>
+  <data name="str_serr_descr" xml:space="preserve">
+    <value>Età: 21 - Sesso: maschile * Trauma stradale: terapia analgesica per paziente di 21 anni con drenaggio toracico per pneumotorace post-traumatico.</value>
+  </data>
+  <data name="str_serr_name" xml:space="preserve">
+    <value>Caso SERRATUS</value>
+  </data>
+  <data name="str_serr_ph1_1" xml:space="preserve">
+    <value>localizzazione della fascia e iniezione</value>
+  </data>
+  <data name="str_serr_ph1_2" xml:space="preserve">
+    <value>F</value>
+  </data>
+  <data name="str_settings" xml:space="preserve">
+    <value>impostazioni</value>
+  </data>
+  <data name="str_set_up" xml:space="preserve">
+    <value>configurazione</value>
+  </data>
+  <data name="str_short_name" xml:space="preserve">
+    <value>NOME BREVE*</value>
+  </data>
+  <data name="str_show_info_stud" xml:space="preserve">
+    <value>mostra info al discente</value>
+  </data>
+  <data name="str_show_needle_col" xml:space="preserve">
+    <value>mostra traiettoria ago:</value>
+  </data>
+  <data name="str_show_needle_traj" xml:space="preserve">
+    <value>mostra traiettoria ago</value>
+  </data>
+  <data name="str_show_target_pos" xml:space="preserve">
+    <value>mostra posizione obiettivo</value>
+  </data>
+  <data name="str_show_target_pos_col" xml:space="preserve">
+    <value>mostra posizione obiettivo:</value>
+  </data>
+  <data name="str_sim_not_conn" xml:space="preserve">
+    <value>simulatore non connesso</value>
+  </data>
+  <data name="str_sponsor_by" xml:space="preserve">
+    <value>SPONSORIZZATO DA</value>
+  </data>
+  <data name="str_start_date" xml:space="preserve">
+    <value>data di inizio</value>
+  </data>
+  <data name="str_step_3_3" xml:space="preserve">
+    <value>PASSO 3/3</value>
+  </data>
+  <data name="str_student" xml:space="preserve">
+    <value>Discente:</value>
+  </data>
+  <data name="str_student_upper" xml:space="preserve">
+    <value>DISCENTE</value>
+  </data>
+  <data name="str_studio" xml:space="preserve">
+    <value>studio</value>
+  </data>
+  <data name="str_sure_cancel_evt" xml:space="preserve">
+    <value>Sei sicuro di voler cancellare questo Evento? Ciò comporterà la cancellazione anche di tutti i risultati associati all'evento</value>
+  </data>
+  <data name="str_sure_cancel_student" xml:space="preserve">
+    <value>Sei sicuro di voler cancellare questo Discente? Ciò comporterà la cancellazione anche di tutti i risultati associati al discente</value>
+  </data>
+  <data name="str_sure_cancel_teacher" xml:space="preserve">
+    <value>Sei sicuro di voler cancellare questo Istruttore?  Ciò comporterà la cancellazione anche di tutti i risultati associati all'istruttore</value>
+  </data>
+  <data name="str_sure_delete_res" xml:space="preserve">
+    <value>Sei sicuro di voler cancellare i risultati selezionati</value>
+  </data>
+  <data name="str_sure_stop_case" xml:space="preserve">
+    <value>Sei sicuro di vole interrompere il caso? I risultati non verranno salvati</value>
+  </data>
+  <data name="str_surname" xml:space="preserve">
+    <value>COGNOME</value>
+  </data>
+  <data name="str_switch_ctrl" xml:space="preserve">
+    <value>interruttore</value>
+  </data>
+  <data name="str_tap" xml:space="preserve">
+    <value>tap</value>
+  </data>
+  <data name="str_tap_descr" xml:space="preserve">
+    <value>Età: 32 - Sesso: femmina * Blocco TAP ecoguidato dopo taglio cesareo su una femmina di 32 anni (162 cm, 80 kg).</value>
+  </data>
+  <data name="str_tap_name" xml:space="preserve">
+    <value>Caso TAP</value>
+  </data>
+  <data name="str_tap_ph1_1" xml:space="preserve">
+    <value>valutazione del sito di puntura lungo la direzione sagittale</value>
+  </data>
+  <data name="str_tap_ph1_2" xml:space="preserve">
+    <value>Esplora lo spazio TAP muovendoti lungo la direzione sagittale</value>
+  </data>
+  <data name="str_tap_ph2_1" xml:space="preserve">
+    <value>valutazione del sito di puntura lungo la direzione antero-posteriore</value>
+  </data>
+  <data name="str_tap_ph2_2" xml:space="preserve">
+    <value>Esplora lo spazio TAP muovendoti lungo la direzione antero-posteriore</value>
+  </data>
+  <data name="str_tap_ph3_1" xml:space="preserve">
+    <value>localizzazione della fascia e iniezione</value>
+  </data>
+  <data name="str_tap_ph3_2" xml:space="preserve">
+    <value>Descrizione composta dell'iniezione</value>
+  </data>
+  <data name="str_target_present" xml:space="preserve">
+    <value>obiettivo presente in questo frame</value>
+  </data>
+  <data name="str_teacher" xml:space="preserve">
+    <value>Istruttore:</value>
+  </data>
+  <data name="str_teacher_upper" xml:space="preserve">
+    <value>ISTRUTTORE</value>
+  </data>
+  <data name="str_tip_dist" xml:space="preserve">
+    <value>distanza tra la punta e il bersaglio (mm)</value>
+  </data>
+  <data name="str_title" xml:space="preserve">
+    <value>TITOLO</value>
+  </data>
+  <data name="str_to" xml:space="preserve">
+    <value>A</value>
+  </data>
+  <data name="str_too_lengthy" xml:space="preserve">
+    <value>Operazione troppo lunga. Punteggio diminuito del</value>
+  </data>
+  <data name="str_too_many_ins" xml:space="preserve">
+    <value>Troppi inserimenti. Punteggio diminuito del</value>
+  </data>
+  <data name="str_type_serializ" xml:space="preserve">
+    <value>Il tipo deve essere serializzabile.</value>
+  </data>
+  <data name="str_unselect" xml:space="preserve">
+    <value>deseleziona</value>
+  </data>
+  <data name="str_username" xml:space="preserve">
+    <value>NOME UTENTE</value>
+  </data>
+  <data name="str_user_name" xml:space="preserve">
+    <value>NOME UTENTE</value>
+  </data>
+  <data name="str_value" xml:space="preserve">
+    <value>valore</value>
+  </data>
+  <data name="str_view" xml:space="preserve">
+    <value>visualizza</value>
+  </data>
+  <data name="str_view_ctrls" xml:space="preserve">
+    <value>clicca per mostrare/nascondere i controlli di visualizzazione...</value>
+  </data>
+  <data name="str_volume" xml:space="preserve">
+    <value>Volume:</value>
+  </data>
+  <data name="str_w" xml:space="preserve">
+    <value>W:</value>
+  </data>
+  <data name="str_waiting_case_load" xml:space="preserve">
+    <value>In attesa del caricamento di un caso</value>
+  </data>
+  <data name="str_within_range" xml:space="preserve">
+    <value>entro l'intervallo, valore ottimale</value>
+  </data>
+  <data name="str_with_admin_rights" xml:space="preserve">
+    <value>con i privilegi di amministratore</value>
+  </data>
+  <data name="str_x" xml:space="preserve">
+    <value>X:</value>
+  </data>
+  <data name="str_y" xml:space="preserve">
+    <value>Y:</value>
+  </data>
+  <data name="str_yaw" xml:space="preserve">
+    <value>YAW:</value>
+  </data>
+  <data name="str_yes" xml:space="preserve">
+    <value>Sì</value>
+  </data>
+  <data name="str_yes_upper" xml:space="preserve">
+    <value>SÌ</value>
+  </data>
+  <data name="str_z" xml:space="preserve">
+    <value>Z:</value>
+  </data>
+  <data name="str_zero_vol" xml:space="preserve">
+    <value>volume zero</value>
+  </data>
+  <data name="str_close" xml:space="preserve">
+    <value>Esci</value>
+  </data>
+  <data name="str_change_lang" xml:space="preserve">
+    <value>La lingua verrà modificata dopo il riavvio del software. Continuare?</value>
+  </data>
+  <data name="str_chinese" xml:space="preserve">
+    <value>Cinese</value>
+  </data>
+  <data name="str_english" xml:space="preserve">
+    <value>Inglese</value>
+  </data>
+  <data name="str_italian" xml:space="preserve">
+    <value>Italiano</value>
+  </data>
+  <data name="str_align_slice" xml:space="preserve">
+    <value>larghezza sezione allin. (mm):</value>
+  </data>
+  <data name="str_french" xml:space="preserve">
+    <value>Francese</value>
+  </data>
+  <data name="str_moreThenTen_notAllowed" xml:space="preserve">
+    <value>L'utente non può selezionare più di 10 risultati </value>
+  </data>
+  <data name="str_cases_title" xml:space="preserve">
+    <value>casi</value>
+  </data>
+  <data name="str_fasciailiaca_descr" xml:space="preserve">
+    <value>Età: 78 - Sesso: femmina *Frattura intratrocanterica del femore destro</value>
+  </data>
+  <data name="str_fasciailiaca_name" xml:space="preserve">
+    <value>Caso FASCIA ILIACA SOPRAINGUINALE</value>
+  </data>
+  <data name="str_hint_notatarget" xml:space="preserve">
+    <value>non target</value>
+  </data>
+  <data name="str_hint_target" xml:space="preserve">
+    <value>target</value>
+  </data>
+  <data name="str_hint_vascular_area" xml:space="preserve">
+    <value>area vascolare</value>
+  </data>
+  <data name="str_modules_title" xml:space="preserve">
+    <value>moduli</value>
+  </data>
+  <data name="str_report_hit" xml:space="preserve">
+    <value>Raggiunti</value>
+  </data>
+  <data name="str_report_score_targetwrongInjection_explanation" xml:space="preserve">
+    <value>Punteggio diminuito di 10 per ogni iniezione errata.</value>
+  </data>
+  <data name="str_report_score_targetwrongnerveareas_explanation" xml:space="preserve">
+    <value>aree nervose errate. Punteggio dimiuito di 50 per ogni raggiungimento errato.</value>
+  </data>
+  <data name="str_report_score_targetwrongvascularareas_explanation" xml:space="preserve">
+    <value>aree vascolari. Punteggio 0.</value>
+  </data>
+  <data name="str_report_score_target_explanation" xml:space="preserve">
+    <value>Punteggio attribuito proporzionalmente al numero di target corretti raggiunti</value>
+  </data>
+  <data name="str_report_target_nerves" xml:space="preserve">
+    <value>Nervi target</value>
+  </data>
+  <data name="str_report_total_wrong_injections" xml:space="preserve">
+    <value>Numero totale di iniezioi errate</value>
+  </data>
+  <data name="str_report_wrong_nerve_hits" xml:space="preserve">
+    <value>Raggiungimenti nervosi errati</value>
+  </data>
+  <data name="str_report_wrong_vascular_hits" xml:space="preserve">
+    <value>Raggiungimenti vascolari errati</value>
+  </data>
+  <data name="str_title_fascia_blocks" xml:space="preserve">
+    <value>Blocchi Piano Interfasciale</value>
+  </data>
+  <data name="str_title_hip_blocks" xml:space="preserve">
+    <value>Blocchi d'Anca</value>
+  </data>
+  <data name="str_title_nerve_blocks" xml:space="preserve">
+    <value>Blocchi Nervosi</value>
+  </data>
+  <data name="str_generalTargetlocationInjection_CranioCaudal" xml:space="preserve">
+    <value>Localizzazione del target e iniezione anestetico - scansione cranio-caudale</value>
+  </data>
+  <data name="str_generalTargetlocationInjection_MedioLateral" xml:space="preserve">
+    <value>Localizzazione del target e iniezione anestetico - scansione medio-laterale</value>
+  </data>
+  <data name="str_generalTargetlocation_CranioCaudal" xml:space="preserve">
+    <value>Localizzazione del target - scansione cranio-caudale</value>
+  </data>
+  <data name="str_infrafasciailiaca_descr" xml:space="preserve">
+    <value>INFRAINGUINAL FASCIA ILIACA Description</value>
+  </data>
+  <data name="str_infrafasciailiaca_name" xml:space="preserve">
+    <value>Caso FASCIA ILIACA INFRAINGUINALE</value>
+  </data>
+  <data name="str_peng_descr" xml:space="preserve">
+    <value>PENG Description</value>
+  </data>
+  <data name="str_peng_name" xml:space="preserve">
+    <value>Caso PENG</value>
+  </data>
+  <data name="str_needle_info" xml:space="preserve">
+    <value>Informazioni ago</value>
+  </data>
+</root>

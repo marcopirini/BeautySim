@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{144D2426-3DF2-4BAB-9C0F-D001FF7718E7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Khymeia.Device.Motion</RootNamespace>
+    <AssemblyName>Khymeia.Device.Motion</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AER.cs" />
+    <Compile Include="BasicBalanceClass.cs" />
+    <Compile Include="VectorMath\BoundingBox.cs" />
+    <Compile Include="VectorMath\BoundingFrustum.cs" />
+    <Compile Include="VectorMath\BoundingSphere.cs" />
+    <Compile Include="VectorMath\Collision.cs" />
+    <Compile Include="VectorMath\Color3.cs" />
+    <Compile Include="VectorMath\Color4.cs" />
+    <Compile Include="VectorMath\Design\BaseConverter.cs" />
+    <Compile Include="VectorMath\Design\FieldPropertyDescriptor.cs" />
+    <Compile Include="VectorMath\Design\Half2Converter.cs" />
+    <Compile Include="VectorMath\Design\Half3Converter.cs" />
+    <Compile Include="VectorMath\Design\Half4Converter.cs" />
+    <Compile Include="VectorMath\Design\HalfConverter.cs" />
+    <Compile Include="VectorMath\Design\MatrixConverter.cs" />
+    <Compile Include="VectorMath\Design\QuaternionConverter.cs" />
+    <Compile Include="VectorMath\Design\Vector2Converter.cs" />
+    <Compile Include="VectorMath\Design\Vector3Converter.cs" />
+    <Compile Include="VectorMath\Design\Vector4Converter.cs" />
+    <Compile Include="VectorMath\Enums.cs" />
+    <Compile Include="VectorMath\ENUM_EULERINTRINSIC.cs" />
+    <Compile Include="VectorMath\EulerUtils.cs" />
+    <Compile Include="VectorMath\EULER_CALC_MODE.cs" />
+    <Compile Include="VectorMath\ExtrinsicEulerAngles.cs" />
+    <Compile Include="VectorMath\Gjk.cs" />
+    <Compile Include="VectorMath\Half.cs" />
+    <Compile Include="VectorMath\Half2.cs" />
+    <Compile Include="VectorMath\Half3.cs" />
+    <Compile Include="VectorMath\Half4.cs" />
+    <Compile Include="VectorMath\HalfUtilities.cs" />
+    <Compile Include="VectorMath\MathHelper.cs" />
+    <Compile Include="VectorMath\Matrix.cs" />
+    <Compile Include="VectorMath\Plane.cs" />
+    <Compile Include="VectorMath\Quaternion.cs" />
+    <Compile Include="VectorMath\Ray.cs" />
+    <Compile Include="VectorMath\Utilities.cs" />
+    <Compile Include="VectorMath\Vector2.cs" />
+    <Compile Include="VectorMath\Vector3.cs" />
+    <Compile Include="VectorMath\Vector4.cs" />
+    <Compile Include="WarningMessage.cs" />
+    <Compile Include="CopyStruct.cs" />
+    <Compile Include="Enum_PropertyDevice.cs" />
+    <Compile Include="Enum_WarningMessage.cs" />
+    <Compile Include="MotionClass.cs" />
+    <Compile Include="CONNECTIONSTATUS.cs" />
+    <Compile Include="DataTransformer.cs" />
+    <Compile Include="ClassExtensions.cs" />
+    <Compile Include="ObjectCopier.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringHelper.cs" />
+    <Compile Include="Structures.cs" />
+    <Compile Include="MOTIONFILE.cs" />
+    <Compile Include="MOTIONFRAMEList.cs" />
+    <Compile Include="USBDevice.cs" />
+    <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="euler angles transform.pdf" />
+    <None Include="VectorMath\EulerUtils.xlsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BeautySim.Globalization\BeautySim.Globalization.csproj">
+      <Project>{dcb2be06-a454-449f-8d50-fa8f273c40ea}</Project>
+      <Name>BeautySim.Globalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\USBClassLibrary\USBClassLibrary.csproj">
+      <Project>{b89a0e26-8a40-4eb2-beec-100359bce76e}</Project>
+      <Name>USBClassLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

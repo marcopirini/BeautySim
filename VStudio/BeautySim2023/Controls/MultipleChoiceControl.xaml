@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="BeautySim2023.MultipleChoiceControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BeautySim2023"
+             mc:Ignorable="d">
+
+    <Grid Name="grMain">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="500"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Upper Row - Question -->
+        <StackPanel Grid.Row="0" Margin="5" Name="spQuestion">
+            <TextBlock Text="{Binding Question}" FontWeight="Bold" FontSize="{Binding FontSizeQuestion}" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <!-- Lower Row - Selectable Answers -->
+        <StackPanel Grid.Row="1" Margin="5" Orientation="Horizontal" Name="spAnswers" HorizontalAlignment="Center">
+
+        </StackPanel>
+    </Grid>
+</UserControl>

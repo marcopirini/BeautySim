@@ -1,0 +1,185 @@
+﻿<Page x:Class="BeautySim2023.EventsManagerFrame"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:BeautySim2023"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:lang="clr-namespace:BeautySim.Globalization;assembly=BeautySim.Globalization"
+    Title="EventsManagerFrame" Background="Transparent">
+
+    <Page.Resources>
+        <DataTemplate x:Key="EventTemplate">
+            <!--<Border Margin="5" Height="85" BorderBrush="White" BorderThickness="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" FontSize="14" VerticalAlignment="Center" Content="{Binding ShortName}"></Label>
+                    <Label Grid.Column="1" FontSize="14" VerticalAlignment="Center" Content="{Binding Location}"></Label>
+                    <Label Grid.Column="2" FontSize="14" VerticalAlignment="Center" Content="{Binding OrganizedBy}"></Label>
+                </Grid>
+            </Border>-->
+            <Border Margin="5" Height="65" BorderBrush="RoyalBlue" BorderThickness="4" CornerRadius="8" HorizontalAlignment="Stretch"
+                     Background="{Binding Selected, Converter={StaticResource SelectedBackgroundConverter}}">
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250" />
+                        <ColumnDefinition Width="370" />
+                        <ColumnDefinition Width="250" />
+                        <ColumnDefinition Width="250" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" FontSize="15" VerticalAlignment="Center" Content="{Binding EventOrg.ShortName}"></Label>
+                    <Label Grid.Column="1" FontSize="15" VerticalAlignment="Center" Content="{Binding EventOrg.CompleteName}"></Label>
+                    <Label Grid.Column="2" FontSize="15" VerticalAlignment="Center" Content="{Binding EventOrg.Location}"></Label>
+                    <Label Grid.Column="3" FontSize="15" VerticalAlignment="Center" Content="{Binding EventOrg.OrganizedBy}"></Label>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="3.5*" />
+        </Grid.RowDefinitions>
+
+        <Grid Name="spPresent"
+            Margin="10 " VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="#00bfa5" BorderThickness="5" CornerRadius="4">
+                <ListBox Name="ListEvents"
+                 Grid.Column="0" ItemTemplate="{StaticResource EventTemplate}" SelectionChanged="ListEvents_SelectionChanged">
+                </ListBox>
+            </Border>
+
+            <Grid Name="spCommands" 
+                    Margin="10 " Grid.Column="1" HorizontalAlignment="Center" >
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="55"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button Name="bAdd" Click="bAdd_Click" Grid.Row="0"
+                                                Margin="5"  Height="45" Width="190" >
+
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Plus" HorizontalAlignment="Center" Height="40" Width="38"/>
+                        <TextBlock VerticalAlignment="Center"  Margin="10"
+                            Text="{x:Static lang:Language.str_add_new}">
+                        </TextBlock>
+                    </StackPanel>
+
+                </Button>
+                <Button Name="bModify" Click="bModify_Click" Grid.Row="1"  Margin="5"  Height="45" Width="190" >
+
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Pencil" HorizontalAlignment="Center" Height="40" Width="38"/>
+                        <TextBlock Name="tbModify" VerticalAlignment="Center"  Margin="10"
+                            Text="{x:Static lang:Language.str_modify}">
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Name="bDelete" Click="bDelete_Click" Grid.Row="2"  Margin="5"  Height="45" Width="190" >
+
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Delete" HorizontalAlignment="Center" Height="40" Width="38"/>
+                        <TextBlock VerticalAlignment="Center"  Margin="10"
+                            Text="{x:Static lang:Language.str_delete}">
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Name="bSelect" Click="bSelect_Click" Grid.Row="3"  Margin="5"  Height="45" Width="190" >
+
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="SelectAll" HorizontalAlignment="Center" Height="40" Width="38"/>
+                        <TextBlock Name="tbSelect" VerticalAlignment="Center"  Margin="10"
+                            Text="{x:Static lang:Language.str_select}">
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Grid>
+
+        <StackPanel Name="spModify"
+            HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Center">
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5*" />
+                    <RowDefinition Height="2*" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Name="spInfoEvent" 
+                    Grid.Row="0" Margin="10 " HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+
+                        </Grid.RowDefinitions>
+
+                        <Label Margin="5 " Grid.Row="0" Grid.Column="0" FontSize="15" Foreground="Black" VerticalAlignment="Center" Content="{x:Static lang:Language.str_short_name}"/>
+                        <Label Margin="5 " Grid.Row="1" Grid.Column="0" FontSize="15" Foreground="Black" VerticalAlignment="Center" Content="{x:Static lang:Language.str_complete_name}"/>
+                        <Label Margin="5 " Grid.Row="2" Grid.Column="0" FontSize="15" Foreground="Black" VerticalAlignment="Center" Content="{x:Static lang:Language.str_location}"/>
+                        <Label Margin="5 " Grid.Row="3" Grid.Column="0" FontSize="15" Foreground="Black" VerticalAlignment="Center" Content="{x:Static lang:Language.str_from}"/>
+                        <Label Margin="5 " Grid.Row="3" Grid.Column="2" FontSize="15" Foreground="Black" VerticalAlignment="Center" Content="{x:Static lang:Language.str_to}"/>
+                        <Label Margin="5 " Grid.Row="4" Grid.Column="0" FontSize="15" Foreground="Black" VerticalAlignment="Center" Content="{x:Static lang:Language.str_org_by}"/>
+                        <Label Margin="5 " Grid.Row="5" Grid.Column="0" FontSize="15" Foreground="Black" VerticalAlignment="Center" Content="{x:Static lang:Language.str_sponsor_by}"/>
+
+                        <TextBox Name="tbShortName" Margin="5 " Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15"></TextBox>
+                        <TextBox Name="tbCompleteName" Margin="5" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15"></TextBox>
+                        <TextBox Name="tbLocation" Margin="5" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15"></TextBox>
+                        <DatePicker Name="tbStartFrom" Margin="5" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="15"></DatePicker>
+                        <DatePicker Name="tbFinishAt" Margin="5" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="15"></DatePicker>
+                        <TextBox Name="tbOrganisedBy" Margin="5" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="15"></TextBox>
+                        <TextBox Name="tbSponsoredBy" Margin="5" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15"></TextBox>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Name="spCommandFields"
+                    Margin="10" Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Bottom">
+                    <Button Name="bSave" Margin="5"  Height="50" Width="130" Click="bSave_Click">
+                        <StackPanel Orientation="Horizontal"  >
+                            <materialDesign:PackIcon Kind="ContentSave" HorizontalAlignment="Center" Height="40" Width="38"/>
+                            <TextBlock VerticalAlignment="Center" Margin="10"
+                            Text="{x:Static lang:Language.str_save}">
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Name="bCancel" Click="bCancel_Click"
+                        Margin="10"  Height="50" Width="130" >
+
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Cancel" HorizontalAlignment="Center" Height="40" Width="38"/>
+                            <TextBlock VerticalAlignment="Center"  Margin="10"
+                            Text="{x:Static lang:Language.str_cancel}">
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <!--<Border Margin="10,10,10,10" BorderBrush="White" Grid.Column="2" BorderThickness="4">
+                </Border>-->
+            </Grid>
+        </StackPanel>
+
+    </Grid>
+</Page>
