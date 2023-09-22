@@ -3,7 +3,6 @@ C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\bin\Deb
 C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\bin\Debug\fr-FR\BeautySim.Globalization.resources.dll
 C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\bin\Debug\it-IT\BeautySim.Globalization.resources.dll
 C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\bin\Debug\zh-CN\BeautySim.Globalization.resources.dll
-C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\obj\Debug\BeautySim.Globalization.csproj.AssemblyReference.cache
 C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\obj\Debug\BeautySim.Globalization.Language.resources
 C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\obj\Debug\BeautySim.Globalization.Language.fr-FR.resources
 C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\BeautySim.Globalization\obj\Debug\BeautySim.Globalization.Language.it-IT.resources

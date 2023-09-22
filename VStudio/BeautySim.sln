@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.3.32825.248
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33801.447
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PDIDLLWrapperX64", "PDIDLLWrapperX64\PDIDLLWrapperX64.vcxproj", "{F2B4DF73-E3DA-48C0-9308-BE9EF37D4729}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InjectionPointManager", "InjectionPointsDefinitor\InjectionPointManager.csproj", "{EEEF6EA0-2FCD-46F7-A779-AC2FCBFE896F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautySim.Common", "BeautySim.Common\BeautySim.Common.csproj", "{E559C120-E490-4771-9F9D-7BA6150543EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautySimStartingApp", "BeautySimStartingApp\BeautySimStartingApp.csproj", "{34E1B25B-4AB1-4BB6-8543-3CD2CB89D71C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,6 +149,18 @@ Global
 		{E559C120-E490-4771-9F9D-7BA6150543EF}.Release|x64.Build.0 = Release|Any CPU
 		{E559C120-E490-4771-9F9D-7BA6150543EF}.Release|x86.ActiveCfg = Release|Any CPU
 		{E559C120-E490-4771-9F9D-7BA6150543EF}.Release|x86.Build.0 = Release|Any CPU
+		{34E1B25B-4AB1-4BB6-8543-3CD2CB89D71C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34E1B25B-4AB1-4BB6-8543-3CD2CB89D71C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34E1B25B-4AB1-4BB6-8543-3CD2CB89D71C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{34E1B25B-4AB1-4BB6-8543-3CD2CB89D71C}.Debug|x64.Build.0 = Debug|Any CPU
+		{34E1B25B-4AB1-4BB6-8543-3CD2CB89D71C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{34E1B25B-4AB1-4BB6-8543-3CD2CB89D71C}.Debug|x86.Build.0 = Debug|Any CPU
+		{34E1B25B-4AB1-4BB6-8543-3CD2CB89D71C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34E1B25B-4AB1-4BB6-8543-3CD2CB89D71C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34E1B25B-4AB1-4BB6-8543-3CD2CB89D71C}.Release|x64.ActiveCfg = Release|Any CPU
+		{34E1B25B-4AB1-4BB6-8543-3CD2CB89D71C}.Release|x64.Build.0 = Release|Any CPU
+		{34E1B25B-4AB1-4BB6-8543-3CD2CB89D71C}.Release|x86.ActiveCfg = Release|Any CPU
+		{34E1B25B-4AB1-4BB6-8543-3CD2CB89D71C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
