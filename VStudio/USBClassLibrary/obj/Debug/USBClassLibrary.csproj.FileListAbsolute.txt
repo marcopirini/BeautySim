@@ -6,6 +6,7 @@ C:\Lavoro\SourceTree\BlockSim\VStudio\USBClassLibrary\obj\Debug\USBClassLibrary.
 C:\Lavoro\SourceTree\BlockSim\VStudio\USBClassLibrary\obj\Debug\USBClassLibrary.csproj.AssemblyReference.cache
 C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\USBClassLibrary\bin\Debug\USBClassLibrary.dll
 C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\USBClassLibrary\bin\Debug\USBClassLibrary.pdb
+C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\USBClassLibrary\obj\Debug\USBClassLibrary.csproj.AssemblyReference.cache
 C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\USBClassLibrary\obj\Debug\USBClassLibrary.csproj.CoreCompileInputs.cache
 C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\USBClassLibrary\obj\Debug\USBClassLibrary.dll
 C:\Lavoro\SourceTree\BeautySim\BeautySim\VStudio\USBClassLibrary\obj\Debug\USBClassLibrary.pdb

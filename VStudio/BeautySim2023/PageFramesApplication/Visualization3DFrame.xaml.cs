@@ -152,8 +152,8 @@ namespace BeautySim2023
 
         private void hvView3D_Loaded_1(object sender, RoutedEventArgs e)
         {
-            hvView3D.Camera.LookDirection = new Vector3D(-1, 0, 0);
-            hvView3D.Camera.UpDirection = new Vector3D(0, 0, -1);
+            hvView3D.Camera.LookDirection = new Vector3D(0, 1, 0);
+            hvView3D.Camera.UpDirection = new Vector3D(1, 0, 0);
             hvView3D.ZoomExtents();
         }
 
@@ -223,7 +223,8 @@ namespace BeautySim2023
                 var builder = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
                 builder.AddBox(Vector3.Zero, 1, 1, 1);
                 var reader = new HelixToolkit.Wpf.SharpDX.ObjReader();
-                var models = reader.Read(folder + "\\Testa pelle mirror3.obj");
+                //var models = reader.Read(folder + "\\Testa pelle mirror3.obj");
+                var models = reader.Read(folder + "\\TestaSIliconeResized31.obj");
                 AppControl.Instance.CollisionItemsGuid.Add("SKIN", new List<Guid>());
                 for (int i = 0; i < models.Count(); i++)
                 {

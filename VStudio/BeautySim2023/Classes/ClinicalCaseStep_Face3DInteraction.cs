@@ -111,50 +111,50 @@ namespace BeautySim2023
                             InjectionPoints3D.Add(injectionPoint3D);
                         }
                     }
-                    else if (line.StartsWith("ERRORCASE"))
-                    {
-                        string[] errorCaseParts = line.Split('\t');
+                    //else if (line.StartsWith("ERRORCASE"))
+                    //{
+                    //    string[] errorCaseParts = line.Split('\t');
 
-                        if (errorCaseParts.Length >= 6)
-                        {
-                            ErrorCase errorCase = new ErrorCase
-                            {
-                                ErrorNumber = int.Parse(errorCaseParts[1]),
-                                //InjectionPointsReferenced = errorCaseParts[2].Split('/').Select(int.Parse).ToList(),
-                                ErrorDescription = errorCaseParts[4],
-                                ErrorImageName = errorCaseParts[5],
-                                ErrorConditions = new List<ErrorCondition>()
-                            };
+                    //    if (errorCaseParts.Length >= 6)
+                    //    {
+                    //        ErrorCase errorCase = new ErrorCase
+                    //        {
+                    //            ErrorNumber = int.Parse(errorCaseParts[1]),
+                    //            //InjectionPointsReferenced = errorCaseParts[2].Split('/').Select(int.Parse).ToList(),
+                    //            ErrorDescription = errorCaseParts[4],
+                    //            ErrorImageName = errorCaseParts[5],
+                    //            ErrorConditions = new List<ErrorCondition>()
+                    //        };
 
-                            ErrorCases.Add(errorCase);
+                    //        ErrorCases.Add(errorCase);
 
 
-                            string conditionPart = errorCaseParts[3];
+                    //        string conditionPart = errorCaseParts[3];
 
-                            string[] conditionParts = conditionPart.Split('/');
-                            foreach (string condition in conditionParts)
-                            {
-                                string[] conditionSubparts = condition.Split(new[] { '>', '<', '=' }, 2);
+                    //        string[] conditionParts = conditionPart.Split('/');
+                    //        foreach (string condition in conditionParts)
+                    //        {
+                    //            string[] conditionSubparts = condition.Split(new[] { '>', '<', '=' }, 2);
 
-                                if (conditionSubparts.Length == 2)
-                                {
-                                    string field = conditionSubparts[0];
-                                    string inequality = conditionPart.Substring(conditionPart.IndexOf(conditionSubparts[0]) + conditionSubparts[0].Length, 1);
-                                    double reference = double.Parse(conditionSubparts[1]);
+                    //            if (conditionSubparts.Length == 2)
+                    //            {
+                    //                string field = conditionSubparts[0];
+                    //                string inequality = conditionPart.Substring(conditionPart.IndexOf(conditionSubparts[0]) + conditionSubparts[0].Length, 1);
+                    //                double reference = double.Parse(conditionSubparts[1]);
 
-                                    ErrorCondition errorCondition = new ErrorCondition
-                                    {
-                                        Field = field,
-                                        Inequality = inequality,
-                                        Reference = reference
-                                    };
+                    //                ErrorCondition errorCondition = new ErrorCondition
+                    //                {
+                    //                    Field = field,
+                    //                    Inequality = inequality,
+                    //                    Reference = reference
+                    //                };
 
-                                    errorCase.ErrorConditions.Add(errorCondition);
-                                }
-                            }
+                    //                errorCase.ErrorConditions.Add(errorCondition);
+                    //            }
+                    //        }
 
-                        }
-                    }
+                    //    }
+                    //}
                 }
             }
         }

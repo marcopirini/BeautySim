@@ -3,12 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:InjectionPointManager"
         Title="Injection Point Manager" WindowState="Maximized">
-    <Window.Resources>
-        <local:BoolToYesNoConverter x:Key="BoolToYesNoConverter" />
-    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="4*" />
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
@@ -23,14 +21,17 @@
             <Image x:Name="faceImage" Stretch="Uniform" SizeChanged="faceImage_SizeChanged_1"/>
             <Canvas x:Name="injectionPointsCanvas" MouseLeftButtonDown="FaceImage_MouseLeftButtonDown" Background="Transparent" PreviewMouseWheel="Canvas_PreviewMouseWheel" />
         </Grid>
-
-        <Grid Grid.Column="1" Grid.RowSpan="2" Background="LightYellow">
+        <Grid Grid.Column="1" Grid.RowSpan="2" Background="lightGreen">
+            <ListView x:Name="lvPointsDefinitions" ItemsSource="{Binding}" SelectionChanged="lvPointsDefinitions_SelectionChanged">
+            </ListView>
+        </Grid>
+        <Grid Grid.Column="2" Grid.RowSpan="2" Background="LightYellow">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <!-- Injection Point List -->
+            <!-- Injection Point List --><!--
             <ListBox x:Name="injectionPointListView" Grid.Row="0"
                      SelectionChanged="InjectionPointList_SelectionChanged" Margin="5">
                 <ListBox.ItemTemplate>
@@ -67,128 +68,49 @@
                         </TextBlock>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-            </ListBox>
+            </ListBox>-->
 
             <!-- Injection Point Properties Editor -->
             <GroupBox Header="Injection Point Properties" Grid.Row="1">
                 <StackPanel>
 
-                    <TextBlock x:Name="selectedPointIndicator" Margin="5" Text="NONE SELECTED" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
-
                     <TextBlock Text="Name:" Margin="5" />
-                    <TextBox x:Name="txtName" Margin="5"/>
-                    <TextBlock Text="Valid or fake:" Margin="5" />
-                    <CheckBox Name="chkValid" Margin="5" />
+                    <TextBox x:Name="txtName" Margin="5" IsEnabled="False"/>
+                    <TextBlock Text="Is error:" Margin="5" IsEnabled="False" />
+                    <CheckBox Name="chkError" Margin="5" />
+                    <TextBlock Text="Already Assigned:" Margin="5" IsEnabled="False" />
+                    <CheckBox Name="chkAssigned" Margin="5" />
                     <TextBlock Text="Depth Correct (mm):" Margin="5" />
-                    <ComboBox x:Name="cmbDepthCorrect" Margin="5">
-
-                    </ComboBox>
+                    <TextBox x:Name="txtDepthCorrect" Margin="5" Width="100" IsEnabled="False" HorizontalAlignment="Left"/>
 
                     <TextBlock Text="Quantity Correct (u):" Margin="5" />
-                    <ComboBox x:Name="cmbQuantityCorrect" Margin="5">
+                    <ComboBox x:Name="cmbQuantityCorrect" Margin="5" SelectionChanged="cmbQuantityCorrect_SelectionChanged">
 
                     </ComboBox>
 
                     <TextBlock Text="Pitch Min/Max:" Margin="5" />
                     <StackPanel Orientation="Horizontal">
-                        <TextBox x:Name="txtPitchMin" Margin="5" Width="100"/>
-                        <TextBox x:Name="txtPitchMax" Margin="5" Width="100"/>
+                        <TextBox x:Name="txtPitchMin" Margin="5" Width="100" IsEnabled="False"/>
+                        <TextBox x:Name="txtPitchMax" Margin="5" Width="100" IsEnabled="False"/>
                     </StackPanel>
 
                     <TextBlock Text="Yaw Min/Max:" Margin="5" />
                     <StackPanel Orientation="Horizontal">
-                        <TextBox x:Name="txtYawMin" Margin="5" Width="100" />
-                        <TextBox x:Name="txtYawMax" Margin="5" Width="100"/>
+                        <TextBox x:Name="txtYawMin" Margin="5" Width="100" IsEnabled="False" />
+                        <TextBox x:Name="txtYawMax" Margin="5" Width="100" IsEnabled="False"/>
                     </StackPanel>
-                    <TextBlock Text="Additional description:" Margin="5" />
-                    <TextBox x:Name="txtAdditionalDescription" Margin="5"/>
+
 
 
 
                     <!-- Add more property controls as needed -->
                     <Button Content="Load Image" Click="btnLoadImage_Click" Height="40" Margin="5 " />
-                    <Button Name="bDelete" Content="Delete InjectionPoint" Click="DeleteButton_Click" Height="40" Margin="5" />
-                    <Button Name="bSaveSpecial" Content="Save Injection Point" Click="SaveInjectionPoint_Click" Height="40" Margin="5" />
+                    <TextBlock Text="Select Area:" Margin="5" />
+                    <ComboBox x:Name="cbSelectArea" Margin="5">
+                    </ComboBox>
+                    <!--<Button Name="bSaveSpecial" Content="Save Injection Point" Click="SaveInjectionPoint_Click" Height="40" Margin="5" />-->
                 </StackPanel>
             </GroupBox>
-        </Grid>
-
-        <Grid Grid.Column="2" Grid.Row="0" Background="AliceBlue">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-
-            </Grid.RowDefinitions>
-
-            <!-- ListView for ErrorCases -->
-            <GroupBox Header="Error Case Point Properties" Grid.Row="0" >
-                <ListView x:Name="errorCaseListView" SelectionChanged="ErrorCaseListView_SelectionChanged" Margin="5">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Error Number" DisplayMemberBinding="{Binding ErrorNumber}" />
-                            <GridViewColumn Header="Description" DisplayMemberBinding="{Binding ErrorDescription}" />
-                            <GridViewColumn Width="300" Header="Image" DisplayMemberBinding="{Binding ErrorImageName}" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </GroupBox>
-            <StackPanel Grid.Row="1" Background="AliceBlue">
-
-                <TextBlock Text="Error Description:" Margin="5" />
-                <TextBox x:Name="txtErrorDescription" Margin="5"/>
-                <TextBlock Text="Error Image:" Margin="5" />
-                <TextBox x:Name="txtErrorImage" Margin="5"/>
-                <!-- Add more fields as needed -->
-
-                <Button Content="New Error Case" Click="NewErrorCaseButton_Click" Margin="5"/>
-                <Button Content="Save Error Case" Click="SaveErrorCaseButton_Click" Margin="5"/>
-                <Button Content="Delete Error Case" Click="DeleteErrorCaseButton_Click" Margin="5"/>
-            </StackPanel>
-
-
-        </Grid>
-
-        <Grid Grid.Column="2" Grid.Row="1" Background="LightGreen">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-
-            </Grid.RowDefinitions>
-            <GroupBox Header="Error Cndition Point Properties" Grid.Row="0" >
-                <!-- ListView for ErrorConditions -->
-                <ListView x:Name="errorConditionListView" SelectionChanged="ErrorConditionListView_SelectionChanged" Margin="5">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Field" DisplayMemberBinding="{Binding Field}" />
-                            <GridViewColumn Header="Inequality" DisplayMemberBinding="{Binding Inequality}" />
-                            <GridViewColumn Header="Reference" DisplayMemberBinding="{Binding Reference}" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </GroupBox>
-
-            <!-- Editor section -->
-
-            <StackPanel Grid.Row="1" Background="LightGreen">
-                <TextBlock Text="Field:" Margin="5" />
-                <ComboBox x:Name="cmbField" Margin="5">
-                    <ComboBoxItem Content="Yaw"/>
-                    <ComboBoxItem Content="Pitch"/>
-                    <ComboBoxItem Content="Depth"/>
-                    <ComboBoxItem Content="Quantity"/>
-                </ComboBox>
-                <TextBlock Text="Inequality:" Margin="5" />
-                <ComboBox x:Name="cmbInequality" Margin="5">
-                    <ComboBoxItem Content="&lt;"/>
-                    <ComboBoxItem Content="&gt;"/>
-                </ComboBox>
-                <TextBlock Text="Reference:" Margin="5" />
-                <TextBox x:Name="txtReference" Margin="5"/>
-
-                <Button Content="New Error Condition" Click="NewErrorConditionButton_Click" Margin="5"/>
-                <Button Content="Save Error Condition" Click="SaveErrorConditionButton_Click" Margin="5"/>
-                <Button Content="Delete Error Condition" Click="DeleteErrorConditionButton_Click" Margin="5"/>
-            </StackPanel>
         </Grid>
     </Grid>
 </Window>

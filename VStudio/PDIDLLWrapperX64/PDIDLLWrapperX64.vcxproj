@@ -28,7 +28,7 @@
     <ProjectGuid>{F2B4DF73-E3DA-48C0-9308-BE9EF37D4729}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>PDIDLLWrapperX64</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

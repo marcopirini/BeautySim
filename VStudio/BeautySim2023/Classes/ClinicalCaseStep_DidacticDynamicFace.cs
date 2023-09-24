@@ -20,7 +20,7 @@ namespace BeautySim2023
                 Score = -2;
             }
 
-            InjectionPoints = new List<InjectionPoint>();
+            InjectionPoints = new List<InjectionPointSpecific2D>();
             AdditionalIndications = new List<AdditionalIndication>();
             ErrorCases = new List<ErrorCase>();
             Questions = new List<Question>();
@@ -28,7 +28,7 @@ namespace BeautySim2023
 
         public string ImageName { get; set; }
         public int NumInjectionsPoints { get; set; }
-        public List<InjectionPoint> InjectionPoints { get; set; }
+        public List<InjectionPointSpecific2D> InjectionPoints { get; set; }
         public int NumAdditionalIndications { get; set; }
         public List<AdditionalIndication> AdditionalIndications { get; set; }
         public string NumErrorCases { get; private set; }
@@ -98,7 +98,7 @@ namespace BeautySim2023
                 {
                     string numInjectionsPointsValue = line.Replace("NumInjectionsPoints=", "");
                     NumInjectionsPoints = int.Parse(numInjectionsPointsValue);
-                    InjectionPoints = new List<InjectionPoint>();
+                    InjectionPoints = new List<InjectionPointSpecific2D>();
                 }
                 else if (line.StartsWith("INJPOINT"))
                 {
@@ -106,16 +106,16 @@ namespace BeautySim2023
 
                     if (injectionPointParts.Length >= 12)
                     {
-                        InjectionPoint injectionPoint = new InjectionPoint
+                        InjectionPointSpecific2D injectionPoint = new InjectionPointSpecific2D
                         {
                             PointNumber = int.Parse(injectionPointParts[1]),
                             ToTarget = injectionPointParts[2].Replace("ToTarget:", "") == "Y",
                             Name = injectionPointParts[3],
                             Coordinates = injectionPointParts[4].Replace("XY:", ""),
                             DepthOptions = injectionPointParts[5].Replace("DepthOptionsmm:", "").Split('/').Select(double.Parse).ToList(),
-                            ChosenDepth = double.Parse(injectionPointParts[6].Replace("DepthCorrectmm:", "")),
+                            PrescribedDepth = double.Parse(injectionPointParts[6].Replace("DepthCorrectmm:", "")),
                             QuantityOptions = injectionPointParts[7].Replace("QuantityOptionsu:", "").Split('/').Select(double.Parse).ToList(),
-                            ChosenQuantity = double.Parse(injectionPointParts[8].Replace("QuantityCorrectu:", "")),
+                            PrescribedQuantity = double.Parse(injectionPointParts[8].Replace("QuantityCorrectu:", "")),
                             YawMin = double.Parse(injectionPointParts[9].Replace("YawMinMax:", "").Split('/')[0]),
                             YawMax = double.Parse(injectionPointParts[9].Replace("YawMinMax:", "").Split('/')[1]),
                             PitchMin = double.Parse(injectionPointParts[10].Replace("PitchMinMax:", "").Split('/')[0]),
@@ -146,48 +146,48 @@ namespace BeautySim2023
                     NumErrorCases = numErrorCasesValue;
                     ErrorCases = new List<ErrorCase>();
                 }
-                else if (line.StartsWith("ERRORCASE"))
-                {
-                    string[] errorCaseParts = line.Split('\t');
+                //else if (line.StartsWith("ERRORCASE"))
+                //{
+                //    string[] errorCaseParts = line.Split('\t');
 
-                    if (errorCaseParts.Length >= 6)
-                    {
-                        ErrorCase errorCase = new ErrorCase
-                        {
-                            ErrorNumber = int.Parse(errorCaseParts[1]),
-                            //InjectionPointsReferenced = errorCaseParts[2].Split('/').Select(int.Parse).ToList(),
-                            ErrorDescription = errorCaseParts[4],
-                            ErrorImageName = errorCaseParts[5],
-                            ErrorConditions = new List<ErrorCondition>()
-                        };
+                //    if (errorCaseParts.Length >= 6)
+                //    {
+                //        ErrorCase errorCase = new ErrorCase
+                //        {
+                //            ErrorNumber = int.Parse(errorCaseParts[1]),
+                //            //InjectionPointsReferenced = errorCaseParts[2].Split('/').Select(int.Parse).ToList(),
+                //            ErrorDescription = errorCaseParts[4],
+                //            ErrorImageName = errorCaseParts[5],
+                //            ErrorConditions = new List<ErrorCondition>()
+                //        };
 
-                        ErrorCases.Add(errorCase);
+                //        ErrorCases.Add(errorCase);
 
-                        string conditionPart = errorCaseParts[3];
+                //        string conditionPart = errorCaseParts[3];
 
-                        string[] conditionParts = conditionPart.Split('/');
-                        foreach (string condition in conditionParts)
-                        {
-                            string[] conditionSubparts = condition.Split(new[] { '>', '<', '=' }, 2);
+                //        string[] conditionParts = conditionPart.Split('/');
+                //        foreach (string condition in conditionParts)
+                //        {
+                //            string[] conditionSubparts = condition.Split(new[] { '>', '<', '=' }, 2);
 
-                            if (conditionSubparts.Length == 2)
-                            {
-                                string field = conditionSubparts[0];
-                                string inequality = conditionPart.Substring(conditionPart.IndexOf(conditionSubparts[0]) + conditionSubparts[0].Length, 1);
-                                double reference = double.Parse(conditionSubparts[1]);
+                //            if (conditionSubparts.Length == 2)
+                //            {
+                //                string field = conditionSubparts[0];
+                //                string inequality = conditionPart.Substring(conditionPart.IndexOf(conditionSubparts[0]) + conditionSubparts[0].Length, 1);
+                //                double reference = double.Parse(conditionSubparts[1]);
 
-                                ErrorCondition errorCondition = new ErrorCondition
-                                {
-                                    Field = field,
-                                    Inequality = inequality,
-                                    Reference = reference
-                                };
+                //                ErrorCondition errorCondition = new ErrorCondition
+                //                {
+                //                    Field = field,
+                //                    Inequality = inequality,
+                //                    Reference = reference
+                //                };
 
-                                errorCase.ErrorConditions.Add(errorCondition);
-                            }
-                        }
-                    }
-                }
+                //                errorCase.ErrorConditions.Add(errorCondition);
+                //            }
+                //        }
+                //    }
+                //}
                 else if (line.StartsWith("NumAdditionalIndications="))
                 {
                     string numAdditionalIndicationsValue = line.Replace("NumAdditionalIndications=", "");

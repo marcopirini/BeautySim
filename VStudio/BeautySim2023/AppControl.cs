@@ -76,7 +76,7 @@ namespace BeautySim2023
             return new System.Windows.Media.Media3D.Quaternion(sinHalfAngle * axisX, sinHalfAngle * axisY, sinHalfAngle * axisZ, cosHalfAngle);
         }
 
-        private float axisPositionOffsetNeedle = 20;
+        private float axisPositionOffsetNeedle = 5.5f;
         private Point3D baseNeedle;
         public Point3D BaseNeedleOrigin;
 
@@ -2344,7 +2344,8 @@ namespace BeautySim2023
             WindowTeacher.SetWindowLong(hwnd2, WindowTeacher.GWL_STYLE, WindowTeacher.GetWindowLong(hwnd2, WindowTeacher.GWL_STYLE) & ~WindowTeacher.WS_SYSMENU);
             DBConnector.Instance.InitDB("C:\\BeautySim\\Database\\BeautySimDB.db");
             pDIClass = new PDIClass();
-            System.Windows.Media.Media3D.Quaternion qy = AppControl.CreateRotationQuaternionAlongAxis(180, 1);
+            // System.Windows.Media.Media3D.Quaternion qy = AppControl.CreateRotationQuaternionAlongAxis(180, 1);
+            System.Windows.Media.Media3D.Quaternion qy = AppControl.CreateRotationQuaternionAlongAxis(0, 1);
             System.Windows.Media.Media3D.Quaternion qz = AppControl.CreateRotationQuaternionAlongAxis(0, 2);
 
             AppControl.Instance.Rotation_Manikin = qy * qz;
