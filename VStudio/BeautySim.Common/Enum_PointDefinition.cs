@@ -82,5 +82,12 @@ namespace BeautySim.Common
         OL_2_U2,
         OL_2_L1,
         OL_2_L2,
+        RE_EXT,
+        LE_EXT,
+        RL_CORNER,
+        LE_INT,
+        LL_CORNER,
+        RE_INT,
+        NOSEPOINT,
     }
 }

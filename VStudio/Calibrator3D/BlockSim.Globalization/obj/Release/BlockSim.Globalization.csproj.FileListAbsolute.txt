@@ -1,0 +1,16 @@
+C:\Lavoro\SourceTree\BlockSim\VStudio\BlockSim.Globalization\bin\Release\BlockSim.Globalization.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\BlockSim.Globalization\bin\Release\BlockSim.Globalization.pdb
+C:\Lavoro\SourceTree\BlockSim\VStudio\BlockSim.Globalization\bin\Release\it-IT\BlockSim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\BlockSim.Globalization\bin\Release\zh-CN\BlockSim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\BlockSim.Globalization\obj\Release\BlockSim.Globalization.Language.resources
+C:\Lavoro\SourceTree\BlockSim\VStudio\BlockSim.Globalization\obj\Release\BlockSim.Globalization.Language.it-IT.resources
+C:\Lavoro\SourceTree\BlockSim\VStudio\BlockSim.Globalization\obj\Release\BlockSim.Globalization.Language.zh-CN.resources
+C:\Lavoro\SourceTree\BlockSim\VStudio\BlockSim.Globalization\obj\Release\BlockSim.Globalization.csproj.GenerateResource.cache
+C:\Lavoro\SourceTree\BlockSim\VStudio\BlockSim.Globalization\obj\Release\BlockSim.Globalization.csproj.CoreCompileInputs.cache
+C:\Lavoro\SourceTree\BlockSim\VStudio\BlockSim.Globalization\obj\Release\it-IT\BlockSim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\BlockSim.Globalization\obj\Release\zh-CN\BlockSim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\BlockSim.Globalization\obj\Release\BlockSim.Globalization.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\BlockSim.Globalization\obj\Release\BlockSim.Globalization.pdb
+C:\Lavoro\SourceTree\BlockSim\VStudio\BlockSim.Globalization\bin\Release\fr-FR\BlockSim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\BlockSim.Globalization\obj\Release\BlockSim.Globalization.Language.fr-FR.resources
+C:\Lavoro\SourceTree\BlockSim\VStudio\BlockSim.Globalization\obj\Release\fr-FR\BlockSim.Globalization.resources.dll

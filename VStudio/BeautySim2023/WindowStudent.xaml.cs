@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,9 +19,32 @@ namespace BeautySim2023
         [System.Runtime.InteropServices.DllImport("gdi32.dll")]
         public static extern bool DeleteObject(IntPtr onj);
 
+
+        [DllImport("User32.dll")]
+        private static extern bool SetCursorPos(int X, int Y);
+
+        public void SetCursor(int x, int y)
+        {
+            // Left boundary
+            var xL = (int)this.Left;
+            // Top boundary
+            var yT = (int)this.Top;
+
+            SetCursorPos(x + xL, y + yT);
+        }
+
         public WindowStudent()
         {
             InitializeComponent();
+            this.KeyDown += WindowStudent_KeyDown;
+        }
+
+        private void WindowStudent_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key== System.Windows.Input.Key.M)
+            {
+                AppControl.Instance.InjectAnesthetic();
+            }
         }
 
         private delegate void SetImageDelegate(System.Windows.Controls.Image lbl, BitmapSource c);

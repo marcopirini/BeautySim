@@ -19,6 +19,19 @@ namespace BeautySim2023
         public const int GWL_STYLE = -16;
         public const int WS_SYSMENU = 0x80000;
 
+        [DllImport("User32.dll")]
+        private static extern bool SetCursorPos(int X, int Y);
+
+        public void SetCursor(int x, int y)
+        {
+            // Left boundary
+            var xL = (int)this.Left;
+            // Top boundary
+            var yT = (int)this.Top;
+
+            SetCursorPos(x + xL, y + yT);
+        }
+
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
@@ -28,7 +41,7 @@ namespace BeautySim2023
         public WindowTeacher()
         {
             InitializeComponent();
-
+            this.KeyDown += WindowTeacher_KeyDown;
             try
             {
                 tbDebugMode.Visibility = Properties.Settings.Default.DebugMode ? Visibility.Visible : Visibility.Hidden;
@@ -99,12 +112,19 @@ namespace BeautySim2023
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.Message + ex.StackTrace);
                 MessageBox.Show(BeautySim.Globalization.Language.str_inst_err);
                 App.Current.Shutdown();
             }
         }
 
-
+        private void WindowTeacher_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.M)
+            {
+                AppControl.Instance.InjectAnesthetic();
+            }
+        }
 
         private void PageContainer_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
         {
@@ -135,6 +155,8 @@ namespace BeautySim2023
                     AppControl.Instance.SetText(AppControl.Instance.WindowTeacher.lCase, "");
                 }
             }
+
+            AppControl.Instance.CloseWindowImages();
         }
 
         private void LogOut_Click(object sender, RoutedEventArgs e)

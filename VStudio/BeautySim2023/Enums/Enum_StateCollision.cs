@@ -1,4 +1,4 @@
-﻿namespace BeautySimStartingApp
+﻿namespace BeautySim2023
 {
     public enum Enum_StateCollision
     {

@@ -35,11 +35,159 @@
 
         </StackPanel>
 
+        <Grid Grid.Column="1" Grid.Row="1" Name="grInjectionPoints" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="9*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            
+            
+            <Grid.Resources>
+                <local:WidthConverter x:Key="WidthConverter" />
+            </Grid.Resources>
+            <ListView Grid.Row="0"  VirtualizingPanel.IsVirtualizing="False"  Name="lvInjectionPoints" ItemsSource="{Binding InjectionPoints2D}" SelectionChanged="lvInjectionPoints_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Visible" Loaded="lvInjectionPoints_Loaded">
+
+                <ListView.Resources>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                        <ContentPresenter />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.Resources>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn  DisplayMemberBinding="{Binding PointDefinition}" Width="110">
+                            <GridViewColumn.Header>
+                                <TextBlock TextWrapping="Wrap" Text="Point&#x0a;Name" />
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn Width="150">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox Background="LightGray" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding QuantityOptions}" SelectedItem="{Binding ActuallyChosenOrPerformedQuantity, UpdateSourceTrigger=PropertyChanged}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" />
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumn.Header>
+                                <TextBlock TextWrapping="Wrap" Text="Quantity&#x0a;Botox (U)"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+
+                        <GridViewColumn DisplayMemberBinding="{Binding OptimalQuantityVis}" Width="130">
+                            <GridViewColumn.Header>
+                                <TextBlock TextWrapping="Wrap" Text="Opt. Quantity&#x0a;(U)" />
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding OptimalPitch}" Width="130">
+                            <GridViewColumn.Header>
+                                <TextBlock TextWrapping="Wrap" Text="Opt. Angle&#x0a;Elevation" />
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding OptimalYaw}" Width="130">
+                            <GridViewColumn.Header>
+                                <TextBlock TextWrapping="Wrap" Text="Opt. Angle&#x0a;Azimuth" />
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding PrescribedDepth}" Width="135">
+                            <GridViewColumn.Header>
+                                <TextBlock TextWrapping="Wrap" Text="Opt. Depth&#x0a;(mm)" />
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Rectangle Grid.Row="1" Name="OverlayRectangle" Fill="#2AF0F0F0" Visibility="Hidden" Width="{Binding ElementName=lvInjectionPoints, Converter={StaticResource WidthConverter}}" />
+            <Grid Grid.Row="1" Name="grIndications" Visibility="Hidden">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Ellipse Width="15" Height="15" Fill="Green"/>
+                    <TextBlock Text=" Correct" VerticalAlignment="Center" FontSize="15" Margin="5,0,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Ellipse Width="15" Height="15" Fill="Orange"/>
+                    <TextBlock Text=" Correct spot, too much botox" VerticalAlignment="Center" FontSize="15" TextWrapping="Wrap"  Margin="5,0,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <Ellipse Width="15" Height="15" Fill="Yellow"/>
+                    <TextBlock Text=" Not enough botox" VerticalAlignment="Center" FontSize="15" TextWrapping="Wrap" Margin="5,0,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="3" Orientation="Horizontal">
+                    <Ellipse Width="15" Height="15" Fill="Red"/>
+                    <TextBlock Text=" Botox on error area" VerticalAlignment="Center" FontSize="15" Margin="5,0,0,0"/>
+                </StackPanel>
+            </Grid>
+        
+        </Grid>
+        
+        <Grid Name="spFeedbackPage" MinHeight="500" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Stretch"  VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
 
 
-        <Border HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" BorderBrush="#00bfa5" BorderThickness="3">
-            <Image Name="imCaseImage" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Column="0" Grid.Row="0" Margin="10" Grid.RowSpan="4" HorizontalAlignment="Center"  BorderBrush="#00bfa5" BorderThickness="3">
+                <Image  Name="ImConsequence"  >
+
+                </Image>
+            </Border>
+            <TextBlock TextWrapping="Wrap" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Name="tbNumber" FontSize="30" Margin="10"/>
+            <TextBlock TextWrapping="Wrap" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Name="tbWhatYouDid" FontSize="25" Margin="10"/>
+            <TextBlock TextWrapping="Wrap" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Name="tbConsequence" FontSize="25" Margin="10"/>
+
+            <StackPanel Grid.Row="3" Grid.Column="1" Name="spButtons" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button  Name="btnBack" Click="btnBack_Click" Content="Back" Margin="10" />
+                <Button  Name="btnNext" Click="btnNext_Click" Content="Next" />
+            </StackPanel>
+        </Grid>
+
+        <StackPanel x:Name="spFinalFeedback" Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel x:Name="spQuestionnaireFeedback" Orientation="Vertical" Visibility="Collapsed" Margin="0,0,0,30">
+                <TextBlock TextWrapping="Wrap" Name="tbQuestionnaireFeedback" FontSize="30"/>
+            </StackPanel>
+
+            <StackPanel x:Name="spOperativityFeedback" Orientation="Vertical" Visibility="Collapsed" Margin="0,0,0,30">
+                <TextBlock TextWrapping="Wrap" Name="tbOperativityFeedback" FontSize="30"/>
+            </StackPanel>
+            <StackPanel x:Name="spOperativityFeedbackItems" Orientation="Vertical" Visibility="Collapsed">
+                <TextBlock TextWrapping="Wrap" Name="tbOperativityFeedbackItems" FontSize="22"  Margin="20,0,0,30"/>
+            </StackPanel>
+            <TextBlock TextWrapping="Wrap" Name="tbFinalFeedback" FontSize="30" Margin="10"/>
+            
+        </StackPanel>
+
+        <Border Name="bImageAndPoints" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" BorderBrush="#00bfa5" BorderThickness="3">
+
+            <Grid Background="LightGray">
+                <Image x:Name="imCaseImage" Stretch="Uniform" SizeChanged="faceImage_SizeChanged_1"/>
+                <Canvas x:Name="injectionPointsCanvas" MouseLeftButtonDown="FaceImage_MouseLeftButtonDown" Background="Transparent" />
+            </Grid>
+
+            <!--Image Name="imCaseImage" />-->
         </Border>
-
+        
     </Grid>
  </Page>

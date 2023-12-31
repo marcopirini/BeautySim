@@ -89,6 +89,35 @@
                             </TextBlock>
                         </StackPanel>
                     </Button>
+
+                    <Button Name="bInsertAnaetheticMouse"
+                        Click="bInsertAnaethetic_Click" 
+                            VerticalAlignment="Bottom"
+                            Margin="5"
+                                Height="70"
+                                Width="190"                             >
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Margin="0" Kind="Syringe" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="38" />
+                            <TextBlock Name="tbInsertAnaestetic" VerticalAlignment="Center" TextWrapping="Wrap" Width="100" Margin="5"
+                                Text="{x:Static lang:Language.str_insertAnestetic_ctrl}">
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Name="bViewImages"
+                        Click="bViewImages_Click" 
+                            VerticalAlignment="Bottom"
+                            Margin="5"
+                                Height="70"
+                                Width="190"                             >
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Margin="0" Kind="Eye" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="38" />
+                            <TextBlock Name="tbViewImages" VerticalAlignment="Center" TextWrapping="Wrap" Width="100" Margin="5"
+                                Text="{x:Static lang:Language.view_images}">
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+
                     <Button Name="bNextStep"
                         Click="bNextStep_Click" 
                             VerticalAlignment="Bottom"

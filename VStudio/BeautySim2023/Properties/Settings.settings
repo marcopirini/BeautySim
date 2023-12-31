@@ -17,9 +17,6 @@
     <Setting Name="LastValidEventIndex" Type="System.Int64" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="DistanceSensorNeedleTip" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">105</Value>
-    </Setting>
     <Setting Name="ExitThresholdNeedle" Type="System.Single" Scope="User">
       <Value Profile="(Default)">2</Value>
     </Setting>
@@ -43,6 +40,33 @@
     </Setting>
     <Setting Name="ErrorLog" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="AngleRotationManikinAdjustment" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">6</Value>
+    </Setting>
+    <Setting Name="LengthNeedle" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">57</Value>
+    </Setting>
+    <Setting Name="TranslationX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
+    <Setting Name="TranslationY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">-140</Value>
+    </Setting>
+    <Setting Name="TranslationZ" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">6.5</Value>
+    </Setting>
+    <Setting Name="View3DPhases" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ViewImagePhases" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ViewQuestionnairePhases" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="CalibrationMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mean</Value>
     </Setting>
   </Settings>
 </SettingsFile>

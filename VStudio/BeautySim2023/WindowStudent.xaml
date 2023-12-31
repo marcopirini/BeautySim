@@ -24,7 +24,7 @@
 
         <Frame Grid.Row="0" NavigationUIVisibility="Hidden" Name="PageContainer" />
 
-        <StackPanel Orientation="Horizontal"  Grid.Row="1" Grid.Column="0" Margin="15" HorizontalAlignment="Left" Name="spLegenda" Visibility="Hidden">
+        <!--<StackPanel Orientation="Horizontal"  Grid.Row="1" Grid.Column="0" Margin="15" HorizontalAlignment="Left" Name="spLegenda" Visibility="Hidden">
 
             <StackPanel Orientation="Horizontal" Name="spLineTarget" Visibility="Visible">
                 <Line Stroke="Cyan" Width="30" X1="0" StrokeThickness="3" Y1="15" Y2="15" X2="30" Height="30" Margin="5"></Line>
@@ -44,7 +44,7 @@
                 <Ellipse Stroke="Red" Width="30" StrokeThickness="3" Height="30" Margin="5"></Ellipse>
                 <TextBlock Margin="5" Width="100" VerticalAlignment="Center" Text="{x:Static lang:Language.str_hint_vascular_area}"></TextBlock>
             </StackPanel>
-        </StackPanel>
+        </StackPanel>-->
 
 
         <!--<Border Name="bLogo" Visibility="{Binding VisibilityLogoOnStudentPage}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="4" Background="LightGray">

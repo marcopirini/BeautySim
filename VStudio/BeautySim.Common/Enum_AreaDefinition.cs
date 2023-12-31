@@ -6,6 +6,8 @@
         CENTRAL,
         ORBICULAR_LEFT,
         ORBICULAR_RIGHT,
-        NASAL
+        NASAL,
+        ORBICULAR,
+        CALIB
     }
 }

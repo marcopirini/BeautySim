@@ -8,6 +8,7 @@
         private float score;
         private bool selected;
         public int NumErrors { get; internal set; }
+        public double QuestionnaireScore = 0;
         public ClinicalCaseStep()
         {
         }
@@ -62,8 +63,6 @@
         public string NameStep { get; set; }
         public int Number { get; private set; }
 
-        public float Points { get; internal set; }
-
         public float Score
         {
             get
@@ -101,6 +100,7 @@
         public bool ToBeExcluded { get; set; }
 
         public Enum_ClinicalCaseStepType Type { get; set; }
+        public bool PresentToUser { get; internal set; }
 
         public virtual void ClearAllUserRelatedFields()
         {

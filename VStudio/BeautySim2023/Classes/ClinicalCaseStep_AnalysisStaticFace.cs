@@ -23,6 +23,7 @@ namespace BeautySim2023
         public string ImageName { get; set; }
         public int NumQuestions { get; set; }
         public List<Question> Questions { get; set; }
+        public int NumErrors { get; internal set; }
 
         public override void ClearAllUserRelatedFields()
         {
@@ -86,6 +87,7 @@ namespace BeautySim2023
                 }
             }
         }
+        public double QuestionnaireScore = 0;
 
         public override void ImportMaterial(string folderMaterial)
         {

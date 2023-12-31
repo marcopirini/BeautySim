@@ -10,6 +10,7 @@ namespace BeautySim2023
     {
         INITIAL,
         ANSWERING,
-        FEEDBACK
+        FEEDBACK,
+        FINALSCORE
     }
 }

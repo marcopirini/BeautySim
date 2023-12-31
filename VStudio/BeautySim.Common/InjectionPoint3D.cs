@@ -1,5 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
+using System.Windows.Markup;
+using System.Windows.Media.Media3D.Converters;
+using System.Windows.Media.Media3D;
+using System.Windows.Media;
+using System.Windows;
 
 namespace BeautySim.Common
 {
@@ -21,6 +27,7 @@ namespace BeautySim.Common
 
         private double z;
 
+        private double minDistanceFromNeighbours;
         public InjectionPoint3D() : base()
         {
             actualReleases = new List<ActualRelease>();
@@ -57,6 +64,21 @@ namespace BeautySim.Common
                 {
                     actualReleases = value;
                     OnPropertyChanged(nameof(ActualReleases));
+                }
+            }
+        }
+        private double numReleases;
+
+        [XmlAttribute]
+        public double NumReleases
+        {
+            get { return numReleases; }
+            set
+            {
+                if (numReleases != value)
+                {
+                    numReleases = value;
+                    OnPropertyChanged(nameof(NumReleases));
                 }
             }
         }
@@ -116,6 +138,22 @@ namespace BeautySim.Common
                 }
             }
         }
+
+        [XmlAttribute]
+        public double MinDistanceFromNeighbours
+        {
+            get { return minDistanceFromNeighbours; }
+            set
+            {
+                if (minDistanceFromNeighbours != value)
+                {
+                    minDistanceFromNeighbours = value;
+                    OnPropertyChanged(nameof(MinDistanceFromNeighbours));
+                }
+            }
+        }
+
+
         public void CopyAllPropertiesFrom2DSpecific(InjectionPointSpecific2D bb)
         {
             PointDefinition = bb.PointDefinition;
@@ -131,6 +169,7 @@ namespace BeautySim.Common
             YawMax = bb.YawMax;
             YawMin = bb.YawMin;
             Assigned = bb.Assigned;
+            MinDistanceFromNeighbours = 0;
         }
 
         public void CopyAllPropertiesFromBase(InjectionPointBase bb)
@@ -145,12 +184,12 @@ namespace BeautySim.Common
             AreaDef = bb.AreaDef;
             QuantityOptions = bb.QuantityOptions;
             QuantityOptionsAsString = bb.QuantityOptionsAsString;
-            PrescribedQuantity = bb.PrescribedQuantity;
             YawMax = bb.YawMax;
             YawMin = bb.YawMin;
+            MinDistanceFromNeighbours = 0;
         }
 
-        public void CalculateTotalQuantity()
+        public void RefreshQuantities()
         {
             double num = 0;
             foreach (ActualRelease actualRelease in ActualReleases)
@@ -159,11 +198,75 @@ namespace BeautySim.Common
             }
             
             ActuallyChosenOrPerformedQuantity = num;
+            NumReleases = ActualReleases.Count;
+        }
+
+        public double GiveMeMinEntranceYaw()
+        {
+            double minYaw = 1000;
+            foreach (ActualRelease actualRelease in ActualReleases)
+            {
+                if ((actualRelease.YawEntrance < minYaw) && (actualRelease.InjectedQuantity > 0))    
+                {
+                    minYaw = actualRelease.YawEntrance;
+                }
+            }
+            return minYaw;  
+        }
+
+        public double GiveMeMaxEntranceYaw()
+        {
+            double maxYaw = -1000;
+            foreach (ActualRelease actualRelease in ActualReleases)
+            {
+                if ((actualRelease.YawEntrance > maxYaw) && (actualRelease.InjectedQuantity > 0))
+                {
+                    maxYaw = actualRelease.YawEntrance;
+                }
+            }
+            return maxYaw;
+        }
+
+        public double GiveMeMinEntrancePitch()
+        {
+            double minPitch = 1000;
+            foreach (ActualRelease actualRelease in ActualReleases)
+            {
+                if ((actualRelease.PitchEntrance < minPitch) && (actualRelease.InjectedQuantity > 0))
+                {
+                    minPitch = actualRelease.PitchEntrance;
+                }
+            }
+            return minPitch;
+        }
+
+        public double GiveMeMaxEntrancePitch()
+        {
+            double maxPitch = -1000;
+            foreach (ActualRelease actualRelease in ActualReleases)
+            {
+                if ((actualRelease.PitchEntrance > maxPitch) && (actualRelease.InjectedQuantity > 0))
+                {
+                    maxPitch = actualRelease.PitchEntrance;
+                }
+            }
+            return maxPitch;
         }
 
         public bool HasBeedTargeted()
         {
             return actualReleases.Count > 0;
+        }
+
+        public System.Windows.Media.Media3D.Point3D GetPoint()
+        {
+            return new System.Windows.Media.Media3D.Point3D(X, Y, Z);
+        }
+
+        public Point3D GetRotoTransatedPoint(Transform3DGroup tsg)
+        {
+            Point3D ptd=tsg.Transform(GetPoint());
+            return ptd;
         }
     }
 }

@@ -32,13 +32,13 @@ namespace InjectionPointManager
         private InjectionPointSpecific2D selectedInjectionPoint;
 
         private string pathFilePointsBase = "C:\\BeautySim\\BasePointsDefinitions.xml";
-
+        
         public MainWindow()
         {
             InitializeComponent();
             //cmbDepthCorrect.ItemsSource = DepthOptions;
             //cmbQuantityCorrect.ItemsSource = QuantityOptions;
-
+            
             if (!File.Exists(pathFilePointsBase))
             {
                 PointsManager.Instance.PopulateInjectionPointsAndSaveThem(pathFilePointsBase);
@@ -228,7 +228,7 @@ namespace InjectionPointManager
             {
                 InjectionPointBase bb = injectionPoints.FirstOrDefault(item2 => item2.PointDefinition == item.PointDefinition);
 
-                item.CopyAllPropertiesFromBase(bb);
+                item.CopyAllPropertiesFromBaseExcptPrescribedQuantity(bb);
             }
 
             List<string> pointsTypeList = pointsToWorkOn.Select(e => e.ToString()).ToList();

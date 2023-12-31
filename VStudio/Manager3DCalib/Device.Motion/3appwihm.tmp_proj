@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5758A2FC-F498-4D05-8C1F-D8E059062D59}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Khymeia.VRRS.PacketParserModule</RootNamespace>
+    <AssemblyName>Khymeia.VRRS.PacketParserModule</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PacketItem.cs" />
+    <Compile Include="PacketParserWindow.xaml.cs">
+      <DependentUpon>PacketParserWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PacketParser.cs" />
+    <Compile Include="PacketParserExceptions.cs" />
+    <Compile Include="ProcessManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Khymeia.LoggerModule\Khymeia.LoggerModule.csproj">
+      <Project>{70487E1A-2D30-4ECA-A47A-1D63FE16CF7D}</Project>
+      <Name>Khymeia.LoggerModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Khymeia.VRRS.Data\Khymeia.VRRS.Data.csproj">
+      <Project>{77FC28DE-E6F7-4461-997C-F1F072ED65DC}</Project>
+      <Name>Khymeia.VRRS.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Khymeia.VRRS.Entity.Common\Khymeia.VRRS.Entity.Common.csproj">
+      <Project>{65FFA72B-20AE-44CB-9F1B-5B21E6753C6B}</Project>
+      <Name>Khymeia.VRRS.Entity.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Khymeia.VRRS.LanguageManager\Khymeia.VRRS.LanguageManager.csproj">
+      <Project>{8ABD5FFA-04F1-41AA-93C4-A8FDF4674094}</Project>
+      <Name>Khymeia.VRRS.LanguageManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Khymeia.VRRS.Styles\Khymeia.VRRS.Styles.csproj">
+      <Project>{54B67379-01DA-47CD-910B-B0548EB32CE0}</Project>
+      <Name>Khymeia.VRRS.Styles</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <ReferencePath Include="C:\DENIS\VRRS2014\CODE\Khymeia.LoggerModule\bin\Debug\Khymeia.LoggerModule.dll" />
+    <ReferencePath Include="C:\DENIS\VRRS2014\CODE\Khymeia.VRRS.Data\bin\Debug\Khymeia.VRRS.Data.dll" />
+    <ReferencePath Include="C:\DENIS\VRRS2014\CODE\Khymeia.VRRS.Entity.Common\bin\Debug\Khymeia.VRRS.Entity.Common.dll" />
+    <ReferencePath Include="C:\DENIS\VRRS2014\CODE\Khymeia.VRRS.LanguageManager\bin\Debug\Khymeia.VRRS.LanguageManager.dll" />
+    <ReferencePath Include="C:\DENIS\VRRS2014\CODE\Khymeia.VRRS.Styles\bin\Debug\Khymeia.VRRS.Styles.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Microsoft.CSharp.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\PresentationCore.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\PresentationFramework.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.DataSetExtensions.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.Linq.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xaml.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.Linq.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\WindowsBase.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="C:\DENIS\VRRS2014\CODE\Khymeia.VRRS.PacketParserModule\obj\Debug\PacketParserWindow.g.cs" />
+  </ItemGroup>
+</Project>

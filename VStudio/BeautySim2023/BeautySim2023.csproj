@@ -49,6 +49,9 @@
     <Reference Include="Cyotek.Drawing.BitmapFont, Version=1.0.0.0, Culture=neutral, PublicKeyToken=58daa28b0b2de221, processorArchitecture=MSIL">
       <HintPath>..\packages\Cyotek.Drawing.BitmapFont.2.0.4\lib\net472\Cyotek.Drawing.BitmapFont.dll</HintPath>
     </Reference>
+    <Reference Include="DemoCore">
+      <HintPath>..\..\..\..\..\..\ACCURATE_DEVICES\DemoCore.dll</HintPath>
+    </Reference>
     <Reference Include="devDept.Eyeshot.Control.Wpf.v12, Version=12.0.520.0, Culture=neutral, PublicKeyToken=5385d83d2fb4d7d9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files\devDept Software\Eyeshot Ultimate 12\Bin\devDept.Eyeshot.Control.Wpf.v12.dll</HintPath>
@@ -89,6 +92,9 @@
     </Reference>
     <Reference Include="MathNet.Numerics, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MathNet.Numerics.5.0.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="MIConvexHull, Version=1.1.19.1018, Culture=neutral, PublicKeyToken=2644b6f8be52c998, processorArchitecture=MSIL">
+      <HintPath>..\packages\MIConvexHull.1.1.19.1019\lib\netstandard2.0\MIConvexHull.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Expression.Interaction.3.0.40218.0\lib\net46\Microsoft.Expression.Interactions.dll</HintPath>
@@ -211,6 +217,10 @@
     <Compile Include="Classes\AdditionalIndication.cs" />
     <Compile Include="Classes\BitmapUtils.cs" />
     <Compile Include="Classes\Calculator.cs" />
+    <Compile Include="Classes\Calib3DClass.cs" />
+    <Compile Include="Classes\Matrix3DUtils.cs" />
+    <Compile Include="Classes\Vertex4Triangulation.cs" />
+    <Compile Include="Classes\WidthConverter.cs" />
     <Compile Include="Classes\ClinicalCaseStep_Message.cs" />
     <Compile Include="Classes\EntranceData.cs" />
     <Compile Include="Classes\ExtensionMethods.cs" />
@@ -259,6 +269,7 @@
     <Compile Include="PageFramesApplication\CaseStudentFrame.xaml.cs">
       <DependentUpon>CaseStudentFrame.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PageFramesApplication\Enum_HighlightType.cs" />
     <Compile Include="PageFramesApplication\Visualization3DFrameStudent.xaml.cs">
       <DependentUpon>Visualization3DFrameStudent.xaml</DependentUpon>
     </Compile>
@@ -384,6 +395,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\Calib3DWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\ShowImagesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WindowTeacher.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -391,6 +410,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Windows\Calib3DWindow.xaml.cs">
+      <DependentUpon>Calib3DWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ShowImagesWindow.xaml.cs">
+      <DependentUpon>ShowImagesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowTeacher.xaml.cs">
       <DependentUpon>WindowTeacher.xaml</DependentUpon>
@@ -522,13 +547,12 @@
     </None>
     <Resource Include="Images\BeautySim.png" />
     <Resource Include="License-LGPL.txt" />
+    <Resource Include="Images\imageNeedle.png" />
     <Content Include="Mask.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Windows\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.HLSL.CSharpVB.1.0.2\build\Microsoft.HLSL.CSharpVB.targets" Condition="Exists('..\packages\Microsoft.HLSL.CSharpVB.1.0.2\build\Microsoft.HLSL.CSharpVB.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

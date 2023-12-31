@@ -9,6 +9,8 @@ namespace BeautySim.Common
         private double actuallyChosenOrPerformedQuantity;
         private bool assigned;
         private double prescribedQuantity;
+        private string optimalQuantityVis;
+
         public InjectionPointBase()
         {
         }
@@ -26,11 +28,36 @@ namespace BeautySim.Common
             YawMax = yawMax;
             YawMin = yawMin;
             Assigned = false;
+            OptimalQuantityVis = "??";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [XmlAttribute]
+        public double OptimalYaw
+        {
+            get { return ((YawMax-YawMin)/2.0+YawMin); }
+        }
+
+
+
+        public string OptimalQuantityVis
+        {
+            get { return optimalQuantityVis; }
+            set
+            {
+                if (optimalQuantityVis != value)
+                {
+                    optimalQuantityVis = value;
+                    OnPropertyChanged(nameof(OptimalQuantityVis));
+                }
+            }
+        }
+
+        public double OptimalPitch
+        {
+            get { return ((PitchMax-PitchMin)/2.0+PitchMin); }
+        }
+
         public double ActuallyChosenOrPerformedQuantity
         {
             get { return actuallyChosenOrPerformedQuantity; }

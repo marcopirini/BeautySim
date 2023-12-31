@@ -1,0 +1,169 @@
+﻿<Window x:Class="BeautySimStartingApp.Window3D"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:hx="http://helix-toolkit.org/wpf/SharpDX"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Window3D" WindowStartupLocation="Manual" Width="560" Left="800" Top="5" Height="319" Margin="5,5,5,5"
+        WindowStyle="None" ResizeMode="NoResize"
+        xmlns:local="clr-namespace:BeautySimStartingApp"
+        WindowState="Maximized">
+    <!--<Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/BeautySimStartingApp;component/DictionaryConverters.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>-->
+    <Window.DataContext>
+        <local:MainWindowViewModel />
+    </Window.DataContext>
+    <!--<Window.Background>
+        <ImageBrush ImageSource="pack://application:,,,/BeautySimStartingApp;component/Resources/metal3.jpg" TileMode="None">
+        </ImageBrush>
+    </Window.Background>-->
+    <Grid Name="MainGrid">
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="75" />
+        </Grid.RowDefinitions>
+
+        --><!--<local:ManikinControl x:Name="manikinControl" Margin="1" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseWheel="manikinControl_MouseWheel" />--><!--
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8*" />
+                <RowDefinition Height="6*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>-->
+
+            <!--<Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2"  BorderBrush="#00bfa5" BorderThickness="2" CornerRadius="1">
+            <h:HelixViewport3D  PanGesture="LeftClick" IsZoomEnabled="True" PreviewMouseWheel="hvView3D_PreviewMouseWheel" x:Name="hvView3D" ShowCoordinateSystem="false" CoordinateSystemWidth="100" Background="WhiteSmoke"  ShowViewCube="false" Loaded="HvView3D_Loaded">
+
+                <h:DefaultLights />
+
+                <ModelVisual3D x:Name="modelHumanBlock">
+                    <ModelVisual3D.Transform>
+                        <Transform3DGroup>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D Axis="0,1,0" x:Name="yrotmodel" />
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                        </Transform3DGroup>
+                    </ModelVisual3D.Transform>
+                </ModelVisual3D>
+
+                <ModelVisual3D x:Name="modelProbeBlock">
+                    <ModelVisual3D.Transform>
+                        <Transform3DGroup>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D Axis="1,0,0" x:Name="xrot" />
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D Axis="0,1,0" x:Name="yrot" />
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D Axis="0,0,1" x:Name="zrot" />
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                            <TranslateTransform3D x:Name="probePos">
+                            </TranslateTransform3D>
+                        </Transform3DGroup>
+                    </ModelVisual3D.Transform>
+                </ModelVisual3D>
+            </h:HelixViewport3D>
+        </Border>-->
+
+            <!--<Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2"  BorderBrush="#00bfa5" BorderThickness="2" CornerRadius="1">-->
+                <!--<hx:Viewport3DX x:Name="hvView3D" ShowCoordinateSystem="false" CoordinateSystemSize="100" Background="WhiteSmoke"  ShowViewCube="false" Loaded="HvView3D_Loaded">
+                    <hx:Viewport3DX.InputBindings>
+                        <MouseBinding Command="hx:ViewportCommands.Rotate" Gesture="RightClick" />
+                        <MouseBinding Command="hx:ViewportCommands.Pan" Gesture="MiddleClick" />
+                    </hx:Viewport3DX.InputBindings>
+                    <hx:MeshGeometryModel3D Name="noSkinHead"
+
+                    Mouse3DDown="MeshGeometryModel3D_Mouse3DDown">
+                    </hx:MeshGeometryModel3D>
+                    <hx:MeshGeometryModel3D Name="noSkinHead2"
+                    Geometry="{Binding Geometry}"
+                    Material="{Binding Material}"
+                    Mouse3DDown="MeshGeometryModel3D_Mouse3DDown">
+                    </hx:MeshGeometryModel3D>
+                </hx:Viewport3DX>-->
+
+                <hx:Viewport3DX x:Name="hvView3D" ShowCoordinateSystem="True" CoordinateSystemSize="100" Background="WhiteSmoke"  ShowViewCube="false">
+                    <hx:Viewport3DX.InputBindings>
+                        <MouseBinding Command="hx:ViewportCommands.Rotate" Gesture="RightClick" />
+                        <MouseBinding Command="hx:ViewportCommands.Pan" Gesture="MiddleClick" />
+                    </hx:Viewport3DX.InputBindings>
+                    <!--<hx:MeshGeometryModel3D Name="noSkinHead"
+
+                    Mouse3DDown="MeshGeometryModel3D_Mouse3DDown">
+                    </hx:MeshGeometryModel3D>-->
+                    <hx:MeshGeometryModel3D Name="noSkinHead2"
+                    Geometry="{Binding Geometry}"
+                    Material="{Binding ViewCubeMaterial3}">
+                    </hx:MeshGeometryModel3D>
+                </hx:Viewport3DX>
+
+
+                <!--<hx:GroupModel3D x:Name="modelHumanBlock">
+                    -->
+                <!--<Transform3DGroup>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D Axis="0,1,0" x:Name="yrotmodel" />
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                        </Transform3DGroup>-->
+                <!--
+                </hx:GroupModel3D>
+
+                <hx:GroupModel3D x:Name="modelProbeBlock">
+                    -->
+                <!--<ModelVisual3D.Transform>
+                        <Transform3DGroup>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D Axis="1,0,0" x:Name="xrot" />
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D Axis="0,1,0" x:Name="yrot" />
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D Axis="0,0,1" x:Name="zrot" />
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                            <TranslateTransform3D x:Name="probePos">
+                            </TranslateTransform3D>
+                        </Transform3DGroup>
+                    </ModelVisual3D.Transform>-->
+                <!--
+                </hx:GroupModel3D>
+            </hx:Viewport3DX>-->
+            <!--</Border>-->
+
+            <!--<StackPanel Name="spSystems" Orientation="Vertical" Margin="10" Grid.RowSpan="2" Grid.Column="0" HorizontalAlignment="Left">
+                <StackPanel Orientation="Vertical" Name="spControls">
+                    <CheckBox Name="cbProbe" Content="Probe" IsChecked="True" FontSize="8" Checked="cbsModified_Checked" Unchecked="cbsModified_Checked" />
+                    <CheckBox Name="cbHead" Content="Head" IsChecked="True" FontSize="8" Checked="cbsModified_Checked" Unchecked="cbsModified_Checked" />
+                    <CheckBox Name="cbArteries" Content="Arteries" IsChecked="True" FontSize="8" Checked="cbsModified_Checked" Unchecked="cbsModified_Checked" />
+                    <CheckBox Name="cbVeins" Content="Veins" IsChecked="True" FontSize="8" Checked="cbsModified_Checked" Unchecked="cbsModified_Checked" />
+                    <CheckBox Name="cbNerves" Content="Nerves" IsChecked="True" FontSize="8" Checked="cbsModified_Checked" Unchecked="cbsModified_Checked" />
+                </StackPanel>
+            </StackPanel>-->
+        <!--</Grid>-->
+    </Grid>
+</Window>

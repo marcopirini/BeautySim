@@ -10,9 +10,12 @@ namespace BeautySim2023
         public string ImageName { get; set; }
         public int NumQuestions { get; set; }
         public List<Question> Questions { get; set; }
+ 
 
         public bool MultipleSelectionAllowed { get; internal set; }
         public string Question { get; internal set; }
+
+
         public Enum_StepQuestionnaire Step = Enum_StepQuestionnaire.INITIAL;
         public ClinicalCaseStep_Questionnaire(): base(Enum_ClinicalCaseStepType.QUESTIONNAIRE)
         {

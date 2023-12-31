@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -60,7 +61,6 @@ namespace BeautySim2023
 
         [XmlAttribute]
         public int CaseLevel { get; private set; }
-
 
         [XmlAttribute]
         public string Name { get; set; }
@@ -129,7 +129,7 @@ namespace BeautySim2023
                     Description = linesRead[1].Replace("Description=", "");
                     Module = (Enum_Modules)Enum.Parse(typeof(Enum_Modules), linesRead[2].Replace("Module=", ""));
                     CaseLevel = Convert.ToInt32(linesRead[3].Replace("Level=", ""));
-                    ImageName= linesRead[4].Replace("ImageName=", "");
+                    ImageName = linesRead[4].Replace("ImageName=", "");
                     for (int i = 5; i < linesRead.Count; i++)
                     {
                         if (linesRead[i].StartsWith("Phase"))
@@ -139,75 +139,134 @@ namespace BeautySim2023
                             {
                                 ClinicalCaseStep toAdd = new ClinicalCaseStep();
                                 Enum_ClinicalCaseStepType typeCl = (Enum_ClinicalCaseStepType)Enum.Parse(typeof(Enum_ClinicalCaseStepType), parsed[1]);
+
                                 switch (typeCl)
                                 {
                                     case Enum_ClinicalCaseStepType.MESSAGE:
                                         toAdd = new ClinicalCaseStep_Message();
                                         toAdd.ImportInformationFromTxtFile(Folder + "\\" + parsed[2] + ".txt");
+
                                         break;
 
                                     case Enum_ClinicalCaseStepType.QUESTIONNAIRE:
                                         toAdd = new ClinicalCaseStep_Questionnaire();
                                         toAdd.ImportInformationFromTxtFile(Folder + "\\" + parsed[2] + ".txt");
+
                                         break;
 
                                     case Enum_ClinicalCaseStepType.ANALYSIS_STATIC_FACE:
                                         toAdd = new ClinicalCaseStep_AnalysisStaticFace();
                                         toAdd.ImportInformationFromTxtFile(Folder + "\\" + parsed[2] + ".txt");
+
                                         break;
 
-
-
                                     case Enum_ClinicalCaseStepType.DIDACTIC_DYNAMIC_FACE:
+
                                         toAdd = new ClinicalCaseStep_DidacticDynamicFace();
                                         toAdd.ImportInformationFromTxtFile(Folder + "\\" + parsed[2] + ".txt");
+
                                         break;
 
                                     case Enum_ClinicalCaseStepType.FACE3D_INTERACTION:
                                         toAdd = new ClinicalCaseStep_Face3DInteraction();
                                         toAdd.ImportInformationFromTxtFile(Folder + "\\" + parsed[2] + ".txt");
+
                                         break;
 
                                     default:
                                         break;
                                 }
-
                                 Steps.Add(toAdd);
                             }
                         }
                         Initialized = true;
                         toRet = true;
                     }
+                    EvaluateStepsToAddOrNot(); 
                 }
-               
             }
             else
             {
-                toRet=false;
+                toRet = false;
             }
             return toRet;
         }
 
+        public void EvaluateStepsToAddOrNot()
+        {
+            foreach (ClinicalCaseStep item in Steps)
+            {
+                if ((item is ClinicalCaseStep_Message) && (Properties.Settings.Default.ViewQuestionnairePhases))
+                {
+                    item.PresentToUser = true;
+                }
+                else if ((item is ClinicalCaseStep_Questionnaire) && (Properties.Settings.Default.ViewQuestionnairePhases))
+                {
+                    item.PresentToUser = true;
+                }
+                else if ((item is ClinicalCaseStep_AnalysisStaticFace) && (Properties.Settings.Default.ViewImagePhases))
+                {
+                    item.PresentToUser = true;
+                }
+                else if ((item is ClinicalCaseStep_DidacticDynamicFace) && (Properties.Settings.Default.ViewImagePhases))
+                {
+                    item.PresentToUser = true;
+                }
+                else if ((item is ClinicalCaseStep_Face3DInteraction) && (Properties.Settings.Default.View3DPhases))
+                {
+                    item.PresentToUser = true;
+                }
+                else
+                {
+                    item.PresentToUser = false;
+                }
+
+               
+            }
+        }
+
         [XmlAttribute]
         public float GlobalScore { get; set; }
+
         public int CurrentStepIndex { get; internal set; }
 
         internal void CalculateGlobalScore()
         {
+            //OLD ONES
+            //float scoreTemp = 0;
+            //float numPoints = 0;
+            //for (int i = 0; i < Steps.Count; i++)
+            //{
+            //    if (Steps[i].ImScoreable)
+            //    {
+            //        scoreTemp = scoreTemp + Steps[i].Score * Steps[i].Points;
+            //        numPoints = numPoints + Steps[i].Points;
+            //    }
+            //}
+
+            //if (numPoints > 0)
+            //{
+            //    GlobalScore = scoreTemp / (numPoints);
+            //}
+            //else
+            //{
+            //    GlobalScore = 0;
+            //}
+
             float scoreTemp = 0;
-            float numPoints = 0;
+            float numScorableSteps = 0;
             for (int i = 0; i < Steps.Count; i++)
             {
                 if (Steps[i].ImScoreable)
                 {
-                    scoreTemp = scoreTemp + Steps[i].Score * Steps[i].Points;
-                    numPoints = numPoints + Steps[i].Points;
+                    scoreTemp = scoreTemp + Steps[i].Score;
+                    numScorableSteps++;
                 }
             }
 
-            if (numPoints > 0)
+            if (numScorableSteps > 0)
             {
-                GlobalScore = scoreTemp / (numPoints);
+                GlobalScore = scoreTemp / (numScorableSteps);
             }
             else
             {

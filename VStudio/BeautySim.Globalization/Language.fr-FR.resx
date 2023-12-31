@@ -1233,4 +1233,16 @@
   <data name="str_needle_info" xml:space="preserve">
     <value>Needle information</value>
   </data>
+  <data name="str_insertAnestetic_ctrl" xml:space="preserve">
+    <value>insert 1 U</value>
+  </data>
+  <data name="str_calibrate" xml:space="preserve">
+    <value>calibrate</value>
+  </data>
+  <data name="str_register" xml:space="preserve">
+    <value>register</value>
+  </data>
+  <data name="str_calibrate_window" xml:space="preserve">
+    <value>calibration</value>
+  </data>
 </root>

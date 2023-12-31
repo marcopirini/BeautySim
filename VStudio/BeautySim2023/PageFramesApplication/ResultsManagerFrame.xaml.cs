@@ -196,9 +196,9 @@ namespace BeautySim2023
 
                 AppControl.Instance.ClearTempResults();
 
-                ResultManager.CreateReportPDF(toCompileResults, "C:\\BeautySim\\ResultsTemp");
+                ResultManager.CreateReportPDF(toCompileResults, AppControl.ResultsTempFolder);
 
-                DirectoryInfo di = new DirectoryInfo("C:\\BeautySim\\ResultsTemp");
+                DirectoryInfo di = new DirectoryInfo(AppControl.ResultsTempFolder);
 
                 FileInfo[] files = di.GetFiles("*.pdf");
                 if (files.Count() > 0)
@@ -232,14 +232,14 @@ namespace BeautySim2023
 
         private void bSave_Click(object sender, RoutedEventArgs e)
         {
-            DirectoryInfo di = new DirectoryInfo("C:\\BeautySim\\ResultsTemp");
+            DirectoryInfo di = new DirectoryInfo(AppControl.ResultsTempFolder);
             FileInfo[] files = di.GetFiles("*.pdf");
             if (files.Count() > 0)
             {
                
                 SaveFileDialog saveFileDialog1 = new SaveFileDialog();
                 saveFileDialog1.FileName = files.First().Name;
-                string saveDir = "C:\\BeautySim_SavedReports";
+                string saveDir = AppControl.SaveReportsFolder; 
                 if (!Directory.Exists(saveDir))
                 {
                     Directory.CreateDirectory(saveDir);

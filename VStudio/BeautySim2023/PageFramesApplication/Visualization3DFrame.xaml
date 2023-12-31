@@ -10,25 +10,27 @@
     <Page.Resources>
         <local:BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
 
-    <local:ExitingTimeConverter x:Key="ExitingTimeConverter" />
-    <local:BooleanToBackgroundConverter x:Key="BooleanToBackgroundConverter" />
+        <local:ExitingTimeConverter x:Key="ExitingTimeConverter" />
+        <local:BooleanToBackgroundConverter x:Key="BooleanToBackgroundConverter" />
     </Page.Resources>
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*" />
+            <RowDefinition Height="9*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="3*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="5*" />
-            <ColumnDefinition Width="1.5*" />
+            <ColumnDefinition Width="280" />
         </Grid.ColumnDefinitions>
 
         <!--<Label Name="lNameStructure" Grid.Row="1" Grid.ColumnSpan="2" Content="{Binding HitStructure}" HorizontalAlignment="Left" Margin="5" FontSize="50">
         </Label>-->
 
-        <hx:Viewport3DX Grid.Row="0" Grid.RowSpan="1" Grid.ColumnSpan="2" x:Name="hvView3D" ShowViewCube="True" Loaded="hvView3D_Loaded_1" Unloaded="hvView3D_Unloaded"
-            ShowCoordinateSystem="True" EffectsManager="{Binding EffectsManager}">
+        <hx:Viewport3DX Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="2" x:Name="hvView3D" ShowViewCube="False" 
+            ShowCoordinateSystem="False" EffectsManager="{Binding EffectsManager}">
             <hx:Viewport3DX.InputBindings>
                 <KeyBinding Key="B" Command="hx:ViewportCommands.BackView" />
                 <KeyBinding Key="F" Command="hx:ViewportCommands.FrontView" />
@@ -39,7 +41,7 @@
                 <KeyBinding Command="hx:ViewportCommands.ZoomExtents" Gesture="Control+E" />
                 <MouseBinding Command="hx:ViewportCommands.Rotate" Gesture="RightClick" />
                 <MouseBinding Command="hx:ViewportCommands.Zoom" Gesture="MiddleClick" />
-                <MouseBinding Command="hx:ViewportCommands.Pan" Gesture="LeftClick" />
+                <MouseBinding Command="hx:ViewportCommands.Pan" Gesture="Alt+RightClick" />
             </hx:Viewport3DX.InputBindings>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">
@@ -63,13 +65,12 @@
                 Transform="{Binding TransformSphere2}">
             </hx:MeshGeometryModel3D>
 
-            <hx:GroupModel3D x:Name="modelAntenna" AutomationProperties.Name="modelAntenna">
+            <!--<hx:GroupModel3D x:Name="modelAntenna" AutomationProperties.Name="modelAntenna" Visibility="{Binding VisibilityAntenna}">
                 <hx:MeshGeometryModel3D
         Geometry="{Binding GeometryAntenna}"
-        Material="{Binding MaterialAntenna}"
-        Visibility="{Binding VisibilityAntenna}">
+        Material="{Binding MaterialAntenna}">
                 </hx:MeshGeometryModel3D>
-            </hx:GroupModel3D>
+            </hx:GroupModel3D>-->
 
             <hx:GroupModel3D x:Name="modelBody">
                 <hx:GroupModel3D.Transform>
@@ -80,7 +81,10 @@
                             </RotateTransform3D.Rotation>
                         </RotateTransform3D>
                         <!--<TranslateTransform3D OffsetX="{Binding XPosSensor02}" OffsetY="{Binding YPosSensor02}" OffsetZ="{Binding ZPosSensor02}" />-->
-                        <TranslateTransform3D OffsetX="20" OffsetY="0" OffsetZ="0" />
+                        <!--<TranslateTransform3D OffsetX="37.3" OffsetY="-134.1" OffsetZ="0" />-->
+                        <TranslateTransform3D OffsetX="{Binding TranslationPointModel.X}"
+                                              OffsetY="{Binding TranslationPointModel.Y}"
+                                              OffsetZ="{Binding TranslationPointModel.Z}" />
                     </Transform3DGroup>
                 </hx:GroupModel3D.Transform>
 
@@ -107,7 +111,6 @@
 
                 <hx:ItemsModel3D x:Name="groupSkin" Transform="{Binding GroupModel3DTransform}" Visibility="{Binding SkinVisible, Converter={StaticResource BoolToVisConverter}}">
                 </hx:ItemsModel3D>
-
             </hx:GroupModel3D>
             <hx:GroupModel3D x:Name="modelSensor" AutomationProperties.Name="modelSensor">
                 <hx:GroupModel3D.Transform>
@@ -127,11 +130,11 @@
             <hx:GroupModel3D x:Name="modelNeedle" AutomationProperties.Name="modelNeedle">
                 <hx:GroupModel3D.Transform>
                     <Transform3DGroup>
-                        <RotateTransform3D>
+                        <!--<RotateTransform3D>
                             <RotateTransform3D.Rotation>
                                 <AxisAngleRotation3D Axis="1,0,0" Angle="{Binding RotationAngleOffsetNeedle}" />
                             </RotateTransform3D.Rotation>
-                        </RotateTransform3D>
+                        </RotateTransform3D>-->
                         <TranslateTransform3D OffsetY="{Binding AxisPositionOffsetNeedle}" />
                         <RotateTransform3D>
                             <RotateTransform3D.Rotation>
@@ -142,28 +145,30 @@
                     </Transform3DGroup>
                 </hx:GroupModel3D.Transform>
 
-                <hx:MeshGeometryModel3D x:Name="mTConnector" Geometry="{Binding GeometryTConnector}" Material="{Binding MaterialConnector}" />
-                <hx:MeshGeometryModel3D x:Name="mConnector" Geometry="{Binding GeometryConnector}" Material="{Binding MaterialConnector}" />
+                <!--<hx:MeshGeometryModel3D x:Name="mTConnector" Geometry="{Binding GeometryTConnector}" Material="{Binding MaterialConnector}" />
+                <hx:MeshGeometryModel3D x:Name="mConnector" Geometry="{Binding GeometryConnector}" Material="{Binding MaterialConnector}" />-->
                 <hx:MeshGeometryModel3D x:Name="mNeedle" Geometry="{Binding GeometryNeedle}" Material="{Binding MaterialNeedle}" />
                 <hx:MeshGeometryModel3D x:Name="mCable" Geometry="{Binding GeometryCable}" Material="{Binding MaterialCable}" />
             </hx:GroupModel3D>
         </hx:Viewport3DX>
 
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.RowSpan="1" Grid.ColumnSpan="2">
-            <CheckBox Name="cbArteries" Content="Arteries" Checked="cbSomething_Changed" Unchecked="cbSomething_Changed" IsChecked="True"/>
-            <CheckBox Name="cbVeins" Content="Veins" Checked="cbSomething_Changed" Unchecked="cbSomething_Changed" IsChecked="True"/>
-            <CheckBox Name="cbSkin" Content="Skin" Checked="cbSomething_Changed" Unchecked="cbSomething_Changed" IsChecked="True"/>
-            <CheckBox Name="cbProcerus" Content="Procerus" Checked="cbSomething_Changed" Unchecked="cbSomething_Changed" IsChecked="True"/>
-            <CheckBox Name="cbOrbicularis" Content="Orbicularis" Checked="cbSomething_Changed" Unchecked="cbSomething_Changed" IsChecked="True"/>
-            <CheckBox Name="cbCorrugator" Content="Corrugators" Checked="cbSomething_Changed" Unchecked="cbSomething_Changed" IsChecked="True"/>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="2" Visibility="Visible">
+            <CheckBox Name="cbSkin" Content="Skin" Checked="cbSomething_Changed" Unchecked="cbSomething_Changed" IsChecked="True" />
+            <CheckBox Name="cbSkinWireframe" Content="Skin Wireframe" Checked="cbSomething_Changed" Unchecked="cbSomething_Changed" IsChecked="True" />
+            <CheckBox Name="cbArteries" Content="Arteries" Checked="cbSomething_Changed" Unchecked="cbSomething_Changed" IsChecked="False" />
+            <CheckBox Name="cbVeins" Content="Veins" Checked="cbSomething_Changed" Unchecked="cbSomething_Changed" IsChecked="False" />
+            
+            <CheckBox Name="cbProcerus" Content="Procerus" Checked="cbSomething_Changed" Unchecked="cbSomething_Changed" IsChecked="False" Visibility="Hidden"/>
+            <CheckBox Name="cbOrbicularis" Content="Orbicularis" Checked="cbSomething_Changed" Unchecked="cbSomething_Changed" IsChecked="False" Visibility="Hidden"/>
+            <CheckBox Name="cbCorrugator" Content="Corrugators" Checked="cbSomething_Changed" Unchecked="cbSomething_Changed" IsChecked="False" Visibility="Hidden"/>
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.RowSpan="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom">
-            <Label Name="lNameStructure" Content="{Binding HitStructure}" HorizontalAlignment="Left" Margin="5" FontSize="25"/>
-            <Label Name="lTextYawPitch" Content="{Binding TextToShowYawPitch}" HorizontalAlignment="Left" Margin="5" FontSize="25"/>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="2" VerticalAlignment="Bottom">
+            <Label Name="lNameStructure" Content="{Binding HitStructure}" HorizontalAlignment="Left" Margin="5" FontSize="10" Visibility="Hidden" />
+            <Label Name="lTextYawPitch" Content="{Binding TextToShowYawPitch}" HorizontalAlignment="Left" Margin="5" FontSize="10" />
         </StackPanel>
 
-        <ListView x:Name="entranceListView" Loaded="entranceListView_Loaded" Grid.Column="2" ItemsSource="{Binding EntranceDataList}">
+        <ListView x:Name="entranceListView" Loaded="entranceListView_Loaded" Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" ItemsSource="{Binding EntranceDataList}" Visibility="Hidden">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Entrance Information">
@@ -186,11 +191,11 @@
                                     <Run Text="{Binding ExitingTime, StringFormat=dd/MM/yyyy hh:mm:ss}" FontSize="9" />
                                         </TextBlock>
                                         <TextBlock>
-                                    <Run Text="Yaw: " />
+                                    <Run Text="Azimuth: " />
                                     <Run Text="{Binding EntryingPointYaw}" />
                                         </TextBlock>
                                         <TextBlock>
-                                    <Run Text="Pitch: " />
+                                    <Run Text="Elevation: " />
                                     <Run Text="{Binding EntryingPointPitch}" />
                                         </TextBlock>
                                         <TextBlock>
@@ -206,5 +211,97 @@
             </ListView.View>
         </ListView>
 
+        <ListView Name="InjectionPointListView" VirtualizingPanel.IsVirtualizing="False" Grid.Row="0" Grid.Column="2" SelectionChanged="InjectionPointListView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn  DisplayMemberBinding="{Binding PointDefinition}" Width="70">
+                        <GridViewColumn.Header>
+                            <TextBlock TextWrapping="Wrap" Text="Point&#x0a;Def" />
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding ActuallyChosenOrPerformedQuantity}" Width="85">
+                        <GridViewColumn.Header>
+                            <TextBlock TextWrapping="Wrap" Text="Total&#x0a;Quantity" />
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding NumReleases}" Width="90">
+                        <GridViewColumn.Header>
+                            <TextBlock TextWrapping="Wrap" Text="# releases" />
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Grid Grid.Row="1" Grid.Column="2" Name="grIndications" Visibility="Hidden" Margin="10">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Ellipse Width="15" Height="15" Fill="Green"/>
+                <TextBlock Text=" Correct" VerticalAlignment="Center" FontSize="12" Margin="5,0,0,0"/>
+            </StackPanel>
+            <StackPanel  Grid.Row="1" Orientation="Horizontal">
+                <Ellipse Width="15" Height="15" Fill="Orange"/>
+                <TextBlock Text=" Correct spot, too much botox" VerticalAlignment="Center" FontSize="12" TextWrapping="Wrap"  Margin="5,0,0,0"/>
+            </StackPanel>
+            <StackPanel  Grid.Row="2" Orientation="Horizontal">
+                <Ellipse Width="15" Height="15" Fill="Yellow"/>
+                <TextBlock Text=" Not enough botox" VerticalAlignment="Center" FontSize="12" TextWrapping="Wrap"  Margin="5,0,0,0"/>
+            </StackPanel>
+            <StackPanel  Grid.Row="3" Orientation="Horizontal">
+                <Ellipse Width="15" Height="15" Fill="Red"/>
+                <TextBlock Text=" Botox on error area" VerticalAlignment="Center" FontSize="12" Margin="5,0,0,0"/>
+            </StackPanel>
+        </Grid>
+
+
+        <Grid Name="grInformation" Grid.Row="2" Grid.Column="2" Margin="20" VerticalAlignment="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Azimuth:" />
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Elevation:" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Impact Point X:   " />
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Impact Point Y:   " />
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Impact Point Z:   " />
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="Tip Needle X: " />
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Tip Needle Y: " />
+            <TextBlock Grid.Row="7" Grid.Column="0" Text="Tip Needle Z: " />
+            <TextBlock Grid.Row="8" Grid.Column="0" Text="Depth:    " />
+
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding YawNeedle, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding PitchNeedle, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ImpactPoint.X, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ImpactPoint.Y, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ImpactPoint.Z, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <!--<TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding TipNeedle.X, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding TipNeedle.Y, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding TipNeedle.Z, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />-->
+
+            <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding XPosSensor02, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding YPosSensor02, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding ZPosSensor02, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding DepthInjection, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+        </Grid>
     </Grid>
 </Page>

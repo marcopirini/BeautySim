@@ -4,7 +4,7 @@
     xmlns:local="clr-namespace:BeautySim2023"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:lang="clr-namespace:BeautySim.Globalization;assembly=BeautySim.Globalization"
-    Title="FunctionalitiesFrame" Background="Transparent">
+    Title="FunctionalitiesFrame" Background="Transparent" Loaded="Page_Loaded">
 
     <Page.Resources>
     </Page.Resources>
@@ -25,7 +25,7 @@
 
                 <TextBlock Grid.Row="0" Name="tbFunc" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="30" Margin="20" VerticalAlignment="Center" Text="{x:Static lang:Language.str_management}"/>
                 <StackPanel Grid.Row="1">
-                    <Button Name="bManageStudents" Click="ManageStudents_Click" Grid.Column="0" Grid.Row="0"
+                    <Button Name="bManageStudents" Click="ManageStudents_Click" 
                           Margin="15"
                           Height="60" Width="240">
                         <StackPanel Orientation="Horizontal">
@@ -35,7 +35,7 @@
                             </TextBlock>
                         </StackPanel>
                     </Button>
-                    <Button Name="bSessionsArchive" Grid.Column="0" Grid.Row="1" Click="SessionsArchive_Click"
+                    <Button Name="bSessionsArchive" Click="SessionsArchive_Click"
                            Margin="15"
                           Height="60" Width="240">
                         <StackPanel Orientation="Horizontal">
@@ -86,16 +86,21 @@
                         </StackPanel>
                     </Button>
 
-                    <Button Name="bSettings"
-
-                          Click="Settings_Click"
-
-                     Margin="35,100,35,100"
+                    <Button Name="bSettings" IsEnabled="True" Click="Settings_Click" Margin="35,100,35,15"
                           Height="60" Width="240">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Settings" HorizontalAlignment="Center" Height="40" Width="40" />
                             <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Margin="10"
                             Text="{x:Static lang:Language.str_settings}">
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Name="bCalibration" IsEnabled="True" Click="Calibration_Click" Margin="15" Height="60" Width="240">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="FocusField" HorizontalAlignment="Center" Height="40" Width="40" />
+                            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Margin="10"
+                            Text="{x:Static lang:Language.str_calibrate_window}">
                             </TextBlock>
                         </StackPanel>
                     </Button>
@@ -139,7 +144,33 @@
                                HorizontalAlignment="Center" Margin="20,10,20,10"   VerticalAlignment="Top"
                                SelectionChanged="cbSelectCase_SelectionChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  DropDownOpened="cbSelectCase_DropDownOpened" DropDownClosed="cbSelectCase_DropDownClosed"/>
 
-                    </StackPanel>
+
+
+
+
+                            <TextBlock Name="tbFeatures"  TextWrapping="Wrap" HorizontalAlignment="Left" FontSize="30" Margin="20,10,20,10" VerticalAlignment="Center" Text="{x:Static lang:Language.str_steps}"/>
+
+                            <Grid Margin="30,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Margin="5 " Grid.Row="0" Grid.Column="0" FontSize="15" Foreground="Black" VerticalAlignment="Center" Content="{x:Static lang:Language.str_questionaire}"/>
+                                <ToggleButton Margin="5" Name="tgViewQuestionnaire" Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15" Checked="tgViewQuestionnaire_Checked" Unchecked="tgViewQuestionnaire_Unchecked"/>
+                                <Label Margin="5 " Grid.Row="1" Grid.Column="0" FontSize="15" Foreground="Black" VerticalAlignment="Center" Content="{x:Static lang:Language.str_learningPhasesOnImages}"/>
+                                <ToggleButton Margin="5" Name="tgViewImagePhases" Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15" Checked="tgViewImagePhases_Checked" Unchecked="tgViewImagePhases_Unchecked"/>
+                                <Label Margin="5" Grid.Row="2" Grid.Column="0" FontSize="15" Foreground="Black" VerticalAlignment="Center" Content="{x:Static lang:Language.str_learning3D}"/>
+                                <ToggleButton Margin="5" Name="tgView3DPhases" Height="40" Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15" Checked="tgView3DPhases_Checked" Unchecked="tgView3DPhases_Unchecked"/>
+                            </Grid>
+
+                        </StackPanel>
                      </Border>
                     <Border Grid.Row="0" Grid.Column="1" Margin="10,20,20,0" BorderBrush="#00bfa5" BorderThickness="5">
                         <Grid >

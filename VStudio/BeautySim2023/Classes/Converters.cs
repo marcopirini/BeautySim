@@ -1,5 +1,4 @@
-﻿using BeautySimStartingApp;
-using HelixToolkit.Wpf.SharpDX;
+﻿using HelixToolkit.Wpf.SharpDX;
 using System;
 using System.Globalization;
 using System.Windows;

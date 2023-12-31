@@ -1,5 +1,10 @@
-﻿using System.Windows;
+﻿using BeautySim2023.Windows;
+using System;
+using System.IO;
+using System.Resources;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace BeautySim2023
 {
@@ -19,16 +24,20 @@ namespace BeautySim2023
             AppControl.Instance.WindowTeacher.bClose.Visibility = Visibility.Collapsed;
             AppControl.Instance.WindowTeacher.bLogOut.Visibility = Visibility.Collapsed;
 
+            AppControl.Instance.AreImagesVisualizedOn3D = false;
+            // PIRINI UPDATE THE LABEL OF THE BUTTON FOR IMAGE VISUALIZATION
+
         }
 
          private void bNextStep_Click(object sender, RoutedEventArgs e)
         {
-            //CaseController.Instance.AdvanceStep();
+            AppControl.Instance.CloseWindowImages();
+            AppControl.Instance.AdvanceStep();
         }
 
         private void bLocateMouse_Click(object sender, RoutedEventArgs e)
         {
-            //AppControl.Instance.SwitchMousePosition(this);
+            AppControl.Instance.SwitchMousePosition(this);
             
         }
 
@@ -53,6 +62,15 @@ namespace BeautySim2023
             //AppControl.Instance.OffsetPositions();
         }
 
+        private void bInsertAnaethetic_Click(object sender, RoutedEventArgs e)
+        {
+            AppControl.Instance.InjectAnesthetic();
+        }
 
+        private void bViewImages_Click(object sender, RoutedEventArgs e)
+        {
+            AppControl.Instance.ManageViewImagesOn3D();
+
+        }
     }
 }

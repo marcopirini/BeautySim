@@ -40,8 +40,9 @@
     <Reference Include="Cyotek.Drawing.BitmapFont, Version=1.0.0.0, Culture=neutral, PublicKeyToken=58daa28b0b2de221, processorArchitecture=MSIL">
       <HintPath>..\packages\Cyotek.Drawing.BitmapFont.2.0.4\lib\net472\Cyotek.Drawing.BitmapFont.dll</HintPath>
     </Reference>
-    <Reference Include="DemoCore">
-      <HintPath>..\..\..\..\..\ACCURATE_DEVICES\DemoCore.dll</HintPath>
+    <Reference Include="DemoCore, Version=0.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\ACCURATE_DEVICES\DemoCore.dll</HintPath>
     </Reference>
     <Reference Include="HelixToolkit, Version=2.23.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
       <HintPath>..\packages\HelixToolkit.2.23.0\lib\netstandard2.0\HelixToolkit.dll</HintPath>
@@ -57,6 +58,9 @@
     </Reference>
     <Reference Include="MaterialDesignThemes.Wpf, Version=4.8.0.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.4.8.0\lib\net462\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.5.0.0\lib\net461\MathNet.Numerics.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Expression.Interaction.3.0.40218.0\lib\net46\Microsoft.Expression.Interactions.dll</HintPath>
@@ -107,6 +111,9 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Expression.Interaction.3.0.40218.0\lib\net46\System.Windows.Interactivity.dll</HintPath>
@@ -129,13 +136,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BeautySimClass.cs" />
+    <Compile Include="Matrix3DUtils.cs" />
+    <Compile Include="Editor3DClass.cs" />
     <Compile Include="Classes\OrdinalConverter.cs" />
     <Compile Include="Classes\EntranceData.cs" />
     <Compile Include="Classes\PointHit.cs" />
     <Compile Include="Classes\Enum_StateCollision.cs" />
-    <Compile Include="Window3D.xaml.cs">
-      <DependentUpon>Window3D.xaml</DependentUpon>
+    <Compile Include="Editor3DWindow.xaml.cs">
+      <DependentUpon>Editor3DWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="DictionaryConverters.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -145,7 +153,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Window3D.xaml">
+    <Page Include="Editor3DWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

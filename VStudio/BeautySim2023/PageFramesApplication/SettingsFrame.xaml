@@ -14,14 +14,19 @@
             <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <Border Grid.Column="0" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="#00bfa5" BorderThickness="6" >
-        <Image Name="imNeedle"  Source="/BeautySim2023;component/Images/needleImage.png" Height="500">
+        <Image Name="imNeedle" Source="/BeautySim2023;component/Images/imageNeedle.png" Height="500">
         </Image>
         </Border>
 
         <StackPanel Name="spCOntrols" Grid.Column="1" VerticalAlignment="Center" Margin="90">
-            <TextBlock Text="{x:Static lang:Language.str_define_needle_len}" FontSize="22" Margin="20" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
-            <TextBox Name="tbNeedleLength" Height="80" FontSize="50" TextAlignment="Center"></TextBox>
-
+            <TextBlock Text="Define Needle Length" FontSize="22" Margin="10" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
+            <TextBox Name="tbNeedleLength" Height="50" FontSize="30" TextAlignment="Center"></TextBox>
+            <TextBlock Text="Define XTrasl" FontSize="22" Margin="10" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
+            <TextBox Name="tbXTrasl" Height="50" FontSize="30" TextAlignment="Center"></TextBox>
+            <TextBlock Text="Define YTrasl" FontSize="22" Margin="10" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
+            <TextBox Name="tbYTrasl" Height="50" FontSize="30" TextAlignment="Center"></TextBox>
+            <TextBlock Text="Define ZTrasl" FontSize="22" Margin="10" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
+            <TextBox Name="tbZTrasl" Height="50" FontSize="30" TextAlignment="Center"></TextBox>
             <Button Name="bSave" Margin="5,50,5,0" Height="50" Width="130" Click="bSave_Click">
                 <StackPanel Orientation="Horizontal"  >
                     <materialDesign:PackIcon Kind="ContentSave" HorizontalAlignment="Center" Height="40" Width="38"/>

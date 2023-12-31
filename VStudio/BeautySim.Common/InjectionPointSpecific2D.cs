@@ -4,7 +4,9 @@ namespace BeautySim.Common
 {
     public class InjectionPointSpecific2D : InjectionPointBase
     {
-
+        public InjectionPointSpecific2D()
+        {
+        }
 
         private string coordinates;
 
@@ -50,7 +52,7 @@ namespace BeautySim.Common
         public double X { get; set; }
         [XmlAttribute]
         public double Y { get; set; }
-        public void CopyAllPropertiesFromBase(InjectionPointBase bb)
+        public void CopyAllPropertiesFromBaseExcptPrescribedQuantity(InjectionPointBase bb)
         {
             PointDefinition = bb.PointDefinition;
             PrescribedDepth = bb.PrescribedDepth;
@@ -64,7 +66,6 @@ namespace BeautySim.Common
             QuantityOptionsAsString = bb.QuantityOptionsAsString;
             YawMax = bb.YawMax;
             YawMin = bb.YawMin;
-            PrescribedQuantity = bb.PrescribedQuantity;
         }
     }
 }

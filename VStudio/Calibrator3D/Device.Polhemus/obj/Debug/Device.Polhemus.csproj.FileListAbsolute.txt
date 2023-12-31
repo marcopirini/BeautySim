@@ -1,0 +1,126 @@
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\Device.Polhemus\bin\Debug\PDIDLLWrapperX64.dll
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\Device.Polhemus\bin\Debug\PDIDLLWrapperX86.dll
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\Device.Polhemus\bin\Debug\Device.Polhemus.dll
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\Device.Polhemus\bin\Debug\Device.Polhemus.pdb
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.dll
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\Device.Polhemus\bin\Debug\USBClassLibrary.dll
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.pdb
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\Device.Polhemus\bin\Debug\USBClassLibrary.pdb
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\Device.Polhemus\obj\Debug\Device.Polhemus.csprojAssemblyReference.cache
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CoreCompileInputs.cache
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CopyComplete
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\Device.Polhemus\obj\Debug\Device.Polhemus.dll
+C:\Users\Marco\Desktop\2019 11 POLHEMUS20191117092316\2019 11 POLHEMUS\Device.Polhemus\obj\Debug\Device.Polhemus.pdb
+C:\Users\Marco\Desktop\Model3D\Model3D\Device.Polhemus\bin\Debug\PDIDLLWrapperX64.dll
+C:\Users\Marco\Desktop\Model3D\Model3D\Device.Polhemus\bin\Debug\PDIDLLWrapperX86.dll
+C:\Users\Marco\Desktop\Model3D\Model3D\Device.Polhemus\bin\Debug\Device.Polhemus.dll
+C:\Users\Marco\Desktop\Model3D\Model3D\Device.Polhemus\bin\Debug\Device.Polhemus.pdb
+C:\Users\Marco\Desktop\Model3D\Model3D\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.dll
+C:\Users\Marco\Desktop\Model3D\Model3D\Device.Polhemus\bin\Debug\USBClassLibrary.dll
+C:\Users\Marco\Desktop\Model3D\Model3D\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.pdb
+C:\Users\Marco\Desktop\Model3D\Model3D\Device.Polhemus\bin\Debug\USBClassLibrary.pdb
+C:\Users\Marco\Desktop\Model3D\Model3D\Device.Polhemus\obj\Debug\Device.Polhemus.csprojAssemblyReference.cache
+C:\Users\Marco\Desktop\Model3D\Model3D\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CoreCompileInputs.cache
+C:\Users\Marco\Desktop\Model3D\Model3D\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CopyComplete
+C:\Users\Marco\Desktop\Model3D\Model3D\Device.Polhemus\obj\Debug\Device.Polhemus.dll
+C:\Users\Marco\Desktop\Model3D\Model3D\Device.Polhemus\obj\Debug\Device.Polhemus.pdb
+C:\Lavoro\Model3D\Code\Device.Polhemus\bin\Debug\PDIDLLWrapperX64.dll
+C:\Lavoro\Model3D\Code\Device.Polhemus\bin\Debug\PDIDLLWrapperX86.dll
+C:\Lavoro\Model3D\Code\Device.Polhemus\bin\Debug\Device.Polhemus.dll
+C:\Lavoro\Model3D\Code\Device.Polhemus\bin\Debug\Device.Polhemus.pdb
+C:\Lavoro\Model3D\Code\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.dll
+C:\Lavoro\Model3D\Code\Device.Polhemus\bin\Debug\USBClassLibrary.dll
+C:\Lavoro\Model3D\Code\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.pdb
+C:\Lavoro\Model3D\Code\Device.Polhemus\bin\Debug\USBClassLibrary.pdb
+C:\Lavoro\Model3D\Code\Device.Polhemus\obj\Debug\Device.Polhemus.csprojAssemblyReference.cache
+C:\Lavoro\Model3D\Code\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CoreCompileInputs.cache
+C:\Lavoro\Model3D\Code\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CopyComplete
+C:\Lavoro\Model3D\Code\Device.Polhemus\obj\Debug\Device.Polhemus.dll
+C:\Lavoro\Model3D\Code\Device.Polhemus\obj\Debug\Device.Polhemus.pdb
+C:\BlockSim3\Code\Device.Polhemus\bin\Debug\PDIDLLWrapperX64.dll
+C:\BlockSim3\Code\Device.Polhemus\bin\Debug\PDIDLLWrapperX86.dll
+C:\BlockSim3\Code\Device.Polhemus\bin\Debug\Device.Polhemus.dll
+C:\BlockSim3\Code\Device.Polhemus\bin\Debug\Device.Polhemus.pdb
+C:\BlockSim3\Code\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.dll
+C:\BlockSim3\Code\Device.Polhemus\bin\Debug\USBClassLibrary.dll
+C:\BlockSim3\Code\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.pdb
+C:\BlockSim3\Code\Device.Polhemus\bin\Debug\USBClassLibrary.pdb
+C:\BlockSim3\Code\Device.Polhemus\obj\Debug\Device.Polhemus.csprojAssemblyReference.cache
+C:\BlockSim3\Code\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CoreCompileInputs.cache
+C:\BlockSim3\Code\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CopyComplete
+C:\BlockSim3\Code\Device.Polhemus\obj\Debug\Device.Polhemus.dll
+C:\BlockSim3\Code\Device.Polhemus\obj\Debug\Device.Polhemus.pdb
+C:\BlockSim2\Code\Device.Polhemus\bin\Debug\PDIDLLWrapperX64.dll
+C:\BlockSim2\Code\Device.Polhemus\bin\Debug\PDIDLLWrapperX86.dll
+C:\BlockSim2\Code\Device.Polhemus\bin\Debug\Device.Polhemus.dll
+C:\BlockSim2\Code\Device.Polhemus\bin\Debug\Device.Polhemus.pdb
+C:\BlockSim2\Code\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.dll
+C:\BlockSim2\Code\Device.Polhemus\bin\Debug\USBClassLibrary.dll
+C:\BlockSim2\Code\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.pdb
+C:\BlockSim2\Code\Device.Polhemus\bin\Debug\USBClassLibrary.pdb
+C:\BlockSim2\Code\Device.Polhemus\obj\Debug\Device.Polhemus.csprojAssemblyReference.cache
+C:\BlockSim2\Code\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CoreCompileInputs.cache
+C:\BlockSim2\Code\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CopyComplete
+C:\BlockSim2\Code\Device.Polhemus\obj\Debug\Device.Polhemus.dll
+C:\BlockSim2\Code\Device.Polhemus\obj\Debug\Device.Polhemus.pdb
+C:\BlockSim2\Code2\Device.Polhemus\bin\Debug\PDIDLLWrapperX64.dll
+C:\BlockSim2\Code2\Device.Polhemus\bin\Debug\PDIDLLWrapperX86.dll
+C:\BlockSim2\Code2\Device.Polhemus\bin\Debug\Device.Polhemus.dll
+C:\BlockSim2\Code2\Device.Polhemus\bin\Debug\Device.Polhemus.pdb
+C:\BlockSim2\Code2\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.dll
+C:\BlockSim2\Code2\Device.Polhemus\bin\Debug\USBClassLibrary.dll
+C:\BlockSim2\Code2\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.pdb
+C:\BlockSim2\Code2\Device.Polhemus\bin\Debug\USBClassLibrary.pdb
+C:\BlockSim2\Code2\Device.Polhemus\obj\Debug\Device.Polhemus.csprojAssemblyReference.cache
+C:\BlockSim2\Code2\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CoreCompileInputs.cache
+C:\BlockSim2\Code2\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CopyComplete
+C:\BlockSim2\Code2\Device.Polhemus\obj\Debug\Device.Polhemus.dll
+C:\BlockSim2\Code2\Device.Polhemus\obj\Debug\Device.Polhemus.pdb
+C:\Lavoro\SourceTree\BlockSim\VStudio\Device.Polhemus\bin\Debug\Device.Polhemus.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\Device.Polhemus\bin\Debug\Device.Polhemus.pdb
+C:\Lavoro\SourceTree\BlockSim\VStudio\Device.Polhemus\bin\Debug\BlockSim.Globalization.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\Device.Polhemus\bin\Debug\USBClassLibrary.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\Device.Polhemus\bin\Debug\BlockSim.Globalization.pdb
+C:\Lavoro\SourceTree\BlockSim\VStudio\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.pdb
+C:\Lavoro\SourceTree\BlockSim\VStudio\Device.Polhemus\bin\Debug\USBClassLibrary.pdb
+C:\Lavoro\SourceTree\BlockSim\VStudio\Device.Polhemus\bin\Debug\fr-FR\BlockSim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\Device.Polhemus\bin\Debug\it-IT\BlockSim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\Device.Polhemus\bin\Debug\zh-CN\BlockSim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CoreCompileInputs.cache
+C:\Lavoro\SourceTree\BlockSim\VStudio\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CopyComplete
+C:\Lavoro\SourceTree\BlockSim\VStudio\Device.Polhemus\obj\Debug\Device.Polhemus.dll
+C:\Lavoro\SourceTree\BlockSim\VStudio\Device.Polhemus\obj\Debug\Device.Polhemus.pdb
+C:\Lavoro\SourceTree\BlockSim\VStudio\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.AssemblyReference.cache
+C:\Lavoro\SourceTree\BautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\Device.Polhemus.dll
+C:\Lavoro\SourceTree\BautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\Device.Polhemus.pdb
+C:\Lavoro\SourceTree\BautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\BlockSim.Globalization.dll
+C:\Lavoro\SourceTree\BautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.dll
+C:\Lavoro\SourceTree\BautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\USBClassLibrary.dll
+C:\Lavoro\SourceTree\BautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\BlockSim.Globalization.pdb
+C:\Lavoro\SourceTree\BautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.pdb
+C:\Lavoro\SourceTree\BautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\USBClassLibrary.pdb
+C:\Lavoro\SourceTree\BautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\fr-FR\BlockSim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\it-IT\BlockSim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\zh-CN\BlockSim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.AssemblyReference.cache
+C:\Lavoro\SourceTree\BautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CoreCompileInputs.cache
+C:\Lavoro\SourceTree\BautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CopyComplete
+C:\Lavoro\SourceTree\BautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\obj\Debug\Device.Polhemus.dll
+C:\Lavoro\SourceTree\BautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\obj\Debug\Device.Polhemus.pdb
+C:\Lavoro\SourceTree\BeautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\Device.Polhemus.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\Device.Polhemus.pdb
+C:\Lavoro\SourceTree\BeautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\BlockSim.Globalization.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\USBClassLibrary.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\BlockSim.Globalization.pdb
+C:\Lavoro\SourceTree\BeautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\Khymeia.Device.Motion.pdb
+C:\Lavoro\SourceTree\BeautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\USBClassLibrary.pdb
+C:\Lavoro\SourceTree\BeautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\fr-FR\BlockSim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\it-IT\BlockSim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\bin\Debug\zh-CN\BlockSim.Globalization.resources.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.AssemblyReference.cache
+C:\Lavoro\SourceTree\BeautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CoreCompileInputs.cache
+C:\Lavoro\SourceTree\BeautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\obj\Debug\Device.Polhemus.csproj.CopyComplete
+C:\Lavoro\SourceTree\BeautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\obj\Debug\Device.Polhemus.dll
+C:\Lavoro\SourceTree\BeautySim\BeautySimStartingApp\BeautySimStartingApp\Device.Polhemus\obj\Debug\Device.Polhemus.pdb

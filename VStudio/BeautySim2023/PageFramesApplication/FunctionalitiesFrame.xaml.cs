@@ -37,13 +37,12 @@ namespace BeautySim2023
             //}
             AppControl.Instance.CheckModulesActivation();
             AppControl.Instance.OldTeacher = AppControl.Instance.CurrentTeacher;
-            AppControl.Instance.WindowStudent.spLegenda.Visibility = Visibility.Hidden;
+            //AppControl.Instance.WindowStudent.spLegenda.Visibility = Visibility.Hidden;
 
             InitModulesItemSource();
 
             InitFrame();
-
-            //PrepareBackGroundWorker();
+            //AppControl.Instance.Model3DInitialized = false;
         }
 
         public void InitFrame()
@@ -80,6 +79,7 @@ namespace BeautySim2023
         //}
         private void bLoadCase_Click(object sender, RoutedEventArgs e)
         {
+           
             if ((AppControl.Instance.CurrentTeacher != null) && (AppControl.Instance.CurrentStudent == null))
             {
                 if (MessageBox.Show(BeautySim.Globalization.Language.str_no_student_sel, true, 1000, false) == false)
@@ -288,6 +288,64 @@ namespace BeautySim2023
             catch (Exception ex)
             {
             }
+        }
+
+        private void Calibration_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Calib3DWindow Cal3DWindow = new Calib3DWindow();
+                Cal3DWindow.ShowDialog();
+                AppControl.Instance.ReadCoordinateFile();
+                AppControl.Instance.UpdateTranslationManikin3D();
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            tgView3DPhases.IsChecked = Properties.Settings.Default.View3DPhases;
+            tgViewImagePhases.IsChecked = Properties.Settings.Default.ViewImagePhases;
+            tgViewQuestionnaire.IsChecked = Properties.Settings.Default.ViewQuestionnairePhases;
+        }
+
+        private void tgView3DPhases_Checked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.View3DPhases = true;
+            Properties.Settings.Default.Save();
+        }
+
+        private void tgView3DPhases_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.View3DPhases = false;
+            Properties.Settings.Default.Save();
+        }
+
+        private void tgViewImagePhases_Checked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.ViewImagePhases = true;
+            Properties.Settings.Default.Save();
+
+        }
+
+        private void tgViewImagePhases_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.ViewImagePhases = false;
+            Properties.Settings.Default.Save();
+        }
+
+        private void tgViewQuestionnaire_Checked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.ViewQuestionnairePhases = true;
+            Properties.Settings.Default.Save();
+        }
+
+        private void tgViewQuestionnaire_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.ViewQuestionnairePhases = false;
+            Properties.Settings.Default.Save();
         }
     }
 }
