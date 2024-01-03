@@ -34,7 +34,7 @@ namespace Calib3DApp
         private List<long> averageCollisionTime = new List<long>();
 
         //private float axisPositionOffsetNeedle = 5.5f;
-        private float axisPositionOffsetNeedle = 0f;
+        //private float axisPositionOffsetNeedle = 0f;
 
         private Point3D baseNeedle;
         private Point3D baseNeedleOrigin;
@@ -56,7 +56,7 @@ namespace Calib3DApp
         private PDIClass pDIClass;
         private List<MeshGeometryModel3D> pointsToBeShown = new List<MeshGeometryModel3D>();
         private System.Windows.Media.Media3D.Quaternion rotation_Manikin;
-        private float rotationAngleOffsetNeedle = 0;
+        //private float rotationAngleOffsetNeedle = 0;
         private System.Windows.Media.Media3D.Quaternion rotationSensor_WRS;
         private int rotationTimer;
         private Enum_StateCollision sc = Enum_StateCollision.NONE;
@@ -98,15 +98,15 @@ namespace Calib3DApp
             }
         }
 
-        public float AxisPositionOffsetNeedle
-        {
-            get { return axisPositionOffsetNeedle; }
-            set
-            {
-                axisPositionOffsetNeedle = value;
-                OnPropertyChanged(nameof(AxisPositionOffsetNeedle));
-            }
-        }
+        //public float AxisPositionOffsetNeedle
+        //{
+        //    get { return axisPositionOffsetNeedle; }
+        //    set
+        //    {
+        //        axisPositionOffsetNeedle = value;
+        //        OnPropertyChanged(nameof(AxisPositionOffsetNeedle));
+        //    }
+        //}
 
         public Point3D BaseNeedle
         {
@@ -198,15 +198,15 @@ namespace Calib3DApp
             }
         }
 
-        public float RotationAngleOffsetNeedle
-        {
-            get { return rotationAngleOffsetNeedle; }
-            set
-            {
-                rotationAngleOffsetNeedle = value;
-                OnPropertyChanged(nameof(RotationAngleOffsetNeedle));
-            }
-        }
+        //public float RotationAngleOffsetNeedle
+        //{
+        //    get { return rotationAngleOffsetNeedle; }
+        //    set
+        //    {
+        //        rotationAngleOffsetNeedle = value;
+        //        OnPropertyChanged(nameof(RotationAngleOffsetNeedle));
+        //    }
+        //}
 
         public System.Windows.Media.Media3D.Quaternion RotationSensor_WRS_real
         {
@@ -489,8 +489,7 @@ namespace Calib3DApp
 
         internal void Calibrate()
         {
-            if (Properties.Settings.Default.CalibrationMode == "Mean")
-            {
+
                 var averageXAssigned = InjectionPoints3DCalib.Average(point => point.XAssigned);
                 var averageYAssigned = InjectionPoints3DCalib.Average(point => point.YAssigned);
                 var averageZAssigned = InjectionPoints3DCalib.Average(point => point.ZAssigned);
@@ -516,56 +515,7 @@ namespace Calib3DApp
                         writer.WriteLine((averageZAssigned-averageZ).ToString("00.00", new CultureInfo("en-US")));
                     }
                 }
-            }
-            else
-            {
-                QuaternionRotation3D RotationManikin3D = new QuaternionRotation3D();
-                TranslateTransform3D TranslationManikin3D = new TranslateTransform3D();
-                Point3D TranslationPointModel = new Point3D(50, -140, 6.5);
-
-                System.Windows.Media.Media3D.Quaternion qy = CreateRotationQuaternionAlongAxis(0, 1);
-                System.Windows.Media.Media3D.Quaternion qz = CreateRotationQuaternionAlongAxis(0, 2);
-
-                //PIRINI
-                Rotation_Manikin = qy * qz;
-
-                RotationManikin3D = new QuaternionRotation3D(Rotation_Manikin);
-                TranslationManikin3D = new TranslateTransform3D(TranslationPointModel.X, TranslationPointModel.Y, TranslationPointModel.Z);
-
-                Transform3DGroup TransformGroupMankin = new Transform3DGroup();
-                TransformGroupMankin.Children.Add(new RotateTransform3D(RotationManikin3D));
-                TransformGroupMankin.Children.Add(TranslationManikin3D);
-
-                List<Point3D> points = new List<Point3D>();
-                List<Point3D> pointsShifted = new List<Point3D>();
-                foreach (InjectionPoint3DCalib it in InjectionPoints3DCalib)
-                {
-                    points.Add(new Point3D(it.X, it.Y, it.Z));
-                }
-                foreach (Point3D itOr in points)
-                {
-                    pointsShifted.Add(GetRotoTransatedPoint(TransformGroupMankin, itOr));
-                }
-
-                for (int i = 0; i < pointsShifted.Count; i++)
-                {
-                    MeshGeometryModel3D aa = new MeshGeometryModel3D();
-                    aa.CullMode = SharpDX.Direct3D11.CullMode.Back;
-
-                    var sphereA = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
-                    sphereA.AddSphere(new Vector3(0, 0, 0), 2);
-                    HelixToolkit.Wpf.SharpDX.Geometry3D geometrySphere = sphereA.ToMeshGeometry3D();
-                    HelixToolkit.Wpf.SharpDX.Material MaterialSphere = DiffuseMaterials.Red;
-                    aa.Geometry = geometrySphere;
-                    aa.Material = MaterialSphere;
-
-                    aa.Transform = new TranslateTransform3D(pointsShifted[i].X, pointsShifted[i].Y, pointsShifted[i].Z);
-
-                    WindowMain.hvView3D.Items.Add(aa);
-                }
-
-                Transform3DGroup td3dg = FindAlignment(pointsShifted.ToArray(), points.ToArray());
-            }
+            
         }
 
         internal void CloseApp()
@@ -639,9 +589,6 @@ namespace Calib3DApp
 
             pDIClass = new PDIClass();
             ConnectPDI();
-            WindowMain.entranceListView.Visibility = Visibility.Visible;
-            WindowMain.pointsListView3D.Visibility = Visibility.Collapsed;
-            WindowMain.gmModels.Transform = new TranslateTransform3D(37.3, -134.1, 0);
             WindowMain.entranceListView.Visibility = Visibility.Collapsed;
             WindowMain.pointsListView3D.Visibility = Visibility.Visible;
             WindowMain.gmModels.Transform = new TranslateTransform3D(0, 0, 0);
@@ -676,10 +623,6 @@ namespace Calib3DApp
                 if (InjectionPoints3DCalib[i].Assigned)
                 {
                     aa.Transform = new TranslateTransform3D(InjectionPoints3DCalib[i].X, InjectionPoints3DCalib[i].Y, InjectionPoints3DCalib[i].Z);
-                }
-                else
-                {
-                    aa.Transform = new TranslateTransform3D(50, 50, 50 + i * 30);
                 }
 
                 pointsToBeShown.Add(aa);
@@ -1044,16 +987,16 @@ namespace Calib3DApp
                             ZPosSensor02 = f1.Pos.Z * 10;
                             RotationSensor_WRS_real = new System.Windows.Media.Media3D.Quaternion(f1.Ori.X, f1.Ori.Y, f1.Ori.Z, f1.Ori.W);
 
-                            AxisAngleRotation3D T1pre = new AxisAngleRotation3D(new Vector3D(1, 0, 0), RotationAngleOffsetNeedle);
-                            RotateTransform3D T1 = new RotateTransform3D(T1pre);
-                            TranslateTransform3D T2 = new TranslateTransform3D(0, AxisPositionOffsetNeedle, 0);
+                            //AxisAngleRotation3D T1pre = new AxisAngleRotation3D(new Vector3D(1, 0, 0), RotationAngleOffsetNeedle);
+                            //RotateTransform3D T1 = new RotateTransform3D(T1pre);
+                            //TranslateTransform3D T2 = new TranslateTransform3D(0, AxisPositionOffsetNeedle, 0);
                             QuaternionRotation3D rotation = new QuaternionRotation3D(RotationSensor_WRS_real);
                             RotateTransform3D T3 = new RotateTransform3D(rotation);
                             TranslateTransform3D T4 = new TranslateTransform3D(XPosSensor02, YPosSensor02, ZPosSensor02);
 
                             Transform3DGroup transformGroup = new Transform3DGroup();
-                            transformGroup.Children.Add(T2);
-                            transformGroup.Children.Add(T1);
+                            //transformGroup.Children.Add(T2);
+                            //transformGroup.Children.Add(T1);
                             transformGroup.Children.Add(T3);
                             transformGroup.Children.Add(T4);
 

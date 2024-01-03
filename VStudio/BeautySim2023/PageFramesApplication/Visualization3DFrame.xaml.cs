@@ -83,5 +83,15 @@ namespace BeautySim2023
             AppControl.Instance.UpdateVisibilityItems(true);
             InjectionPointListView.ItemsSource = AppControl.Instance.InjectionPoints3DThisStep;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ZeroVolume_Click(object sender, RoutedEventArgs e)
+        {
+            AppControl.Instance.ZeroVolume();
+        }
     }
 }

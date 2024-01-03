@@ -156,7 +156,7 @@
                                 <QuaternionRotation3D Quaternion="{Binding Rotation_Manikin}" />
                             </RotateTransform3D.Rotation>
                         </RotateTransform3D>
-                        <TranslateTransform3D OffsetX="37.3" OffsetY="-134.1" OffsetZ="0" />
+                        <TranslateTransform3D OffsetX="0" OffsetY="0" OffsetZ="0" />
                     </Transform3DGroup>
                 </hx:GroupModel3D.Transform>
 

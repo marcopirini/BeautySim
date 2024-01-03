@@ -79,8 +79,6 @@
                                 <QuaternionRotation3D Quaternion="{Binding Rotation_Manikin}" />
                             </RotateTransform3D.Rotation>
                         </RotateTransform3D>
-                        <!--<TranslateTransform3D OffsetX="{Binding XPosSensor02}" OffsetY="{Binding YPosSensor02}" OffsetZ="{Binding ZPosSensor02}" />-->
-                        <!--<TranslateTransform3D OffsetX="37.3" OffsetY="-134.1" OffsetZ="0" />-->
                         <TranslateTransform3D OffsetX="{Binding TranslationPointModel.X}"
                                               OffsetY="{Binding TranslationPointModel.Y}"
                                               OffsetZ="{Binding TranslationPointModel.Z}" />

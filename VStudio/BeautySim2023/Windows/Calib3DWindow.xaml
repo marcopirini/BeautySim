@@ -77,12 +77,7 @@
                 <MouseBinding Command="hx:ViewportCommands.Pan" Gesture="Alt+RightClick"/>
             </hx:Viewport3DX.InputBindings>
             <i:Interaction.Triggers>
-                <!--<i:EventTrigger EventName="MouseLeftButtonDown">
-                    <ie:CallMethodAction MethodName="OnMouseLeftButtonDownHandler" TargetObject="{Binding}" />
-                </i:EventTrigger>-->
-                <!--<i:EventTrigger EventName="MouseMove">
-                    <ie:CallMethodAction MethodName="OnMouseMoveHandler" TargetObject="{Binding}" />
-                </i:EventTrigger>-->
+
             </i:Interaction.Triggers>
             <hx:MeshGeometryModel3D Name="indicationSphere"
                 CullMode="Back"
@@ -124,7 +119,7 @@
                                 <QuaternionRotation3D Quaternion="{Binding Rotation_Manikin}" />
                             </RotateTransform3D.Rotation>
                         </RotateTransform3D>
-                        <TranslateTransform3D OffsetX="37.3" OffsetY="-134.1" OffsetZ="0" />
+                        <TranslateTransform3D OffsetX="0" OffsetY="0" OffsetZ="0" />
                     </Transform3DGroup>
                 </hx:GroupModel3D.Transform>
 
@@ -212,7 +207,7 @@
                         <GridViewColumn Header="X">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding X, StringFormat={}{0:F2}}" />
+                                    <TextBlock Text="{Binding XRotated, StringFormat={}{0:F2}}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -221,7 +216,7 @@
                         <GridViewColumn Header="Y">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Y, StringFormat={}{0:F2}}" />
+                                    <TextBlock Text="{Binding YRotated, StringFormat={}{0:F2}}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -230,7 +225,7 @@
                         <GridViewColumn Header="Z">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Z, StringFormat={}{0:F2}}" />
+                                    <TextBlock Text="{Binding ZRotated, StringFormat={}{0:F2}}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

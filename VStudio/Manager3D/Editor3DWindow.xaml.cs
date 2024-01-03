@@ -194,67 +194,7 @@ namespace Manager3D
             {
                 if (loadedModel && loadedViewer)
                 {
-                    //Model3DGroup modelToView = new Model3DGroup();
-
-                    //if ((bool)cbProbe.IsChecked)
-                    //{
-                    //    for (int i = 0; i < indexesProbe.Count; i++)
-                    //    {
-                    //        modelToView.Children.Add((GeometryModel3D)modelProbe.Children[indexesProbe[i]]);
-                    //    }
-                    //}
-
-                    //Model3DGroup modelToView = new Model3DGroup();
-
-                    //if ((bool)cbUterus.IsChecked)
-                    //{
-                    //    for (int i = 0; i < indexesUterus.Count; i++)
-                    //    {
-                    //        modelToView.Children.Add((GeometryModel3D)modelFemale.Children[indexesUterus[i]]);
-                    //    }
-                    //}
-
-                    //if ((bool)cbFemale.IsChecked)
-                    //{
-                    //    bool trasparency = false;
-
-                    //    Material mat3 = MaterialHelper.CreateMaterial(Colors.Pink, trasparency ? 0.15 : 0.9);
-                    //    Material mat4 = MaterialHelper.CreateMaterial(Colors.RosyBrown, trasparency ? 0.1 : 0.9);
-
-                    //    for (int i = 0; i < indexesFemale.Count; i++)
-                    //    {
-                    //        try
-                    //        {
-                    //            GeometryModel3D geometryModel = (GeometryModel3D)modelFemale.Children[indexesFemale[i]];
-
-                    //            string c = geometryModel.GetName();
-
-                    //            if (c.Contains("Hair"))
-                    //            {
-                    //                geometryModel.Material = mat4;
-                    //                geometryModel.BackMaterial = mat4;
-                    //            }
-                    //            if (c.Contains("Lady"))
-                    //            {
-                    //                geometryModel.Material = mat3;
-                    //                geometryModel.BackMaterial = mat3;
-                    //            }
-                    //            modelToView.Children.Add((GeometryModel3D)modelFemale.Children[indexesFemale[i]]);
-                    //        }
-                    //        catch (Exception)
-                    //        {
-                    //        }
-                    //    }
-                    //}
-
-                    //var transformGroup = new Transform3DGroup();
-
-                    //transformGroup.Children.Add(new ScaleTransform3D(1000, 1000, 1000));
-
-                    //modelToView.Transform = transformGroup;
-
-                    //modelHumanBlock.Content = modelToView;
-                    //modelProbeBlock.Content = modelHead;
+                    
                 }
             }
         }
@@ -276,9 +216,5 @@ namespace Manager3D
         {
         }
 
-        private void bCalibrate_Click(object sender, RoutedEventArgs e)
-        {
-            Editor3DClass.Instance.Calibrate();
-        }
     }
 }

@@ -81,7 +81,7 @@ namespace BeautySim2023
                             Explanation = questionParts[5],
                             Weight = float.Parse(questionParts[6])
                         };
-                        question.Options.Shuffle();
+                        //question.Options.Shuffle();
                         Questions.Add(question);
                     }
                 }

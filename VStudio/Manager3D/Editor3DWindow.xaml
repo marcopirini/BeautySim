@@ -56,21 +56,6 @@
                 </StackPanel>
             </Button>
 
-
-            <Button Name="bCalibrate" Grid.Row="0"
-                          Margin="5"
-                          Click="bCalibrate_Click"
-
-                         Width="170">
-
-                <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon Kind="Calculator" HorizontalAlignment="Center" Height="40" Width="40" />
-                    <TextBlock VerticalAlignment="Center"
-                            Text="CALIBRATE" Margin="10">
-                    </TextBlock>
-                </StackPanel>
-            </Button>
-
             <Button Name="bClose" Grid.Row="0"
                           Margin="5"
                           Click="bClose_Click"
@@ -156,7 +141,7 @@
                                 <QuaternionRotation3D Quaternion="{Binding Rotation_Manikin}" />
                             </RotateTransform3D.Rotation>
                         </RotateTransform3D>
-                        <TranslateTransform3D OffsetX="37.3" OffsetY="-134.1" OffsetZ="0" />
+                        <TranslateTransform3D OffsetX="0" OffsetY="0" OffsetZ="0" />
                     </Transform3DGroup>
                 </hx:GroupModel3D.Transform>
 

@@ -111,9 +111,23 @@
                                 Height="70"
                                 Width="190"                             >
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Margin="0" Kind="Eye" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="38" />
+                            <materialDesign:PackIcon Margin="0" Kind="Face" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="38" />
                             <TextBlock Name="tbViewImages" VerticalAlignment="Center" TextWrapping="Wrap" Width="100" Margin="5"
                                 Text="{x:Static lang:Language.view_images}">
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Name="bViewPoints"
+                        Click="bViewPoints_Click" 
+                            VerticalAlignment="Bottom"
+                            Margin="5"
+                                Height="70"
+                                Width="190"                             >
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Margin="0" Kind="Eye" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="38" />
+                            <TextBlock Name="tbViewPoints" VerticalAlignment="Center" TextWrapping="Wrap" Width="100" Margin="5"
+                                Text="{x:Static lang:Language.view_points}">
                             </TextBlock>
                         </StackPanel>
                     </Button>

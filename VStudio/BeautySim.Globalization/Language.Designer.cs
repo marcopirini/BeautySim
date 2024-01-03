@@ -70,6 +70,15 @@ namespace BeautySim.Globalization {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a hide points.
+        /// </summary>
+        public static string hide_points {
+            get {
+                return ResourceManager.GetString("hide_points", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a A.
         /// </summary>
         public static string str_a {
@@ -1285,7 +1294,7 @@ namespace BeautySim.Globalization {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a insert 1 U.
+        ///   Cerca una stringa localizzata simile a insert 0.1 ml.
         /// </summary>
         public static string str_insertAnestetic_ctrl {
             get {
@@ -3513,6 +3522,15 @@ namespace BeautySim.Globalization {
         public static string view_images {
             get {
                 return ResourceManager.GetString("view_images", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a show points.
+        /// </summary>
+        public static string view_points {
+            get {
+                return ResourceManager.GetString("view_points", resourceCulture);
             }
         }
     }

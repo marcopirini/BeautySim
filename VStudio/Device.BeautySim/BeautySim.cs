@@ -276,7 +276,7 @@ namespace Device.BeautySim
                 while (!IsSimulator && (DateTime.Now - start).TotalMilliseconds < 4000)
                 {
                     SendMessage("ASKFIRMWARE");
-                    SendMessage("SERIAL");
+                    SendMessage("ASKSERIAL");
                     System.Threading.Thread.Sleep(200);
                 }
 
@@ -298,7 +298,7 @@ namespace Device.BeautySim
                 {
                     case (byte)Enum_SimulatorMessageType.FIRMWARE:
                         FirmwareVersion = System.Text.Encoding.Default.GetString(message);
-                        if (FirmwareVersion.StartsWith("BTY"))
+                        if (FirmwareVersion.StartsWith("BeautySim"))
                         {
                             IsSimulator = true;
                         }
@@ -316,7 +316,7 @@ namespace Device.BeautySim
                         break;
 
                     case (byte)Enum_SimulatorMessageType.FLUX:
-                        Flux = CalculateFlux(BitConverter.ToInt16(message, 0));
+                        Flux = CalculateFlux(BitConverter.ToSingle(message, 0));
                         UpdateVolume(Flux, DateTime.Now);
                         break;
 
@@ -394,6 +394,11 @@ namespace Device.BeautySim
             return (float)((v - 102) * 0.1 / (512 - 102) * 1000 / 60);
         }
 
+        private float CalculateFlux(float v)
+        {
+            return (float)((v - 102) * 0.1 / (512 - 102) * 1000 / 60);
+        }
+
         private void UpdateDataFromSensor()
         {
             try
@@ -436,7 +441,7 @@ namespace Device.BeautySim
                             switch (message_type)
                             {
                                 case (byte)Enum_SimulatorMessageType.FIRMWARE:
-                                    len_message = 7;
+                                    len_message = 13;
                                     break;
 
                                 case (byte)Enum_SimulatorMessageType.SERIAL:
@@ -448,7 +453,7 @@ namespace Device.BeautySim
                                     break;
 
                                 case (byte)Enum_SimulatorMessageType.FLUX:
-                                    len_message = 2;
+                                    len_message = 4;
                                     break;
                             }
 

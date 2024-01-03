@@ -1234,7 +1234,7 @@
     <value>Needle information</value>
   </data>
   <data name="str_insertAnestetic_ctrl" xml:space="preserve">
-    <value>insert 1 U</value>
+    <value>insert 0.1 ml</value>
   </data>
   <data name="str_calibrate" xml:space="preserve">
     <value>calibrate</value>
@@ -1244,5 +1244,11 @@
   </data>
   <data name="str_calibrate_window" xml:space="preserve">
     <value>calibration</value>
+  </data>
+  <data name="hide_points" xml:space="preserve">
+    <value>hide points</value>
+  </data>
+  <data name="view_points" xml:space="preserve">
+    <value>show points</value>
   </data>
 </root>

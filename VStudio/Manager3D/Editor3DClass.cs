@@ -32,7 +32,7 @@ namespace Manager3D
         private List<long> averageCollisionTime = new List<long>();
 
         //private float axisPositionOffsetNeedle = 5.5f;
-        private float axisPositionOffsetNeedle = 0f;
+        //private float axisPositionOffsetNeedle = 0f;
 
         private Point3D baseNeedle;
         private Point3D baseNeedleOrigin;
@@ -53,7 +53,7 @@ namespace Manager3D
         private List<MeshGeometryModel3D> pointsToBeShown = new List<MeshGeometryModel3D>();
         private List<PointHit> previousPointsHit = new List<PointHit>();
         private System.Windows.Media.Media3D.Quaternion rotation_Manikin;
-        private float rotationAngleOffsetNeedle = 0;
+        //private float rotationAngleOffsetNeedle = 0;
         private System.Windows.Media.Media3D.Quaternion rotationSensor_WRS;
         private int rotationTimer;
         private Enum_StateCollision sc = Enum_StateCollision.NONE;
@@ -97,15 +97,15 @@ namespace Manager3D
             }
         }
 
-        public float AxisPositionOffsetNeedle
-        {
-            get { return axisPositionOffsetNeedle; }
-            set
-            {
-                axisPositionOffsetNeedle = value;
-                OnPropertyChanged(nameof(AxisPositionOffsetNeedle));
-            }
-        }
+        //public float AxisPositionOffsetNeedle
+        //{
+        //    get { return axisPositionOffsetNeedle; }
+        //    set
+        //    {
+        //        axisPositionOffsetNeedle = value;
+        //        OnPropertyChanged(nameof(AxisPositionOffsetNeedle));
+        //    }
+        //}
 
         public Point3D BaseNeedle
         {
@@ -205,15 +205,15 @@ namespace Manager3D
             }
         }
 
-        public float RotationAngleOffsetNeedle
-        {
-            get { return rotationAngleOffsetNeedle; }
-            set
-            {
-                rotationAngleOffsetNeedle = value;
-                OnPropertyChanged(nameof(RotationAngleOffsetNeedle));
-            }
-        }
+        //public float RotationAngleOffsetNeedle
+        //{
+        //    get { return rotationAngleOffsetNeedle; }
+        //    set
+        //    {
+        //        rotationAngleOffsetNeedle = value;
+        //        OnPropertyChanged(nameof(RotationAngleOffsetNeedle));
+        //    }
+        //}
 
         public System.Windows.Media.Media3D.Quaternion RotationSensor_WRS_real
         {
@@ -252,10 +252,6 @@ namespace Manager3D
                 OnPropertyChanged(nameof(UpDirection));
             }
         }
-
-        public HelixToolkit.Wpf.SharpDX.Material ViewCubeMaterial2 { private set; get; }
-
-        public System.Windows.Media.Media3D.Transform3D ViewCubeTransform3 { private set; get; }
 
         public Visibility VisibilityAntenna { private set; get; } = Visibility.Hidden;
 
@@ -697,10 +693,7 @@ namespace Manager3D
                     {
                         aa.Transform = new TranslateTransform3D(InjectionPoints3D[i].X, InjectionPoints3D[i].Y, InjectionPoints3D[i].Z);
                     }
-                    else
-                    {
-                        aa.Transform = new TranslateTransform3D(50, 50, 50 + i * 30);
-                    }
+
 
                     pointsToBeShown.Add(aa);
 
@@ -752,10 +745,6 @@ namespace Manager3D
                     if (InjectionPoints3D[i].Assigned)
                     {
                         aa.Transform = new TranslateTransform3D(InjectionPoints3D[i].X, InjectionPoints3D[i].Y, InjectionPoints3D[i].Z);
-                    }
-                    else
-                    {
-                        aa.Transform = new TranslateTransform3D(50, 50, 50 + i * 30);
                     }
 
                     pointsToBeShown.Add(aa);
@@ -1183,16 +1172,16 @@ namespace Manager3D
                             ZPosSensor02 = f1.Pos.Z * 10;
                             RotationSensor_WRS_real = new System.Windows.Media.Media3D.Quaternion(f1.Ori.X, f1.Ori.Y, f1.Ori.Z, f1.Ori.W);
 
-                            AxisAngleRotation3D T1pre = new AxisAngleRotation3D(new Vector3D(1, 0, 0), RotationAngleOffsetNeedle);
-                            RotateTransform3D T1 = new RotateTransform3D(T1pre);
-                            TranslateTransform3D T2 = new TranslateTransform3D(0, AxisPositionOffsetNeedle, 0);
+                            //AxisAngleRotation3D T1pre = new AxisAngleRotation3D(new Vector3D(1, 0, 0), RotationAngleOffsetNeedle);
+                            //RotateTransform3D T1 = new RotateTransform3D(T1pre);
+                            //TranslateTransform3D T2 = new TranslateTransform3D(0, AxisPositionOffsetNeedle, 0);
                             QuaternionRotation3D rotation = new QuaternionRotation3D(RotationSensor_WRS_real);
                             RotateTransform3D T3 = new RotateTransform3D(rotation);
                             TranslateTransform3D T4 = new TranslateTransform3D(XPosSensor02, YPosSensor02, ZPosSensor02);
 
                             Transform3DGroup transformGroup = new Transform3DGroup();
-                            transformGroup.Children.Add(T2);
-                            transformGroup.Children.Add(T1);
+                            //transformGroup.Children.Add(T2);
+                            //transformGroup.Children.Add(T1);
                             transformGroup.Children.Add(T3);
                             transformGroup.Children.Add(T4);
 
@@ -1500,112 +1489,10 @@ namespace Manager3D
             }
         }
 
-        internal void Calibrate()
-        {
-            QuaternionRotation3D RotationManikin3D = new QuaternionRotation3D();
-            TranslateTransform3D TranslationManikin3D = new TranslateTransform3D();
-            Point3D TranslationPointModel = new Point3D(50, -140, 6.5);
-
-            System.Windows.Media.Media3D.Quaternion qy = CreateRotationQuaternionAlongAxis(0, 1);
-            System.Windows.Media.Media3D.Quaternion qz = CreateRotationQuaternionAlongAxis(0, 2);
-
-            //PIRINI
-            Rotation_Manikin = qy * qz;
-
-            RotationManikin3D = new QuaternionRotation3D(Rotation_Manikin);
-            TranslationManikin3D = new TranslateTransform3D(TranslationPointModel.X, TranslationPointModel.Y, TranslationPointModel.Z);
-
-            Transform3DGroup TransformGroupMankin = new Transform3DGroup();
-            TransformGroupMankin.Children.Add(new RotateTransform3D(RotationManikin3D));
-            TransformGroupMankin.Children.Add(TranslationManikin3D);
-
-            List<Point3D> points = new List<Point3D>();
-            List<Point3D> pointsShifted = new List<Point3D>();
-            foreach (InjectionPoint3D it in InjectionPoints3D)
-            {
-                points.Add(new Point3D(it.X, it.Y, it.Z));
-            }
-            foreach (Point3D itOr in points)
-            {
-                pointsShifted.Add(GetRotoTransatedPoint(TransformGroupMankin, itOr));
-            }
-
-            for (int i = 0; i < pointsShifted.Count; i++)
-            {
-                MeshGeometryModel3D aa = new MeshGeometryModel3D();
-                aa.CullMode = SharpDX.Direct3D11.CullMode.Back;
-
-                var sphereA = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
-                sphereA.AddSphere(new Vector3(0, 0, 0), 2);
-                HelixToolkit.Wpf.SharpDX.Geometry3D geometrySphere = sphereA.ToMeshGeometry3D();
-                HelixToolkit.Wpf.SharpDX.Material MaterialSphere = DiffuseMaterials.Red;
-                aa.Geometry = geometrySphere;
-                aa.Material = MaterialSphere;
-
-                aa.Transform = new TranslateTransform3D(pointsShifted[i].X, pointsShifted[i].Y, pointsShifted[i].Z);
-
-                WindowMain.hvView3D.Items.Add(aa);
-            }
-
-            Transform3DGroup td3dg = FindAlignment(pointsShifted.ToArray(), points.ToArray());
-        }
-
         public Point3D GetRotoTransatedPoint(Transform3DGroup tsg, Point3D origin)
         {
             Point3D ptd = tsg.Transform(origin);
             return ptd;
-        }
-
-        public static Transform3DGroup FindAlignment(Point3D[] modelPoints, Point3D[] worldPoints)
-        {
-            if (modelPoints.Length != worldPoints.Length || modelPoints.Length < 3)
-                throw new ArgumentException("Invalid input, arrays must have the same length and at least three points.");
-
-            Vector3D[] modelPointsVec = Matrix3DUtils.ConvertPoint3DArrayToVector3DArray(modelPoints);
-            Vector3D[] worldPointsVec = Matrix3DUtils.ConvertPoint3DArrayToVector3DArray(worldPoints);
-
-            // Compute the centroids of the point sets
-            Vector3D modelCentroid = modelPointsVec.Aggregate(new Vector3D(0, 0, 0), (acc, p) => acc + p) / modelPoints.Length;
-            Vector3D worldCentroid = worldPointsVec.Aggregate(new Vector3D(0, 0, 0), (acc, p) => acc + p) / worldPoints.Length;
-
-            // Build the covariance matrix
-            Matrix3x3 H = Matrix3x3.Identity;
-            for (int i = 0; i < modelPoints.Length; i++)
-            {
-                Vector3D modelPoint = modelPointsVec[i] - modelCentroid;
-                Vector3D worldPoint = worldPointsVec[i] - worldCentroid;
-                H.M11 += (float)modelPoint.X * (float)worldPoint.X;
-                H.M12 += (float)modelPoint.X * (float)worldPoint.Y;
-                H.M13 += (float)modelPoint.X * (float)worldPoint.Z;
-                H.M21 += (float)modelPoint.Y * (float)worldPoint.X;
-                H.M22 += (float)modelPoint.Y * (float)worldPoint.Y;
-                H.M23 += (float)modelPoint.Y * (float)worldPoint.Z;
-                H.M31 += (float)modelPoint.Z * (float)worldPoint.X;
-                H.M32 += (float)modelPoint.Z * (float)worldPoint.Y;
-                H.M33 += (float)modelPoint.Z * (float)worldPoint.Z;
-            }
-
-            // Compute the Singular Value Decomposition of H
-            // Assume a function ComputeSVD exists that computes the SVD of a 3x3 matrix
-            (Matrix3x3 U, Matrix3x3 S, Matrix3x3 V) = Matrix3DUtils.ComputeSVD(H);
-
-            // The rotation matrix is U * V^T
-            V.Transpose();
-            Matrix3x3 rotationMatrix = U * V;
-
-            // The translation vector is the difference in centroids, adjusted by the rotation
-            Vector3D translationVector = new Vector3D(0, 0, 0);// worldCentroid - rotationMatrix.Transform(modelCentroid);
-
-            // Create the Transform3DGroup
-            Transform3DGroup transformGroup = new Transform3DGroup();
-
-            //System.Windows.Media.Media3D.Quaternion quaternion = Matrix3DUtils.QuaternionFromMatrix(rotationMatrix);  // Convert matrix to quaternion
-            //RotateTransform3D rotateTransform = new RotateTransform3D(new QuaternionRotation3D(quaternion));
-
-            //transformGroup.Children.Add(rotateTransform);
-            //transformGroup.Children.Add(new TranslateTransform3D(translationVector));
-
-            return transformGroup;
         }
     }
 }

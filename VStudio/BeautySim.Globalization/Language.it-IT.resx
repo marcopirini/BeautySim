@@ -1240,7 +1240,7 @@
     <value>Informazioni ago</value>
   </data>
   <data name="str_insertAnestetic_ctrl" xml:space="preserve">
-    <value>insert 1 U</value>
+    <value>inserisci 0.1 ml</value>
   </data>
   <data name="str_calibrate" xml:space="preserve">
     <value>calibra</value>
@@ -1250,5 +1250,11 @@
   </data>
   <data name="str_calibrate_window" xml:space="preserve">
     <value>calibrazione</value>
+  </data>
+  <data name="hide_points" xml:space="preserve">
+    <value>nascondi punti</value>
+  </data>
+  <data name="view_points" xml:space="preserve">
+    <value>visualizza punti</value>
   </data>
 </root>

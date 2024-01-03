@@ -30,7 +30,7 @@
         </Label>-->
 
         <hx:Viewport3DX Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="2" x:Name="hvView3D" ShowViewCube="False" 
-            ShowCoordinateSystem="False" EffectsManager="{Binding EffectsManager}">
+            ShowCoordinateSystem="True" EffectsManager="{Binding EffectsManager}">
             <hx:Viewport3DX.InputBindings>
                 <KeyBinding Key="B" Command="hx:ViewportCommands.BackView" />
                 <KeyBinding Key="F" Command="hx:ViewportCommands.FrontView" />
@@ -80,8 +80,6 @@
                                 <QuaternionRotation3D Quaternion="{Binding Rotation_Manikin}" />
                             </RotateTransform3D.Rotation>
                         </RotateTransform3D>
-                        <!--<TranslateTransform3D OffsetX="{Binding XPosSensor02}" OffsetY="{Binding YPosSensor02}" OffsetZ="{Binding ZPosSensor02}" />-->
-                        <!--<TranslateTransform3D OffsetX="37.3" OffsetY="-134.1" OffsetZ="0" />-->
                         <TranslateTransform3D OffsetX="{Binding TranslationPointModel.X}"
                                               OffsetY="{Binding TranslationPointModel.Y}"
                                               OffsetZ="{Binding TranslationPointModel.Z}" />
@@ -260,8 +258,7 @@
             </StackPanel>
         </Grid>
 
-
-        <Grid Name="grInformation" Grid.Row="2" Grid.Column="2" Margin="20" VerticalAlignment="Bottom">
+        <Grid Name="grInformation" Grid.Row="2" Grid.Column="2" Margin="10" VerticalAlignment="Bottom">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -269,39 +266,41 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Azimuth:" />
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Elevation:" />
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Impact Point X:   " />
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Impact Point Y:   " />
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="Impact Point Z:   " />
-            <TextBlock Grid.Row="5" Grid.Column="0" Text="Tip Needle X: " />
-            <TextBlock Grid.Row="6" Grid.Column="0" Text="Tip Needle Y: " />
-            <TextBlock Grid.Row="7" Grid.Column="0" Text="Tip Needle Z: " />
-            <TextBlock Grid.Row="8" Grid.Column="0" Text="Depth:    " />
+            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="10" Text="Azimuth (deg):" />
+            <TextBlock Grid.Row="1" Grid.Column="0" FontSize="10" Text="Elevation (deg):" />
+            <TextBlock Grid.Row="2" Grid.Column="0" FontSize="10" Text="Impact Point X (mm):   " />
+            <TextBlock Grid.Row="3" Grid.Column="0" FontSize="10" Text="Impact Point Y (mm):   " />
+            <TextBlock Grid.Row="4" Grid.Column="0" FontSize="10" Text="Impact Point Z (mm):   " />
+            <TextBlock Grid.Row="5" Grid.Column="0" FontSize="10" Text="Depth (mm):    " />
+            <TextBlock Grid.Row="0" Grid.Column="2" FontSize="10" Margin="10,0,0,0" Text="Tip Needle X (mm): " />
+            <TextBlock Grid.Row="1" Grid.Column="2" FontSize="10" Margin="10,0,0,0" Text="Tip Needle Y (mm): " />
+            <TextBlock Grid.Row="2" Grid.Column="2" FontSize="10" Margin="10,0,0,0" Text="Tip Needle Z (mm): " />
+            <TextBlock Grid.Row="3" Grid.Column="2" FontSize="10" Margin="10,0,0,0" Text="Flux (ml/s):    " />
+            <TextBlock Grid.Row="4" Grid.Column="2" FontSize="10" Margin="10,0,0,0" Text="Volume (ml):    " />
+          
 
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding YawNeedle, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding PitchNeedle, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ImpactPoint.X, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ImpactPoint.Y, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
-            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ImpactPoint.Z, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
-            <!--<TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding TipNeedle.X, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
-            <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding TipNeedle.Y, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
-            <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding TipNeedle.Z, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />-->
+            <TextBlock Grid.Row="0" Grid.Column="1" FontSize="15" Text="{Binding YawNeedle, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="1" Grid.Column="1" FontSize="15" Text="{Binding PitchNeedle, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="2" Grid.Column="1" FontSize="15" Text="{Binding ImpactPointToShow.X, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="3" Grid.Column="1" FontSize="15" Text="{Binding ImpactPointToShow.Y, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="4" Grid.Column="1" FontSize="15" Text="{Binding ImpactPointToShow.Z, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="5" Grid.Column="1" FontSize="15" Text="{Binding DepthInjection, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="0" Grid.Column="3" FontSize="15" Text="{Binding XPosSensor02, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="1" Grid.Column="3" FontSize="15" Text="{Binding YPosSensor02, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="2" Grid.Column="3" FontSize="15" Text="{Binding ZPosSensor02, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="3" Grid.Column="3" FontSize="15" Text="{Binding FluxLiquid, StringFormat={}{0:F2}}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Row="4" Grid.Column="3" FontSize="15" Text="{Binding VolumeLiquid, StringFormat={}{0:F2}}" HorizontalAlignment="Right" />
 
-            <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding XPosSensor02, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
-            <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding YPosSensor02, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
-            <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding ZPosSensor02, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
-            <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding DepthInjection, StringFormat={}{0:F1}}" HorizontalAlignment="Right" />
+            <Button Grid.Row="5"  Margin="5" Content="Zero Volume" Height="20" Grid.Column="2" FontSize="8" Grid.ColumnSpan="4" Click="ZeroVolume_Click"  ></Button>
+
         </Grid>
     </Grid>
 </Page>

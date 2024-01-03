@@ -10,6 +10,8 @@ namespace BeautySim2023
     {
         LOADING,
         OPERATIVE,
-        FEEDBACK
+        FEEDBACK,
+        FEEDBACK_INJECTIONPOINTS_EFFECTS,
+        FINAL_FEEDBACK
     }
 }

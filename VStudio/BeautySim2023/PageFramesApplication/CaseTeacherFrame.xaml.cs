@@ -72,5 +72,10 @@ namespace BeautySim2023
             AppControl.Instance.ManageViewImagesOn3D();
 
         }
+
+        private void bViewPoints_Click(object sender, RoutedEventArgs e)
+        {
+            AppControl.Instance.ManageViewPointsOn3D(!AppControl.Instance.ArePointsVisualizedOn3D);
+        }
     }
 }

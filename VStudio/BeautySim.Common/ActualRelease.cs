@@ -12,6 +12,8 @@ namespace BeautySim.Common
         private double depthInjection;
         private double actualY;
         private double actualX;
+        private double artificiallyInjectedQuantity;
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -33,6 +35,21 @@ namespace BeautySim.Common
                 }
             }
         }
+
+        [XmlAttribute]
+        public double ArtificiallyInjectedQuantity
+        {
+            get { return artificiallyInjectedQuantity; }
+            set
+            {
+                if (artificiallyInjectedQuantity != value)
+                {
+                    artificiallyInjectedQuantity = value;
+                    OnPropertyChanged(nameof(ArtificiallyInjectedQuantity));
+                }
+            }
+        }
+
 
         [XmlAttribute]
         public double DepthInjection

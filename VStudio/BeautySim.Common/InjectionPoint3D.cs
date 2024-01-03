@@ -194,7 +194,7 @@ namespace BeautySim.Common
             double num = 0;
             foreach (ActualRelease actualRelease in ActualReleases)
             {
-                num += actualRelease.InjectedQuantity;
+                num += (actualRelease.InjectedQuantity + actualRelease.ArtificiallyInjectedQuantity);
             }
             
             ActuallyChosenOrPerformedQuantity = num;
@@ -206,7 +206,7 @@ namespace BeautySim.Common
             double minYaw = 1000;
             foreach (ActualRelease actualRelease in ActualReleases)
             {
-                if ((actualRelease.YawEntrance < minYaw) && (actualRelease.InjectedQuantity > 0))    
+                if ((actualRelease.YawEntrance < minYaw) && ((actualRelease.InjectedQuantity + actualRelease.ArtificiallyInjectedQuantity) > 0))    
                 {
                     minYaw = actualRelease.YawEntrance;
                 }
@@ -219,7 +219,7 @@ namespace BeautySim.Common
             double maxYaw = -1000;
             foreach (ActualRelease actualRelease in ActualReleases)
             {
-                if ((actualRelease.YawEntrance > maxYaw) && (actualRelease.InjectedQuantity > 0))
+                if ((actualRelease.YawEntrance > maxYaw) && ((actualRelease.InjectedQuantity + actualRelease.ArtificiallyInjectedQuantity) > 0))
                 {
                     maxYaw = actualRelease.YawEntrance;
                 }
@@ -232,7 +232,7 @@ namespace BeautySim.Common
             double minPitch = 1000;
             foreach (ActualRelease actualRelease in ActualReleases)
             {
-                if ((actualRelease.PitchEntrance < minPitch) && (actualRelease.InjectedQuantity > 0))
+                if ((actualRelease.PitchEntrance < minPitch) && ((actualRelease.InjectedQuantity + actualRelease.ArtificiallyInjectedQuantity) > 0))
                 {
                     minPitch = actualRelease.PitchEntrance;
                 }
@@ -245,7 +245,7 @@ namespace BeautySim.Common
             double maxPitch = -1000;
             foreach (ActualRelease actualRelease in ActualReleases)
             {
-                if ((actualRelease.PitchEntrance > maxPitch) && (actualRelease.InjectedQuantity > 0))
+                if ((actualRelease.PitchEntrance > maxPitch) && ((actualRelease.InjectedQuantity + actualRelease.ArtificiallyInjectedQuantity) > 0))
                 {
                     maxPitch = actualRelease.PitchEntrance;
                 }

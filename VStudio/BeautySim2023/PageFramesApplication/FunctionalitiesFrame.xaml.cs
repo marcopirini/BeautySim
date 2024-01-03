@@ -20,7 +20,7 @@ namespace BeautySim2023
         private List<string> listCasesImages = new List<string>();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public FunctionalitiesFrame()
         {
@@ -30,11 +30,6 @@ namespace BeautySim2023
             AppControl.Instance.WindowTeacher.bLogOut.Visibility = Visibility.Collapsed;
             AppControl.Instance.WindowTeacher.cbSelectLanguage.Visibility = Visibility.Collapsed;
 
-            //if (AppControl.Instance != null &&  ((AppControl.Instance.CurrentTeacher != null && AppControl.Instance.CurrentTeacher.UserName == AppControl.ADMIN_USERNAME) ||
-            //    AppControl.Instance.OldTeacher != null && AppControl.Instance.OldTeacher.UserName == AppControl.ADMIN_USERNAME))
-            //{
-            //    AppControl.Instance.CheckModulesActivation();
-            //}
             AppControl.Instance.CheckModulesActivation();
             AppControl.Instance.OldTeacher = AppControl.Instance.CurrentTeacher;
             //AppControl.Instance.WindowStudent.spLegenda.Visibility = Visibility.Hidden;
@@ -42,7 +37,6 @@ namespace BeautySim2023
             InitModulesItemSource();
 
             InitFrame();
-            //AppControl.Instance.Model3DInitialized = false;
         }
 
         public void InitFrame()
@@ -58,12 +52,13 @@ namespace BeautySim2023
         }
 
         /// <summary>
-        ///  
+        ///
         /// </summary>
         public void InitModulesItemSource()
         {
             cbSelectModule.ItemsSource = AppControl.Instance.ModulesNames;
         }
+
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             AppControl.Instance.WindowTeacher.Navigate(new StartPageFrame());
@@ -79,7 +74,6 @@ namespace BeautySim2023
         //}
         private void bLoadCase_Click(object sender, RoutedEventArgs e)
         {
-           
             if ((AppControl.Instance.CurrentTeacher != null) && (AppControl.Instance.CurrentStudent == null))
             {
                 if (MessageBox.Show(BeautySim.Globalization.Language.str_no_student_sel, true, 1000, false) == false)
@@ -222,9 +216,8 @@ namespace BeautySim2023
             AppControl.Instance.WindowTeacher.Navigate(new ResultsManagerFrame());
         }
 
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -234,7 +227,7 @@ namespace BeautySim2023
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="v"></param>
         private void SetUpThisFrame(bool v)
@@ -294,8 +287,12 @@ namespace BeautySim2023
         {
             try
             {
+                //Init and execute Calibration Environment
+
                 Calib3DWindow Cal3DWindow = new Calib3DWindow();
                 Cal3DWindow.ShowDialog();
+
+                //Update Rotottraslation parameters
                 AppControl.Instance.ReadCoordinateFile();
                 AppControl.Instance.UpdateTranslationManikin3D();
             }
@@ -327,7 +324,6 @@ namespace BeautySim2023
         {
             Properties.Settings.Default.ViewImagePhases = true;
             Properties.Settings.Default.Save();
-
         }
 
         private void tgViewImagePhases_Unchecked(object sender, RoutedEventArgs e)

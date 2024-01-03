@@ -69,7 +69,52 @@ namespace BeautySim.Common
         private double zAssigned;
         private double yAssigned;
         private double xAssigned;
+        private double zRotated;
+        private double yRotated;
+        private double xRotated;
 
+
+        [XmlAttribute]
+        public double XRotated
+        {
+            get { return xRotated; }
+            set
+            {
+                if (xRotated != value)
+                {
+                    xRotated = value;
+                    OnPropertyChanged(nameof(XRotated));
+                }
+            }
+        }
+
+        [XmlAttribute]
+        public double YRotated
+        {
+            get { return yRotated; }
+            set
+            {
+                if (yRotated != value)
+                {
+                    yRotated = value;
+                    OnPropertyChanged(nameof(YRotated));
+                }
+            }
+        }
+
+        [XmlAttribute]
+        public double ZRotated
+        {
+            get { return zRotated; }
+            set
+            {
+                if (zRotated != value)
+                {
+                    zRotated = value;
+                    OnPropertyChanged(nameof(ZRotated));
+                }
+            }
+        }
 
         [XmlAttribute]
         public double XAssigned
@@ -131,6 +176,11 @@ namespace BeautySim.Common
         public System.Windows.Media.Media3D.Point3D GetPointAssigned()
         {
             return new System.Windows.Media.Media3D.Point3D(XAssigned, YAssigned, ZAssigned);
+        }
+
+        public System.Windows.Media.Media3D.Point3D GetPointRotated()
+        {
+            return new System.Windows.Media.Media3D.Point3D(XRotated, YRotated, ZRotated);
         }
 
     }

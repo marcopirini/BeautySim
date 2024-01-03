@@ -21,828 +21,59 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Threading;
 using System.Xml.Serialization;
-using VectorMath;
-using System.Collections.Generic;
 using HelixToolkitException = HelixToolkit.Wpf.SharpDX.HelixToolkitException;
 using HitTestResult = HelixToolkit.Wpf.SharpDX.HitTestResult;
-using MIConvexHull;
 
 namespace BeautySim2023
 {
     public class AppControl : IDisposable, INotifyPropertyChanged
     {
-        public Enum_AreaDefinition CurrentArea { get; private set; }
-
-        internal void SetContent(ClinicalCaseStep_Face3DInteraction caseStepCurrent)
-        {
-            string filePoints = AppControl.Instance.CurrentCase.Folder + "\\" + caseStepCurrent.PointDefinitionFileName;
-            if (File.Exists(filePoints))
-            {
-                XmlSerializer deserializer = new XmlSerializer(typeof(List<InjectionPointSpecific2D>));
-
-                // Deserialize from file
-                using (FileStream fileStream = new FileStream(filePoints, FileMode.Open))
-                {
-                    List<InjectionPointSpecific2D> anjectionPoints2D = (List<InjectionPointSpecific2D>)deserializer.Deserialize(fileStream);
-                    AppControl.Instance.InjectionPoints2D = new ObservableCollection<InjectionPointSpecific2D>(anjectionPoints2D);
-
-                    Console.WriteLine("Deserialized List:");
-                }
-            }
-
-            if (File.Exists(AppControl.PathFilePointsBase3D))
-            {
-                AppControl.Instance.InjectionPoints3D = PointsManager.Instance.LoadInjectionPoints3D(AppControl.PathFilePointsBase3D);
-            }
-            AppControl.Instance.InjectionPoints3DThisStep = new ObservableCollection<InjectionPoint3D>();
-
-            CurrentArea = caseStepCurrent.AreaDefinition;
-
-            for (int i = 0; i < AppControl.Instance.InjectionPoints3D.Count; i++)
-            {
-                if (AppControl.Instance.InjectionPoints3D[i].AreaDef == caseStepCurrent.AreaDefinition)
-                {
-                    AppControl.Instance.InjectionPoints3DThisStep.Add(AppControl.Instance.InjectionPoints3D[i]);
-                }
-            }
-
-            //var vertices = new List<Vertex4Triangulation>();
-
-            //foreach (InjectionPoint3D item in AppControl.Instance.InjectionPoints3DThisStep)
-            //{
-            //    vertices.Add(new Vertex4Triangulation(item.X, item.Y, item.Z));
-            //}
-            
-
-            //// Create a convex hull from the vertices
-            //ConvexHullCreationResult<Vertex4Triangulation, DefaultConvexFace<Vertex4Triangulation>> convexHull = ConvexHull.Create(vertices);
-
-            //ConvexHull<Vertex4Triangulation, DefaultConvexFace<Vertex4Triangulation>> delaunayTriangulation = convexHull.Result;
-
-            //foreach (DefaultConvexFace<Vertex4Triangulation> item in delaunayTriangulation.Faces)
-            //{
-
-            //}   
-
-
-            foreach (InjectionPoint3D toCalc in AppControl.Instance.InjectionPoints3DThisStep)
-            {
-                double minDistance=1000000;
-                foreach (InjectionPoint3D toCalc2 in AppControl.Instance.InjectionPoints3DThisStep)
-                {
-                    if (toCalc != toCalc2)
-                    {
-                        double distance = Math.Sqrt(Math.Pow(toCalc.X - toCalc2.X, 2) + Math.Pow(toCalc.Y - toCalc2.Y, 2) + Math.Pow(toCalc.Z - toCalc2.Z, 2));
-                        if (distance < minDistance)
-                        {
-                            minDistance = distance;
-                        }
-                    }
-                }   
-
-                toCalc.MinDistanceFromNeighbours = minDistance;
-
-            }
-
-
-            foreach (InjectionPoint3D item3D in AppControl.Instance.InjectionPoints3DThisStep)
-            {
-                var dueDP = AppControl.Instance.InjectionPoints2D.Where(x => x.PointDefinition == item3D.PointDefinition).FirstOrDefault();
-                if (dueDP != null)
-                {
-                    item3D.PrescribedQuantity = dueDP.PrescribedQuantity;
-                }
-            }
-            //WindowMain.pointsListView3D.SelectionChanged += PointsListView3D_SelectionChanged;
-            //SaveDynamicInfo3DXML(pathFilePointsBase3D);
-
-            InitializePointsToBeShown();
-            UpdateVisizationZoom();
-
-            HasBeen3DPointsLoaded = true;
-        }
-
-        public void UpdateVisizationZoom()
-        {
-            switch (AppControl.Instance.CurrentArea)
-            {
-                case Enum_AreaDefinition.FRONTAL:
-
-                    //FRONTAL!!
-                    Vis3DFrame.hvView3D.Camera.UpDirection = new Vector3D(.7, .7, 0);
-                    Vis3DFrame.hvView3D.Camera.LookDirection = new Vector3D(-.4, .6, 0);
-
-                    Vis3DFrame.hvView3D.Camera.Position = new Point3D(450 + AppControl.Instance.TranslationPointModel.X, -500 + AppControl.Instance.TranslationPointModel.Y, 0 + AppControl.Instance.TranslationPointModel.Z);
-                    Vis3DFrame.hvView3D.LookAt(new Point3D(360 + AppControl.Instance.TranslationPointModel.X, -200 + AppControl.Instance.TranslationPointModel.Y, 0 + AppControl.Instance.TranslationPointModel.Z), 3000);
-
-                    break;
-
-                case Enum_AreaDefinition.CENTRAL:
-
-                    //CENTRAL!!
-                    Vis3DFrame.hvView3D.Camera.UpDirection = new Vector3D(1, 0, 0);
-                    Vis3DFrame.hvView3D.Camera.LookDirection = new Vector3D(-.3, .7, 0);
-                    Vis3DFrame.hvView3D.Camera.Position = new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -500 + AppControl.Instance.TranslationPointModel.Y, 0 + AppControl.Instance.TranslationPointModel.Z);
-                    Vis3DFrame.hvView3D.LookAt(new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -200 + AppControl.Instance.TranslationPointModel.Y, 0 + AppControl.Instance.TranslationPointModel.Z), 3000);
-                    break;
-
-                case Enum_AreaDefinition.ORBICULAR_LEFT:
-                    //ORBICULAR LEFT!
-                    Vis3DFrame.hvView3D.Camera.UpDirection = new Vector3D(.7, .30, 0);
-                    Vis3DFrame.hvView3D.Camera.LookDirection = new Vector3D(-.3, .7, .7);
-                    Vis3DFrame.hvView3D.Camera.Position = new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -200 + AppControl.Instance.TranslationPointModel.Y, -300 + AppControl.Instance.TranslationPointModel.Z);
-                    Vis3DFrame.hvView3D.LookAt(new Point3D(250 + AppControl.Instance.TranslationPointModel.X, -150 + AppControl.Instance.TranslationPointModel.Y, -130 + AppControl.Instance.TranslationPointModel.Z), 3000);
-                    break;
-
-                case Enum_AreaDefinition.ORBICULAR_RIGHT:
-                    //ORBILULAR RIGHT!
-                    Vis3DFrame.hvView3D.Camera.UpDirection = new Vector3D(.7, .30, 0);
-                    Vis3DFrame.hvView3D.Camera.LookDirection = new Vector3D(-.3, .7, -.7);
-                    Vis3DFrame.hvView3D.Camera.Position = new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -300 + AppControl.Instance.TranslationPointModel.Y, 300 + AppControl.Instance.TranslationPointModel.Z);
-                    Vis3DFrame.hvView3D.LookAt(new Point3D(250 + AppControl.Instance.TranslationPointModel.X, -250 + AppControl.Instance.TranslationPointModel.Y, 130 + AppControl.Instance.TranslationPointModel.Z), 3000);
-                    break;
-
-                case Enum_AreaDefinition.NASAL:
-                    break;
-
-                case Enum_AreaDefinition.ORBICULAR:
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (AppControl.Instance.CurrentArea)
-            {
-                case Enum_AreaDefinition.FRONTAL:
-
-                    //FRONTAL!!
-                    Vis3DFrameStudent.hvView3D.Camera.UpDirection = new Vector3D(.7, .7, 0);
-                    Vis3DFrameStudent.hvView3D.Camera.LookDirection = new Vector3D(-.4, .6, 0);
-
-                    Vis3DFrameStudent.hvView3D.Camera.Position = new Point3D(450 + AppControl.Instance.TranslationPointModel.X, -500 + AppControl.Instance.TranslationPointModel.Y, 0 + AppControl.Instance.TranslationPointModel.Z);
-                    Vis3DFrameStudent.hvView3D.LookAt(new Point3D(360 + AppControl.Instance.TranslationPointModel.X, -200 + AppControl.Instance.TranslationPointModel.Y, 0 + AppControl.Instance.TranslationPointModel.Z), 3000);
-
-                    break;
-
-                case Enum_AreaDefinition.CENTRAL:
-
-                    //CENTRAL!!
-                    Vis3DFrameStudent.hvView3D.Camera.UpDirection = new Vector3D(1, 0, 0);
-                    Vis3DFrameStudent.hvView3D.Camera.LookDirection = new Vector3D(-.3, .7, 0);
-                    Vis3DFrameStudent.hvView3D.Camera.Position = new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -500 + AppControl.Instance.TranslationPointModel.Y, 0 + AppControl.Instance.TranslationPointModel.Z);
-                    Vis3DFrameStudent.hvView3D.LookAt(new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -200 + AppControl.Instance.TranslationPointModel.Y, 0 + AppControl.Instance.TranslationPointModel.Z), 3000);
-                    break;
-
-                case Enum_AreaDefinition.ORBICULAR_LEFT:
-                    //ORBICULAR LEFT!
-                    Vis3DFrameStudent.hvView3D.Camera.UpDirection = new Vector3D(.7, .30, 0);
-                    Vis3DFrameStudent.hvView3D.Camera.LookDirection = new Vector3D(-.3, .7, .7);
-                    Vis3DFrameStudent.hvView3D.Camera.Position = new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -200 + AppControl.Instance.TranslationPointModel.Y, -300 + AppControl.Instance.TranslationPointModel.Z);
-                    Vis3DFrameStudent.hvView3D.LookAt(new Point3D(250 + AppControl.Instance.TranslationPointModel.X, -150 + AppControl.Instance.TranslationPointModel.Y, -130 + AppControl.Instance.TranslationPointModel.Z), 3000);
-                    break;
-
-                case Enum_AreaDefinition.ORBICULAR_RIGHT:
-                    //ORBILULAR RIGHT!
-                    Vis3DFrameStudent.hvView3D.Camera.UpDirection = new Vector3D(.7, .30, 0);
-                    Vis3DFrameStudent.hvView3D.Camera.LookDirection = new Vector3D(-.3, .7, -.7);
-                    Vis3DFrameStudent.hvView3D.Camera.Position = new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -300 + AppControl.Instance.TranslationPointModel.Y, 300 + AppControl.Instance.TranslationPointModel.Z);
-                    Vis3DFrameStudent.hvView3D.LookAt(new Point3D(250 + AppControl.Instance.TranslationPointModel.X, -250 + AppControl.Instance.TranslationPointModel.Y, 130 + AppControl.Instance.TranslationPointModel.Z), 3000);
-                    break;
-
-                case Enum_AreaDefinition.NASAL:
-                    break;
-
-                case Enum_AreaDefinition.ORBICULAR:
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        private void InitializePointsToBeShown()
-        {
-            //PIRINI 201231218
-            for (int i = Vis3DFrame.hvView3D.Items.Count - 1; i >= 0; i--)
-            {
-                if (Vis3DFrame.hvView3D.Items[i].Tag != null)
-                {
-                    if (Vis3DFrame.hvView3D.Items[i].Tag.ToString().StartsWith("ThisIsAPoint"))
-                    {
-                        Vis3DFrame.hvView3D.Items.RemoveAt(i);
-                    }
-                }
-            }
-
-            for (int i = Vis3DFrameStudent.hvView3D.Items.Count - 1; i >= 0; i--)
-            {
-                if (Vis3DFrameStudent.hvView3D.Items[i].Tag != null)
-                {
-                    if (Vis3DFrameStudent.hvView3D.Items[i].Tag.ToString().StartsWith("ThisIsAPoint"))
-                    {
-                        Vis3DFrameStudent.hvView3D.Items.RemoveAt(i);
-                    }
-                }
-            }
-
-            for (int i = 0; i < AppControl.Instance.InjectionPoints3DThisStep.Count; i++)
-            {
-                MeshGeometryModel3D aa = new MeshGeometryModel3D();
-                aa.Tag = "ThisIsAPoint" + i.ToString();
-                aa.CullMode = SharpDX.Direct3D11.CullMode.Back;
-
-                var sphereA = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
-                sphereA.AddSphere(new SharpDX.Vector3(0, 0, 0), AppControl.Instance.Diameter3DPoints);
-                HelixToolkit.Wpf.SharpDX.Geometry3D geometrySphere = sphereA.ToMeshGeometry3D();
-                HelixToolkit.Wpf.SharpDX.Material MaterialSphere = DiffuseMaterials.LightBlue;
-                aa.Geometry = geometrySphere;
-                aa.Material = MaterialSphere;
-
-                if (AppControl.Instance.InjectionPoints3DThisStep[i].Assigned)
-                {
-                    //Transform3DGroup transform3DGroup = new Transform3DGroup();
-                    //transform3DGroup.Children.Add(new TranslateTransform3D(AppControl.Instance.InjectionPoints3DThisStep[i].X, AppControl.Instance.InjectionPoints3DThisStep[i].Y, AppControl.Instance.InjectionPoints3DThisStep[i].Z));
-
-                    //aa.Transform = new TranslateTransform3D(
-                    //    AppControl.Instance.InjectionPoints3DThisStep[i].X + AppControl.Instance.TranslationPointModel.X,
-                    //    AppControl.Instance.InjectionPoints3DThisStep[i].Y + AppControl.Instance.TranslationPointModel.Y,
-                    //    AppControl.Instance.InjectionPoints3DThisStep[i].Z + AppControl.Instance.TranslationPointModel.Z);
-
-                    Transform3DGroup transform3DGroup = new Transform3DGroup();
-                    transform3DGroup.Children.Add(new TranslateTransform3D(
-                        AppControl.Instance.InjectionPoints3DThisStep[i].X,
-                        AppControl.Instance.InjectionPoints3DThisStep[i].Y,
-                        AppControl.Instance.InjectionPoints3DThisStep[i].Z));
-                    transform3DGroup.Children.Add(new RotateTransform3D(AppControl.Instance.RotationManikin3D));
-                    transform3DGroup.Children.Add(AppControl.Instance.TranslationManikin3D);
-
-                    aa.Transform = transform3DGroup;
-                }
-                else
-                {
-                    //aa.Transform = new TranslateTransform3D(50, 50, 50 + i * 30);
-                }
-
-                AppControl.Instance.PointsToBeShown.Add(aa);
-
-                Vis3DFrame.hvView3D.Items.Add(aa);
-            }
-
-
-            for (int i = 0; i < AppControl.Instance.InjectionPoints3DThisStep.Count; i++)
-            {
-                MeshGeometryModel3D aa = new MeshGeometryModel3D();
-                aa.Tag = "ThisIsAPoint" + i.ToString();
-                aa.CullMode = SharpDX.Direct3D11.CullMode.Back;
-
-                var sphereA = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
-                sphereA.AddSphere(new SharpDX.Vector3(0, 0, 0), AppControl.Instance.Diameter3DPoints);
-                HelixToolkit.Wpf.SharpDX.Geometry3D geometrySphere = sphereA.ToMeshGeometry3D();
-                HelixToolkit.Wpf.SharpDX.Material MaterialSphere = DiffuseMaterials.LightBlue;
-                aa.Geometry = geometrySphere;
-                aa.Material = MaterialSphere;
-
-                if (AppControl.Instance.InjectionPoints3DThisStep[i].Assigned)
-                {
-                    //Transform3DGroup transform3DGroup = new Transform3DGroup();
-                    //transform3DGroup.Children.Add(new TranslateTransform3D(AppControl.Instance.InjectionPoints3DThisStep[i].X, AppControl.Instance.InjectionPoints3DThisStep[i].Y, AppControl.Instance.InjectionPoints3DThisStep[i].Z));
-
-                    //aa.Transform = new TranslateTransform3D(
-                    //    AppControl.Instance.InjectionPoints3DThisStep[i].X + AppControl.Instance.TranslationPointModel.X,
-                    //    AppControl.Instance.InjectionPoints3DThisStep[i].Y + AppControl.Instance.TranslationPointModel.Y,
-                    //    AppControl.Instance.InjectionPoints3DThisStep[i].Z + AppControl.Instance.TranslationPointModel.Z);
-
-                    Transform3DGroup transform3DGroup = new Transform3DGroup();
-                    transform3DGroup.Children.Add(new TranslateTransform3D(
-                        AppControl.Instance.InjectionPoints3DThisStep[i].X,
-                        AppControl.Instance.InjectionPoints3DThisStep[i].Y,
-                        AppControl.Instance.InjectionPoints3DThisStep[i].Z));
-                    transform3DGroup.Children.Add(new RotateTransform3D(AppControl.Instance.RotationManikin3D));
-                    transform3DGroup.Children.Add(AppControl.Instance.TranslationManikin3D);
-
-                    aa.Transform = transform3DGroup;
-                }
-                else
-                {
-                    //aa.Transform = new TranslateTransform3D(50, 50, 50 + i * 30);
-                }
-
-                AppControl.Instance.PointsToBeShown.Add(aa);
-
-                Vis3DFrameStudent.hvView3D.Items.Add(aa);
-            }
-
-            Vis3DFrame.InjectionPointListView.ItemsSource = AppControl.Instance.InjectionPoints3DThisStep;
-        }
-
-        public HelixToolkit.Wpf.SharpDX.MeshGeometry3D CreateTruncatedConeGeometry(float baseRadius, float topRadius, float height, int thetaDiv, SharpDX.Vector3 normal, SharpDX.Vector3 origin, bool baseCap)
-        {
-            var builder = new HelixToolkit.Wpf.SharpDX.MeshBuilder(true, true);
-            builder.AddCone(origin, normal, baseRadius, topRadius, height, baseCap, false, thetaDiv);
-            var geometry = builder.ToMeshGeometry3D();
-            return geometry;
-        }
-
-        public bool HasBeenLoadedVis3DFrame = false;
-        public HelixToolkit.Wpf.SharpDX.Geometry3D GeometryAntenna { set; get; }
-        public HelixToolkit.Wpf.SharpDX.MeshGeometry3D GeometryCable { get; set; }
-        public HelixToolkit.Wpf.SharpDX.MeshGeometry3D GeometryConnector { get; set; }
-        public HelixToolkit.Wpf.SharpDX.Geometry3D GeometryHeadSkin { set; get; }
-        public HelixToolkit.Wpf.SharpDX.MeshGeometry3D GeometryNeedle { get; set; }
-
-        public HelixToolkit.Wpf.SharpDX.MeshGeometry3D GeometrySensor { get; set; }
-
-        public HelixToolkit.Wpf.SharpDX.Geometry3D GeometrySphere { get; set; }
-
-        public HelixToolkit.Wpf.SharpDX.Geometry3D GeometrySphere2 { set; get; }
-        public HelixToolkit.Wpf.SharpDX.MeshGeometry3D GeometryTConnector { get; set; }
-
-        public HelixToolkit.Wpf.SharpDX.Material MaterialAntenna { set; get; }
-        public HelixToolkit.Wpf.SharpDX.Material MaterialCable { get; set; }
-        public HelixToolkit.Wpf.SharpDX.Material MaterialConnector { get; set; }
-        public HelixToolkit.Wpf.SharpDX.Material MaterialHeadSkin { set; get; }
-        public HelixToolkit.Wpf.SharpDX.Material MaterialNeedle { get; set; }
-        public HelixToolkit.Wpf.SharpDX.Material MaterialProcerus { set; get; }
-        public HelixToolkit.Wpf.SharpDX.Material MaterialSensor { get; set; }
-        public HelixToolkit.Wpf.SharpDX.Material MaterialSphere { set; get; }
-        public HelixToolkit.Wpf.SharpDX.Material MaterialSphere2 { set; get; }
-        public LineGeometry3D Coordinate { set; get; }
-        public BillboardText3D CoordinateText { set; get; }
-        public HelixToolkit.Wpf.SharpDX.Material ViewCubeMaterial2 { set; get; }
-
-        public System.Windows.Media.Media3D.Transform3D ViewCubeTransform3 { set; get; }
-        public TranslateTransform3D TransformSphere { set; get; } = new System.Windows.Media.Media3D.TranslateTransform3D(5, 0, 0);
-
-        public TranslateTransform3D TransformSphere2 { set; get; } = new System.Windows.Media.Media3D.TranslateTransform3D(5, 0, 0);
-
-        public TranslateTransform3D TrasformAntenna { set; get; } = new System.Windows.Media.Media3D.TranslateTransform3D(0, 0, 0);
-
-        public static System.Windows.Media.Media3D.Quaternion CreateQuaternionFromAxisAngle(float angleInDegrees, float axisX, float axisY, float axisZ)
-        {
-            float angleInRadians = (float)(Math.PI * angleInDegrees / 180.0);
-            float sinHalfAngle = (float)Math.Sin(angleInRadians / 2.0);
-            float cosHalfAngle = (float)Math.Cos(angleInRadians / 2.0);
-
-            return new System.Windows.Media.Media3D.Quaternion(sinHalfAngle * axisX, sinHalfAngle * axisY, sinHalfAngle * axisZ, cosHalfAngle);
-        }
-
-        //private float axisPositionOffsetNeedle = 5.5f;
-        private float axisPositionOffsetNeedle = 0f;
-
-        private Point3D baseNeedle;
-        public Point3D BaseNeedleOrigin;
-
-        public string HitStructure
-        {
-            get => hitStructure;
-            set
-            {
-                if (hitStructure != value)
-                {
-                    hitStructure = value;
-                    OnPropertyChanged(nameof(HitStructure));
-                }
-            }
-        }
-
-        private int thetaDivNeedle = 18;
-        private int lengthSensor = 14;
-        private int lengthCable = 50;
-
-        public void InitializeModels(string folder)
-        {
-            bool showSkinComplete = false;
-            bool showSkin = true;
-            bool showNoSkin = false;
-            bool showArteries = false;
-            bool showVeins = false;
-            bool showNerves = false;
-            bool showProcerus = false;
-            bool showOrbicularisSuperiorLateral = false;
-            bool showCorrugator = false;
-
-            float lengthNeedle = AppControl.Instance.LengthNeedle;
-            var sphere = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
-            sphere.AddSphere(new SharpDX.Vector3(0, 0, 0), 1);
-            AppControl.Instance.GeometrySphere = sphere.ToMeshGeometry3D();
-            AppControl.Instance.MaterialSphere = DiffuseMaterials.Green;
-
-            var sphere2 = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
-            sphere2.AddSphere(new SharpDX.Vector3(0, 0, 0), 1);
-            AppControl.Instance.GeometrySphere2 = sphere2.ToMeshGeometry3D();
-            AppControl.Instance.MaterialSphere2 = DiffuseMaterials.Yellow;
-
-            var antenna = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
-            antenna.AddBox(SharpDX.Vector3.Zero, 54, 54, 54);
-            AppControl.Instance.GeometryAntenna = antenna.ToMeshGeometry3D();
-            AppControl.Instance.MaterialAntenna = DiffuseMaterials.Gray;
-
-            AppControl.Instance.GeometrySensor = AppControl.Instance.CreateTruncatedConeGeometry(1, 1, lengthSensor, thetaDivNeedle, new SharpDX.Vector3(1, 0, 0), new SharpDX.Vector3(-lengthSensor / 2.0f, 0, 0), true);
-            AppControl.Instance.MaterialSensor = DiffuseMaterials.Black;
-
-            AppControl.Instance.GeometryConnector = AppControl.Instance.CreateTruncatedConeGeometry(3, 3, 21.72f, thetaDivNeedle, new SharpDX.Vector3(1, 0, 0), new SharpDX.Vector3(0, 0, 0), true);
-            AppControl.Instance.MaterialConnector = DiffuseMaterials.Gray;
-
-            AppControl.Instance.GeometryTConnector = AppControl.Instance.CreateTruncatedConeGeometry(2, 2, 10, thetaDivNeedle, new SharpDX.Vector3(0, 1, 0), new SharpDX.Vector3(0, 0, 0), true);
-
-            AppControl.Instance.GeometryNeedle = AppControl.Instance.CreateTruncatedConeGeometry(0.4f, 0.1f, lengthNeedle, thetaDivNeedle, new SharpDX.Vector3(1, 0, 0), new SharpDX.Vector3(lengthSensor / 2.0f, 0, 0), true);
-            AppControl.Instance.TipNeedleOrigin = new Point3D(lengthNeedle + lengthSensor / 2.0, 0, 0);
-            AppControl.Instance.BaseNeedleOrigin = new Point3D(lengthSensor / 2.0, 0, 0);
-            AppControl.Instance.MaterialNeedle = DiffuseMaterials.Blue;
-
-            AppControl.Instance.GeometryCable = AppControl.Instance.CreateTruncatedConeGeometry(0.5f, 0.5f, -lengthCable, thetaDivNeedle, new SharpDX.Vector3(1, 0, 0), new SharpDX.Vector3(-lengthSensor, 0, 0), true);
-            AppControl.Instance.MaterialCable = DiffuseMaterials.Yellow;
-
-            if (showSkin)
-            {
-                var builder = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
-                builder.AddBox(SharpDX.Vector3.Zero, 1, 1, 1);
-                var reader = new HelixToolkit.Wpf.SharpDX.ObjReader();
-                //var models = reader.Read(folder + "\\Testa pelle mirror3.obj");
-                //var models = reader.Read(folder + "\\TestaNew3b.obj");
-                var models = reader.Read(folder + "\\Head_cut_base.obj"); 
-
-                AppControl.Instance.CollisionItemsGuid.Add("SKIN", new List<Guid>());
-
-                var material = new PhongMaterial
-                {
-                    DiffuseColor = new SharpDX.Color4(1f, 0.5f, 0.5f, 0.3f), // Imposta il quarto valore (alpha) per la trasparenza
-                                                                             // Altri parametri del materiale possono essere impostati qui
-
-                    //IsDepthEnabled = true,
-                    //DepthWriteMask = DepthWriteMask.All
-                };
-
-                for (int i = 0; i < models.Count(); i++)
-                {
-                    var model = new MeshGeometryModel3D();
-                    model.Geometry = models[i].Geometry;
-                    model.Material = DiffuseMaterials.LightGray;
-                    model.CullMode = SharpDX.Direct3D11.CullMode.Back;
-                    //model.InvertNormal = true;
-                    //model.FrontCounterClockwise = true;
-
-                    model.FillMode = SharpDX.Direct3D11.FillMode.Wireframe;
-                    //model.WireframeColor = Colors.AliceBlue;
-
-                    Vis3DFrame.groupSkin.Children.Add(model);
-
-
-                    var modelS = new MeshGeometryModel3D();
-                    modelS.Geometry = models[i].Geometry;
-                    modelS.Material = DiffuseMaterials.LightGray;
-                    modelS.CullMode = SharpDX.Direct3D11.CullMode.Back;
-                    //model.InvertNormal = true;
-                    //model.FrontCounterClockwise = true;
-
-                    modelS.FillMode = SharpDX.Direct3D11.FillMode.Wireframe;
-                    //model.WireframeColor = Colors.AliceBlue;
-
-                    Vis3DFrameStudent.groupSkin.Children.Add(modelS);
-
-                    AppControl.Instance.CollisionItemsGuid["SKIN"].Add(model.Geometry.GUID);
-                }
-            }
-
-            if (showSkinComplete)
-            {
-                var builder = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
-                builder.AddBox(SharpDX.Vector3.Zero, 1, 1, 1);
-                var reader = new HelixToolkit.Wpf.SharpDX.ObjReader();
-                var models = reader.Read(folder + "\\Pelle combinata5.obj");
-                AppControl.Instance.CollisionItemsGuid.Add("SKIN", new List<Guid>());
-                for (int i = 0; i < models.Count(); i++)
-                {
-                    var model = new MeshGeometryModel3D();
-                    model.Geometry = models[i].Geometry;
-                    model.Material = DiffuseMaterials.Gray;
-                    model.FillMode = SharpDX.Direct3D11.FillMode.Wireframe;
-                    Vis3DFrame.groupSkin.Children.Add(model);
-                    //Vis3DFrameStudent.groupSkin.Children.Add(model);
-                    AppControl.Instance.CollisionItemsGuid["SKIN"].Add(model.Geometry.GUID);
-                }
-            }
-
-            if (showProcerus)
-            {
-                var builder = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
-                builder.AddBox(SharpDX.Vector3.Zero, 1, 1, 1);
-                var reader = new HelixToolkit.Wpf.SharpDX.ObjReader();
-                var modelProcerus = reader.Read(folder + "\\ProcerusSmoothed.obj");
-                AppControl.Instance.CollisionItemsGuid.Add("PROCERUS", new List<Guid>());
-                for (int i = 0; i < modelProcerus.Count(); i++)
-                {
-                    var model = new MeshGeometryModel3D();
-                    model.Geometry = modelProcerus[i].Geometry;
-                    model.Material = DiffuseMaterials.Orange;
-                    model.FillMode = SharpDX.Direct3D11.FillMode.Wireframe;
-                    Vis3DFrame.groupProcerus.Children.Add(model);
-                    //Vis3DFrameStudent.groupProcerus.Children.Add(model);
-                    AppControl.Instance.CollisionItemsGuid["PROCERUS"].Add(model.Geometry.GUID);
-                }
-            }
-
-            if (showOrbicularisSuperiorLateral)
-            {
-                var builder = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
-                builder.AddBox(SharpDX.Vector3.Zero, 1, 1, 1);
-                var readerOrbicularisSuperiorLateral = new HelixToolkit.Wpf.SharpDX.ObjReader();
-                var modelOrbicularisSuperiorLateral = readerOrbicularisSuperiorLateral.Read(folder + "\\OrbicularisSuperiorLateralSmoothed.obj");
-                AppControl.Instance.CollisionItemsGuid.Add("ORBICULARIS", new List<Guid>());
-                for (int i = 0; i < modelOrbicularisSuperiorLateral.Count(); i++)
-                {
-                    var model = new MeshGeometryModel3D();
-                    model.Geometry = modelOrbicularisSuperiorLateral[i].Geometry;
-                    model.Material = DiffuseMaterials.Orange;
-                    model.FillMode = SharpDX.Direct3D11.FillMode.Wireframe;
-                    Vis3DFrame.groupOrbicularisSuperiorLateral.Children.Add(model);
-                    //Vis3DFrameStudent.groupOrbicularisSuperiorLateral.Children.Add(model);
-                    AppControl.Instance.CollisionItemsGuid["ORBICULARIS"].Add(model.Geometry.GUID);
-                }
-            }
-            if (showCorrugator)
-            {
-                var builder = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
-                builder.AddBox(SharpDX.Vector3.Zero, 1, 1, 1);
-                var readerCorrugator = new HelixToolkit.Wpf.SharpDX.ObjReader();
-                var modelCorrugators = readerCorrugator.Read(folder + "\\CorrugatorSmoothed.obj");
-                AppControl.Instance.CollisionItemsGuid.Add("CORRUGATOR", new List<Guid>());
-                for (int i = 0; i < modelCorrugators.Count(); i++)
-                {
-                    var model = new MeshGeometryModel3D();
-                    model.Geometry = modelCorrugators[i].Geometry;
-                    model.Material = DiffuseMaterials.Orange;
-                    model.FillMode = SharpDX.Direct3D11.FillMode.Wireframe;
-                    Vis3DFrame.groupCorrugators.Children.Add(model);
-                    //Vis3DFrameStudent.groupCorrugators.Children.Add(model);
-                    AppControl.Instance.CollisionItemsGuid["CORRUGATOR"].Add(model.Geometry.GUID);
-                }
-            }
-
-            if (true)
-            {
-                var readerArteriesSX = new HelixToolkit.Wpf.SharpDX.ObjReader();
-                var readerArteriesDX = new HelixToolkit.Wpf.SharpDX.ObjReader();
-                var modelsArteriesSX = readerArteriesSX.Read(folder + "\\red_sx.obj");
-                var modelsArteriesDX = readerArteriesDX.Read(folder + "\\red_dx.obj");
-                AppControl.Instance.CollisionItemsGuid.Add("ARTERIES", new List<Guid>());
-                for (int i = 0; i < modelsArteriesSX.Count(); i++)
-                {
-                    var model = new MeshGeometryModel3D();
-                    model.Geometry = modelsArteriesSX[i].Geometry;
-                    model.Material = DiffuseMaterials.Red;
-                    model.FillMode = SharpDX.Direct3D11.FillMode.Solid;
-
-                    Vis3DFrame.groupArteries.Children.Add(model);
-                    AppControl.Instance.CollisionItemsGuid["ARTERIES"].Add(model.Geometry.GUID);
-                }
-                for (int i = 0; i < modelsArteriesDX.Count(); i++)
-                {
-                    var model = new MeshGeometryModel3D();
-                    model.Geometry = modelsArteriesDX[i].Geometry;
-                    model.Material = DiffuseMaterials.Red;
-                    model.FillMode = SharpDX.Direct3D11.FillMode.Solid;
-
-                    Vis3DFrame.groupArteries.Children.Add(model);
-                    AppControl.Instance.CollisionItemsGuid["ARTERIES"].Add(model.Geometry.GUID);
-                }
-
-                for (int i = 0; i < modelsArteriesSX.Count(); i++)
-                {
-                    var modelS = new MeshGeometryModel3D();
-                    modelS.Geometry = modelsArteriesSX[i].Geometry;
-                    modelS.Material = DiffuseMaterials.Red;
-                    modelS.FillMode = SharpDX.Direct3D11.FillMode.Solid;
-
-                    Vis3DFrameStudent.groupArteries.Children.Add(modelS);
-                }
-                for (int i = 0; i < modelsArteriesDX.Count(); i++)
-                {
-                    var modelS = new MeshGeometryModel3D();
-                    modelS.Geometry = modelsArteriesDX[i].Geometry;
-                    modelS.Material = DiffuseMaterials.Red;
-                    modelS.FillMode = SharpDX.Direct3D11.FillMode.Solid;
-
-                    Vis3DFrameStudent.groupArteries.Children.Add(modelS);
-                }
-            }
-
-            if (true)
-            {
-                var readerVeinsSX = new HelixToolkit.Wpf.SharpDX.ObjReader();
-                var readerVeinsDX = new HelixToolkit.Wpf.SharpDX.ObjReader();
-                var modelsVeinsSX = readerVeinsSX.Read(folder + "\\blue_sx.obj");
-                var modelsVeinsDX = readerVeinsDX.Read(folder + "\\blue_dx.obj");
-                AppControl.Instance.CollisionItemsGuid.Add("VEINS", new List<Guid>());
-                for (int i = 0; i < modelsVeinsSX.Count(); i++)
-                {
-                    var model = new MeshGeometryModel3D();
-                    model.Geometry = modelsVeinsSX[i].Geometry;
-                    model.Material = DiffuseMaterials.Blue;
-                    model.FillMode = SharpDX.Direct3D11.FillMode.Solid;
-                    AppControl.Instance.CollisionItemsGuid["VEINS"].Add(model.Geometry.GUID);
-                    Vis3DFrame.groupVeins.Children.Add(model);
-                }
-                for (int i = 0; i < modelsVeinsDX.Count(); i++)
-                {
-                    var model = new MeshGeometryModel3D();
-                    model.Geometry = modelsVeinsDX[i].Geometry;
-                    model.Material = DiffuseMaterials.Blue;
-                    model.FillMode = SharpDX.Direct3D11.FillMode.Solid;
-                    AppControl.Instance.CollisionItemsGuid["VEINS"].Add(model.Geometry.GUID);
-                    Vis3DFrame.groupVeins.Children.Add(model);
-                }
-                for (int i = 0; i < modelsVeinsSX.Count(); i++)
-                {
-                    var modelS = new MeshGeometryModel3D();
-                    modelS.Geometry = modelsVeinsSX[i].Geometry;
-                    modelS.Material = DiffuseMaterials.Blue;
-                    modelS.FillMode = SharpDX.Direct3D11.FillMode.Solid;
-                    Vis3DFrameStudent.groupVeins.Children.Add(modelS);
-                }
-                for (int i = 0; i < modelsVeinsDX.Count(); i++)
-                {
-                    var modelS = new MeshGeometryModel3D();
-                    modelS.Geometry = modelsVeinsDX[i].Geometry;
-                    modelS.Material = DiffuseMaterials.Blue;
-                    modelS.FillMode = SharpDX.Direct3D11.FillMode.Solid;
-                    Vis3DFrameStudent.groupVeins.Children.Add(modelS);
-                }
-
-            }
-
-            AppControl.Instance.StringSkinAreas.Add("ORBICULARIS");
-            AppControl.Instance.StringSkinAreas.Add("PROCERUS");
-            AppControl.Instance.StringSkinAreas.Add("CORRUGATOR");
-        }
-
-        private string hitStructure;
-
-        public bool mouseClickOrMove = false;
-
-        public DateTime lastMouseMove;
-
-        private System.Windows.Media.Media3D.Quaternion rotationSensor_WRS;
-
-        private DispatcherTimer timerCheckPolhemus;
-
-        private Point3D tipNeedle;
-        public Point3D TipNeedleOrigin;
-        private Vector3D upDirection;
-        private float xPosSensor02;
-        private float yPosSensor02;
-        private float zPosSensor02;
-
-        public static System.Windows.Media.Media3D.Quaternion CreateRotationQuaternionAlongAxis(float angleInDegrees, int axis)
-        {
-            if (axis == 0)
-            {
-                return CreateQuaternionFromAxisAngle(angleInDegrees, 1, 0, 0);
-            }
-            if (axis == 1)
-            {
-                return CreateQuaternionFromAxisAngle(angleInDegrees, 0, 1, 0);
-            }
-            if (axis == 2)
-            {
-                return CreateQuaternionFromAxisAngle(angleInDegrees, 0, 0, 1);
-            }
-            return CreateQuaternionFromAxisAngle(angleInDegrees, 0, 0, 1);
-        }
-
-        public double CalcDistance(Point3D point1, Point3D point2)
-        {
-            double deltaX = point1.X - point2.X;
-            double deltaY = point1.Y - point2.Y;
-            double deltaZ = point1.Z - point2.Z;
-
-            return Math.Sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-        }
-
-        //private PhongMaterial CreatePhongMaterial(SharpDX.Color4 color)
-        //{
-        //    return new PhongMaterial
-        //    {
-        //        DiffuseColor = color,
-        //        SpecularColor = new SharpDX.Color4(1.0f, 1.0f, 1.0f, 1.0f),
-        //        SpecularShininess = 32f
-        //    };
-        //}
-
-        public System.Windows.Media.Media3D.Quaternion RotationSensor_WRS_real
-        {
-            get { return rotationSensor_WRS; }
-            set
-            {
-                rotationSensor_WRS = value;
-                OnPropertyChanged(nameof(RotationSensor_WRS_real));
-            }
-        }
-
-        public Point3D TipNeedle
-        {
-            get { return tipNeedle; }
-            set
-            {
-                tipNeedle = value;
-                OnPropertyChanged(nameof(TipNeedle));
-            }
-        }
-
-        public Vector3D UpDirection
-        {
-            get { return upDirection; }
-            set
-            {
-                upDirection = value;
-                OnPropertyChanged(nameof(UpDirection));
-            }
-        }
-
-        private float rotationAngleOffsetNeedle = 0;
-        private System.Windows.Media.Media3D.Quaternion rotation_Manikin;
-
-        private bool procerusVisible = true;
-
-        public bool ProcerusVisible
-        {
-            get { return procerusVisible; }
-            set
-            {
-                procerusVisible = value;
-                OnPropertyChanged(nameof(ProcerusVisible));
-            }
-        }
-
-        public System.Windows.Media.Media3D.Quaternion Rotation_Manikin
-        {
-            get { return rotation_Manikin; }
-            set
-            {
-                rotation_Manikin = value;
-                OnPropertyChanged(nameof(Rotation_Manikin));
-            }
-        }
-
-        public QuaternionRotation3D RotationManikin3D { get; private set; }
-        public TranslateTransform3D TranslationManikin3D { get; private set; }
-
-        public const string PathFilePointsBase3D = "C:\\BeautySim\\BasePointsDefinitions3D.xml";
-
-        public float RotationAngleOffsetNeedle
-        {
-            get { return rotationAngleOffsetNeedle; }
-            set
-            {
-                rotationAngleOffsetNeedle = value;
-                OnPropertyChanged(nameof(RotationAngleOffsetNeedle));
-            }
-        }
-
         public const string ADMIN_USERNAME = "Accurate.Admin";
         public const string BeautySim_USERNAME = "Accurate.BeautySim";
         public const string CadsFolder = "C:\\BeautySim\\Models3D";
-
         public const string CasesFolder = "C:\\BeautySim\\Cases";
-        public const string ResultsTempFolder = "C:\\BeautySim\\ResultsTemp";
-        public const string Orthographic = "Orthographic Camera";
         public const string CoordFile = "C:\\BeautySim\\CalibrationFile.txt";
+        public const string DBPath = "C:\\BeautySim\\Database\\BeautySimDB.db";
+        public const string Orthographic = "Orthographic Camera";
+        public const string PathFilePointsBase3D = "C:\\BeautySim\\BasePointsDefinitions3D.xml";
         public const string Perspective = "Perspective Camera";
+        public const string ResultsTempFolder = "C:\\BeautySim\\ResultsTemp";
+        public const string SaveReportsFolder = "C:\\BeautySim_SavedReports";
+        public const string SaveResultsFolder = "C:\\BeautySim\\DataBase\\Results\\";
         public Brush ActiveEllipse = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 0, 150, 136));
-
+        public List<PointHit> ActualPointsHit = new List<PointHit>();
         public List<ClinicalCase> AvailableCases;
-        public float BlockX;
-        public float BlockY;
-        public ObservableCollection<ClinicalCase> Cases;
+        public Point3D BaseNeedleOrigin;
 
+        public ObservableCollection<ClinicalCase> Cases;
         public bool CheckCollisions = false;
+        public Dictionary<string, List<Guid>> CollisionItemsGuid = new Dictionary<string, List<Guid>>();
         public ClinicalCase CurrentCase = null;
         public CurrentCaseStateChangedDelegate CurrentCaseStateChangedEvent;
         public Events CurrentEvent = null;
         public string CurrentModule = null;
         public Users CurrentStudent = null;
         public Users CurrentTeacher = null;
-        public VectorMath.Vector3 D_ANTICOLLISION = new VectorMath.Vector3(140f, 0, 0);
-        public VectorMath.Vector3 D_ANTICOLLISION_NEEDLE = new VectorMath.Vector3(-140f, 0, 0);
-        public VectorMath.Vector3 D_COLLISION = new VectorMath.Vector3(-140f, 0, 0);
-        public VectorMath.Vector3 D_COLLISION_NEEDLE = new VectorMath.Vector3(-100f, 0, 0);
-        public VectorMath.Vector3 D_NEdge_CollisionEdge = new VectorMath.Vector3(13f, 0, 0);
+
         public bool DemoMode = true;
+        public FRAME F1;
+        public bool HasBeenLoadedVis3DFrame = false;
         public float Height = 100;
         public int intervalMsTimer = 30;
+        public DateTime lastMouseMove;
         public string LastSerial;
+        public int LengthCable = 50;
+        public int LengthSensor = 14;
         public double LimitAngleDeg = 10;
         public ObservableCollection<string> Modules;
-
         public ObservableCollection<string> ModulesNames;
+        public bool mouseClickOrMove = false;
         public SharpDX.Vector3 NedleAreaEnd = new SharpDX.Vector3(0, 0, 0);
         public List<VectorMath.Vector3> needlePoints_NRS;
         public List<VectorMath.Vector3> needlePoints_WRS;
@@ -850,147 +81,83 @@ namespace BeautySim2023
         public int NumPointsX = 100;
         public int NumPointsY = 100;
         public Users OldTeacher = null;
-
+        public ObservableCollection<MeshGeometryModel3D> PointsToBeShown = new ObservableCollection<MeshGeometryModel3D>();
+        public int SelectedIndexInjectionPointCalibration;
+        public InjectionPoint3DCalib SelectedInjectionPointCalibration;
         public bool StopLoadCommand = false;
         public string StringCurrentCase = BeautySim.Globalization.Language.str_curr_case;
-
         public string StringLoadCase = BeautySim.Globalization.Language.str_sel_load_case;
-
         public string StringNeedleInjCorrectTarget = BeautySim.Globalization.Language.str_great;
-
         public string StringNeedleInjTakeAim = BeautySim.Globalization.Language.str_go_ahead;
-
         public string StringNeedleInjWrongTarget = BeautySim.Globalization.Language.str_oh_no;
-
+        public List<string> StringSkinAreas = new List<string>();
+        public int ThetaDivNeedle = 18;
+        public Point3D TipNeedleOrigin;
         public Point3D TraslationFromSensor02ToNeedleStart = new Point3D(10, 0, 0);
-
         public float Width = 100;
         private static AppControl instance = null;
-
         private float additionalCorrectionLengthNeedle;
         private bool alreadyConnectedPolhemus;
+        private bool arteriesVisible;
+        //private float axisPositionOffsetNeedle = 0f;
 
+        private Point3D baseNeedle;
         private HelixToolkit.Wpf.SharpDX.Camera camera;
-
         private string cameraModel;
-
         private ClinicalCaseStep caseStepCurrent;
         private System.Windows.Forms.Timer caseTimer;
         private Point3D collidePointNeedle;
-        private int counter;
-        private int counterCollider;
-        private int counterProgressCalibration;
+        private bool corrugatorVsible;
         private decimal CurrentCaseScore = 0;
         private Enum_CaseState currentCaseState;
         private HelixToolkit.Wpf.SharpDX.OrthographicCamera defaultOrthographicCamera = new HelixToolkit.Wpf.SharpDX.OrthographicCamera { Position = new System.Windows.Media.Media3D.Point3D(0, 0, 5), LookDirection = new System.Windows.Media.Media3D.Vector3D(-0, -0, -5), UpDirection = new System.Windows.Media.Media3D.Vector3D(0, 1, 0), NearPlaneDistance = 1, FarPlaneDistance = 100 };
-
         private HelixToolkit.Wpf.SharpDX.PerspectiveCamera defaultPerspectiveCamera = new HelixToolkit.Wpf.SharpDX.PerspectiveCamera { Position = new System.Windows.Media.Media3D.Point3D(0, 0, 5), LookDirection = new System.Windows.Media.Media3D.Vector3D(-0, -0, -5), UpDirection = new System.Windows.Media.Media3D.Vector3D(0, 1, 0), NearPlaneDistance = 0.5, FarPlaneDistance = 150 };
-
-        private float deltaViewFar = 1500;
-
-        private float deltaViewNear = 600;
-
         private double depthImage;
-
+        private double depthInjection;
         private bool disposedValue = false;
-
-        private double distanceNeedleHits;
-        private List<double> distancesNeedleCollision = new List<double>();
-        private FRAME f1;
-
-        private FRAME f2;
-
-        private FunctionalitiesFrame frameControl;
+        private IEffectsManager effectsManager;
         private int fsamp = 20;
-        private float hOrigin;
-
-        private float hScaled;
-
-        private DateTime initialDataTime;
+        private string hitStructure;
+        private Point3D impactPointToShow;
         private int insertionNeedle;
-
         private string insertionNeedleText;
-
         private DateTime lastArrivedInput;
-
         private float lengthNeedle;
-
         private bool loadedCase;
-
         private CaseStudentFrame MainStudentFrame;
         private CaseTeacherFrame MainTeacherFrame;
-        private float minValueAlpha = 0.35f;
-
         private HelixToolkit.Wpf.SharpDX.MeshGeometry3D modelMask;
         private HelixToolkit.Wpf.SharpDX.DiffuseMaterial modelMaterialMask;
-        private string nameFileDefinitionSave;
-
         private bool needleAlignedCorrectly;
-
         private bool needleAngleOk;
-
-        //private LineGeometry3D needleArea;
-
-        //private LineGeometry3D needleAreaIndication;
-
         private System.Windows.Media.Color needleColor;
-
-        private Point3D needleEdgeCollider;
         private System.Windows.Media.Color needleIndicationColor;
 
-        private bool needleInSkin;
-
-        private VectorMath.Vector3 needlePointFinish_WRS_real;
-
-        private VectorMath.Vector3 needlePointFinish_WRS_realHalf;
-
-        private VectorMath.Vector3 needlePointFinish_WRS_toBeUsed;
-
-        private VectorMath.Vector3 needlePointStart_WRS_real;
-
-        private VectorMath.Vector3 needlePointStart_WRS_toBeUsed;
-
         private System.Windows.Media.Color needleTipIndicationColor;
-
-        private YPR needleYPR_WRS_real;
-        private List<SharpDX.Vector3> originalEffectPOints;
+        private bool orbicularisVisible;
 
         private Point3D originPlaneImage;
-
+        public string pathFilePointsBase3DCalib = "C:\\BeautySim\\BasePointsDefinitions3DCalib.xml";
         private PDIClass pDIClass;
-
+        private double pitchNeedle;
         private double pitchSensor02;
-
-        private List<OrderedPoint> PointCollideNeedle3Ds = new List<OrderedPoint>();
-        private VectorMath.Vector3 pointEnd_WRS;
-
-        private List<SharpDX.Vector3> pointsCircle = new List<SharpDX.Vector3>();
-        private SharpDX.Vector3[] pointsDX;
-
-        private SharpDX.Vector3[] pointsDXMask;
-
-        private VectorMath.Vector3 pointStart_WRS;
-
-        private VectorMath.Vector3 positionSensor02_WRS_real;
-        private VectorMath.Vector3 positionSensor02_WRS_toBeUsed;
+        private Point3D pointEntrance;
+        private List<PointHit> previousPointsHit = new List<PointHit>();
+        private bool procerusVisible = true;
         private double rollSensor02;
-        private VectorMath.Quaternion rotationFromSensor02ToNeedle = VectorMath.Quaternion.RotationAxis(new VectorMath.Vector3(1, 0, 0), 100f / 180f * (float)Math.PI);
-        private double[,] rotationMatrixTrasposed_Needle_WRS_real;
-        private double[,] rotationMatrixTrasposed_Needle_WRS_toBeUsed;
-        private double[,] rotationMatrixTrasposed_Needle_WRS_WhenInsertion;
+        private System.Windows.Media.Media3D.Quaternion rotation_Manikin;
+
+        //private float rotationAngleOffsetNeedle = 0;
         private System.Windows.Media.Media3D.Quaternion rotationNeedle_WRS_m;
-        private VectorMath.Quaternion rotationNeedle_WRS_real;
+
         private System.Windows.Media.Media3D.Quaternion rotationOperableEnsamble;
-        private VectorMath.Quaternion rotationSensor02_WRS_real;
-        private YPR sensor02ypr_WRS_real;
+        private System.Windows.Media.Media3D.Quaternion rotationSensor_WRS;
         private bool showIndicationNeedle;
         private bool showTargetPosition;
+        private bool skinVisible;
         private Page StudentFrame;
         private string subTitle;
-
         private Color targetSpecialNerveColor;
-        public Visualization3DFrame Vis3DFrame { get; private set; }
-        public Visualization3DFrameStudent Vis3DFrameStudent { get; private set; }
         private Page TeacherFrame;
         private string textNeedlePuntures;
         private string textNeedlePunturesExp;
@@ -1002,64 +169,44 @@ namespace BeautySim2023
         private string textScore;
         private string textTime;
         private string textTimeExp;
+        private string textToShowYawPitch;
         private string textVascularWrong;
         private string textVascularWrongExp;
         private string textVascularWrongIntro;
         private string textWrongInjections;
         private string textWrongInjectionsExp;
-
+        private DispatcherTimer timerCheckPolhemus;
         private int timeStepSimulation = 50;
+        private Point3D tipNeedle;
         private string title;
-        private bool toContinueProgressCalibration;
-        private bool toPlot;
-        private bool toUpdateControls;
-        private Vector3 vecCollisionNeedle_WRS;
-        private VectorMath.Vector3 versorNeedle_WhenInsertion;
-
+        private Vector3D upDirection;
+        private bool veinsVisible;
         private Visibility visibilityBorderArrowDown;
-
         private Visibility visibilityBorderArrowLeft;
-
         private Visibility visibilityBorderArrowRight;
-
         private Visibility visibilityBorderArrowRotation;
-
         private Visibility visibilityBorderArrowRotation2;
-
         private Visibility visibilityBorderArrowUp;
-
         private Visibility visibilityLogoOnStudentPage;
-
         private bool visibilityNeedleCollisionCheck = false;
-
         private Visibility visibilityResults;
-
         private Visibility visibleLine;
-
         private double widthImage;
-
         private float xPosOperableEnsamble;
-
+        private float xPosSensor02;
         private float xTipNeedle = 0;
-
+        private double yawNeedle;
         private double yawSensor02;
-
         private float yPosOperableEnsamble;
-
+        private float yPosSensor02;
         private float yTipNeedle = 0;
-
         private float zPosOperableEnsamble;
-
+        private float zPosSensor02;
         private float zTipNeedle = 0;
-        private IEffectsManager effectsManager;
-        private string textToShowYawPitch;
 
         private AppControl()
         {
             Cases = new ObservableCollection<ClinicalCase>();
-
-            nameFileDefinitionSave = "DefinitionFramesEffect.xml";
-            originalEffectPOints = new List<SharpDX.Vector3>();
 
             // camera models
             CameraModelCollection = new List<string>()
@@ -1116,7 +263,9 @@ namespace BeautySim2023
             caseTimer.Interval = timeStepSimulation;
             caseTimer.Tick += new EventHandler(CaseTimeTickListener);
             SetTimer(false);
-            initialDataTime = DateTime.Now;
+
+            InjectionPoints3DCalib = new ObservableCollection<InjectionPoint3DCalib>();
+            CollisionItemsGuid = new Dictionary<string, List<Guid>>();
         }
 
         ~AppControl()
@@ -1174,6 +323,275 @@ namespace BeautySim2023
             }
         }
 
+        public bool AreImagesVisualizedOn3D { get; internal set; }
+
+        public bool ArteriesVisible
+        {
+            get { return arteriesVisible; }
+            set
+            {
+                arteriesVisible = value;
+                OnPropertyChanged(nameof(ArteriesVisible));
+            }
+        }
+
+        private List<MeshGeometryModel3D> pointsToBeShown = new List<MeshGeometryModel3D>();
+        private float fluxLiquid;
+        private float volumeLiquid;
+
+        //public float AxisPositionOffsetNeedle
+        //{
+        //    get { return axisPositionOffsetNeedle; }
+        //    set
+        //    {
+        //        axisPositionOffsetNeedle = value;
+        //        OnPropertyChanged(nameof(AxisPositionOffsetNeedle));
+        //    }
+        //}
+
+        internal void InitCalibrationEnvironment(Calib3DWindow window3D)
+        {
+            //Read current calibration tralsation parameters
+            using (StreamReader sr = new StreamReader(AppControl.CoordFile))
+            {
+                string xLine, yLine, zLine, lengthNeedleLine;
+                double x = 0;
+                double y = 0;
+                double z = 0;
+                double lengthNeedleR = 0;
+                while ((xLine = sr.ReadLine()) != null &&
+                       (yLine = sr.ReadLine()) != null &&
+                       (zLine = sr.ReadLine()) != null &&
+                       (lengthNeedleLine = sr.ReadLine()) != null)
+                {
+                    if (double.TryParse(xLine, out x) &&
+                        double.TryParse(yLine, out y) &&
+                        double.TryParse(zLine, out z) &&
+                        double.TryParse(lengthNeedleLine, out lengthNeedleR))
+                    {
+                        Console.WriteLine($"Read coordinates: x={x}, y={y}, z={z}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Failed to parse coordinates");
+                    }
+                }
+                AppControl.Instance.LengthNeedle = (float)lengthNeedleR;
+            }
+
+            CalibrationWindow = window3D;
+            CalibrationWindow.DataContext = AppControl.Instance;
+
+            var hwnd2 = new WindowInteropHelper(window3D).Handle;
+            Calib3DWindow.SetWindowLong(hwnd2, Calib3DWindow.GWL_STYLE, Calib3DWindow.GetWindowLong(hwnd2, Calib3DWindow.GWL_STYLE) & ~Calib3DWindow.WS_SYSMENU);
+
+            CalibrationWindow.pointsListView3D.Visibility = Visibility.Visible;
+            //CalibrationWindow.gmModels.Transform = new TranslateTransform3D(0, 0, 0);
+
+            ObservableCollection<InjectionPoint3D> temporaryList = new ObservableCollection<InjectionPoint3D>();
+            if (File.Exists(AppControl.Instance.pathFilePointsBase3DCalib))
+            {
+                temporaryList = PointsManager.Instance.LoadInjectionPoints3D(AppControl.Instance.pathFilePointsBase3DCalib);
+            }
+
+            foreach (InjectionPoint3D item in temporaryList)
+            {
+                AppControl.Instance.InjectionPoints3DCalib.Add(new InjectionPoint3DCalib(item));
+            }
+
+            CalibrationWindow.pointsListView3D.SelectionChanged += PointsListView3DCalibration_SelectionChanged;
+            CalibrationWindow.pointsListView3D.SelectedIndex = 0;
+
+            for (int i = 0; i < AppControl.Instance.InjectionPoints3DCalib.Count; i++)
+            {
+                MeshGeometryModel3D aa = new MeshGeometryModel3D();
+                aa.CullMode = SharpDX.Direct3D11.CullMode.Back;
+
+                var sphereA = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+                sphereA.AddSphere(new SharpDX.Vector3(0, 0, 0), 2);
+                HelixToolkit.Wpf.SharpDX.Geometry3D geometrySphere = sphereA.ToMeshGeometry3D();
+                HelixToolkit.Wpf.SharpDX.Material MaterialSphere = DiffuseMaterials.Blue;
+                aa.Geometry = geometrySphere;
+                aa.Material = MaterialSphere;
+
+                Transform3DGroup transformGroupRotation = new Transform3DGroup();
+                transformGroupRotation.Children.Add(new RotateTransform3D(RotationManikin3D));
+                var translateTransform = new TranslateTransform3D(0, 0, 0);
+
+                Point3D rotated = AppControl.Instance.InjectionPoints3DCalib[i].GetRotoTransatedPoint(transformGroupRotation);
+                AppControl.Instance.InjectionPoints3DCalib[i].XRotated = rotated.X;
+                AppControl.Instance.InjectionPoints3DCalib[i].YRotated = rotated.Y;
+                AppControl.Instance.InjectionPoints3DCalib[i].ZRotated = rotated.Z;
+
+                if (AppControl.Instance.InjectionPoints3DCalib[i].Assigned)
+                {
+                    translateTransform = new TranslateTransform3D(AppControl.Instance.InjectionPoints3DCalib[i].XRotated, AppControl.Instance.InjectionPoints3DCalib[i].YRotated, AppControl.Instance.InjectionPoints3DCalib[i].ZRotated);
+                }
+                //transformGroup.Children.Add(translateTransform);
+                aa.Transform = translateTransform;
+                pointsToBeShown.Add(aa);
+
+                CalibrationWindow.hvView3D.Items.Add(aa);
+            }
+
+            EffectsManager = new DefaultEffectsManager();
+
+            AppControl.Instance.CollisionItemsGuid = new Dictionary<string, List<Guid>>();
+
+            var sphere = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+            sphere.AddSphere(new SharpDX.Vector3(0, 0, 0), 2);
+            AppControl.Instance.GeometrySphere = sphere.ToMeshGeometry3D();
+            AppControl.Instance.MaterialSphere = DiffuseMaterials.Green;
+
+            var sphere2 = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+            sphere2.AddSphere(new SharpDX.Vector3(0, 0, 0), 2);
+            AppControl.Instance.GeometrySphere2 = sphere2.ToMeshGeometry3D();
+            AppControl.Instance.MaterialSphere2 = DiffuseMaterials.Yellow;
+
+            var antenna = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+            antenna.AddBox(SharpDX.Vector3.Zero, 54, 54, 54);
+            AppControl.Instance.MaterialAntenna = DiffuseMaterials.Gray;
+
+            AppControl.Instance.GeometrySensor = AppControl.Instance.CreateTruncatedConeGeometry(1, 1, AppControl.Instance.LengthSensor, AppControl.Instance.ThetaDivNeedle, new SharpDX.Vector3(1, 0, 0), new SharpDX.Vector3(-AppControl.Instance.LengthSensor / 2.0f, 0, 0), true);
+            AppControl.Instance.MaterialSensor = DiffuseMaterials.Black;
+
+            AppControl.Instance.GeometryConnector = AppControl.Instance.CreateTruncatedConeGeometry(3, 3, 21.72f, AppControl.Instance.ThetaDivNeedle, new SharpDX.Vector3(1, 0, 0), new SharpDX.Vector3(0, 0, 0), true);
+            AppControl.Instance.MaterialConnector = DiffuseMaterials.Gray;
+
+            AppControl.Instance.GeometryTConnector = AppControl.Instance.CreateTruncatedConeGeometry(2, 2, 10, AppControl.Instance.ThetaDivNeedle, new SharpDX.Vector3(0, 1, 0), new SharpDX.Vector3(0, 0, 0), true);
+
+            AppControl.Instance.GeometryNeedle = AppControl.Instance.CreateTruncatedConeGeometry(0.4f, 0.1f, AppControl.Instance.LengthNeedle, AppControl.Instance.ThetaDivNeedle, new SharpDX.Vector3(1, 0, 0), new SharpDX.Vector3(AppControl.Instance.LengthSensor / 2.0f, 0, 0), true);
+            AppControl.Instance.TipNeedleOrigin = new Point3D(AppControl.Instance.LengthNeedle + AppControl.Instance.LengthSensor / 2.0, 0, 0);
+            AppControl.Instance.BaseNeedleOrigin = new Point3D(AppControl.Instance.LengthSensor / 2.0, 0, 0);
+            AppControl.Instance.MaterialNeedle = DiffuseMaterials.Blue;
+
+            AppControl.Instance.GeometryCable = AppControl.Instance.CreateTruncatedConeGeometry(0.5f, 0.5f, -AppControl.Instance.LengthCable, AppControl.Instance.ThetaDivNeedle, new SharpDX.Vector3(1, 0, 0), new SharpDX.Vector3(-AppControl.Instance.LengthSensor, 0, 0), true);
+            AppControl.Instance.MaterialCable = DiffuseMaterials.Yellow;
+
+            GeometryModel3DOctreeManager octreeManager = new GeometryModel3DOctreeManager();
+            octreeManager.Cubify = true;
+
+            var builder = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+            builder.AddBox(SharpDX.Vector3.Zero, 1, 1, 1);
+            var reader = new HelixToolkit.Wpf.SharpDX.ObjReader();
+            var models = reader.Read("C:\\BeautySim\\Models3D" + "\\TestaNew3.obj");
+
+            AppControl.Instance.CollisionItemsGuid.Add("SKIN", new List<Guid>());
+
+            for (int i = 0; i < models.Count(); i++)
+            {
+                var model = new MeshGeometryModel3D();
+                model.Geometry = models[i].Geometry;
+                model.Material = DiffuseMaterials.Gray;
+                CalibrationWindow.groupSkin.Children.Add(model);
+                AppControl.Instance.CollisionItemsGuid["SKIN"].Add(model.Geometry.GUID);
+            }
+
+            InitializeCoordinates();
+        }
+
+        private void PointsListView3DCalibration_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (CalibrationWindow.pointsListView3D.SelectedItem != null)
+            {
+                AppControl.Instance.SelectedInjectionPointCalibration = AppControl.Instance.InjectionPoints3DCalib.Where(item => item.PointDefinition.ToString() == ((InjectionPoint3DCalib)(CalibrationWindow.pointsListView3D.SelectedItem)).PointDefinition.ToString()).FirstOrDefault();
+                AppControl.Instance.SelectedIndexInjectionPointCalibration = CalibrationWindow.pointsListView3D.SelectedIndex;
+                UpdateVisualizationPointsCalibration();
+            }
+            else
+            {
+                AppControl.Instance.SelectedIndexInjectionPointCalibration = -1;
+            }
+        }
+
+        private void SaveDynamicInfo3DXML(string nameFile)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<InjectionPoint3D>));
+            List<InjectionPoint3DCalib> toSave = new List<InjectionPoint3DCalib>();
+            foreach (var item in AppControl.Instance.InjectionPoints3DCalib)
+            {
+                toSave.Add(item);
+            }
+
+            using (FileStream fileStream = new FileStream(nameFile, FileMode.Create))
+            {
+                serializer.Serialize(fileStream, toSave);
+                Console.WriteLine($"Serialized to XML file: {nameFile}");
+            }
+        }
+
+        private void UpdateVisualizationPointsCalibration()
+        {
+            for (int i = 0; i < AppControl.Instance.InjectionPoints3DCalib.Count; i++)
+            {
+                if (AppControl.Instance.InjectionPoints3DCalib[i].Assigned)
+                {
+                    if (AppControl.Instance.InjectionPoints3DCalib[i].IsError)
+                    {
+                        pointsToBeShown[i].Material = DiffuseMaterials.Red;
+                    }
+                    else
+                    {
+                        pointsToBeShown[i].Material = DiffuseMaterials.Green;
+                    }
+                }
+                if (i == AppControl.Instance.SelectedIndexInjectionPointCalibration)
+                {
+                    var meshBuilder = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+                    meshBuilder.AddSphere(new SharpDX.Vector3(0, 0, 0), 4);
+                    var mesh = meshBuilder.ToMeshGeometry3D();
+                    pointsToBeShown[i].Geometry = mesh;
+                }
+                else
+                {
+                    var meshBuilder = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+                    meshBuilder.AddSphere(new SharpDX.Vector3(0, 0, 0), 2);
+                    var mesh = meshBuilder.ToMeshGeometry3D();
+                    pointsToBeShown[i].Geometry = mesh;
+                }
+            }
+        }
+
+        internal void Calibrate()
+        {
+            if (Properties.Settings.Default.CalibrationMode == "Mean")
+            {
+                var averageXAssigned = AppControl.Instance.InjectionPoints3DCalib.Average(point => point.XAssigned);
+                var averageYAssigned = AppControl.Instance.InjectionPoints3DCalib.Average(point => point.YAssigned);
+                var averageZAssigned = AppControl.Instance.InjectionPoints3DCalib.Average(point => point.ZAssigned);
+                var averageX = AppControl.Instance.InjectionPoints3DCalib.Average(point => point.XRotated);
+                var averageY = AppControl.Instance.InjectionPoints3DCalib.Average(point => point.YRotated);
+                var averageZ = AppControl.Instance.InjectionPoints3DCalib.Average(point => point.ZRotated);
+
+                // File path chosen by the user
+                string filePath = AppControl.CoordFile;
+
+                // Write the averages to the file
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    writer.WriteLine((averageXAssigned - averageX).ToString("00.00", new CultureInfo("en-US")));
+                    writer.WriteLine((averageYAssigned - averageY).ToString("00.00", new CultureInfo("en-US")));
+                    writer.WriteLine((averageZAssigned - averageZ).ToString("00.00", new CultureInfo("en-US")));
+                    writer.WriteLine(AppControl.Instance.LengthNeedle.ToString("00.00", new CultureInfo("en-US")));
+                }
+            }
+            else
+            {
+            }
+        }
+
+        public Calib3DWindow CalibrationWindow { get; internal set; }
+
+        public Point3D BaseNeedle
+        {
+            get { return baseNeedle; }
+            set
+            {
+                baseNeedle = value;
+                OnPropertyChanged(nameof(BaseNeedle));
+            }
+        }
+
         public bool BTYSimulatorConnected { get; private set; }
 
         public HelixToolkit.Wpf.SharpDX.Camera Camera
@@ -1222,6 +640,21 @@ namespace BeautySim2023
             }
         }
 
+        public LineGeometry3D Coordinate { set; get; }
+        public BillboardText3D CoordinateText { set; get; }
+
+        public bool CorrugatorVisible
+        {
+            get { return corrugatorVsible; }
+            set
+            {
+                corrugatorVsible = value;
+                OnPropertyChanged(nameof(CorrugatorVisible));
+            }
+        }
+
+        public Enum_AreaDefinition CurrentArea { get; private set; }
+
         public Enum_CaseState CurrentCaseState
         {
             get
@@ -1238,6 +671,10 @@ namespace BeautySim2023
             }
         }
 
+ 
+
+        public bool CurrentLocateMouseSOrT { get; private set; }
+
         public string CurrentModel { get; internal set; }
 
         public double DepthImage_mm
@@ -1250,9 +687,92 @@ namespace BeautySim2023
             }
         }
 
+        public double DepthInjection
+        {
+            get
+            {
+                return depthInjection;
+            }
+            set
+            {
+                depthInjection = value;
+                OnPropertyChanged(nameof(DepthInjection));
+            }
+        }
+
+        public double Diameter3DPoints { get; internal set; } = 2;
+
         public TimeSpan DurationNeedlePhase { get; private set; }
 
+        public IEffectsManager EffectsManager
+        {
+            get { return effectsManager; }
+            protected set
+            {
+                SetValue(ref effectsManager, value);
+            }
+        }
+
+        public ObservableCollection<EntranceData> EntranceDataList { get; set; }
+
+        public string EvaluateTheCorrectAnswers { get; private set; } = "Evaluate the correct answers";
+
+        public string EvaluateTheCorrectAnswersTeacher { get; private set; } = "The student is evaluation feedbacks on the answers provided";
+
+        public bool Feedback3DOn { get; set; }
+
+        public HelixToolkit.Wpf.SharpDX.Geometry3D GeometryAntenna { set; get; }
+
+        public HelixToolkit.Wpf.SharpDX.MeshGeometry3D GeometryCable { get; set; }
+
+        public HelixToolkit.Wpf.SharpDX.MeshGeometry3D GeometryConnector { get; set; }
+
+        public HelixToolkit.Wpf.SharpDX.Geometry3D GeometryHeadSkin { set; get; }
+
+        public HelixToolkit.Wpf.SharpDX.MeshGeometry3D GeometryNeedle { get; set; }
+
+        public HelixToolkit.Wpf.SharpDX.MeshGeometry3D GeometrySensor { get; set; }
+
+        public HelixToolkit.Wpf.SharpDX.Geometry3D GeometrySphere { get; set; }
+
+        public HelixToolkit.Wpf.SharpDX.Geometry3D GeometrySphere2 { set; get; }
+
+        public HelixToolkit.Wpf.SharpDX.MeshGeometry3D GeometryTConnector { get; set; }
+
+        public bool HasBeen3DPointsLoaded { get; private set; }
+
+        public string HitStructure
+        {
+            get => hitStructure;
+            set
+            {
+                if (hitStructure != value)
+                {
+                    hitStructure = value;
+                    OnPropertyChanged(nameof(HitStructure));
+                }
+            }
+        }
+
+        public Point3D ImpactPointToShow
+        {
+            get { return impactPointToShow; }
+            set
+            {
+                impactPointToShow = value;
+                OnPropertyChanged(nameof(ImpactPointToShow));
+            }
+        }
+
         public int IndexRealFinishNeedle { get; internal set; }
+
+        public ObservableCollection<InjectionPointSpecific2D> InjectionPoints2D { get; set; }
+
+        public ObservableCollection<InjectionPoint3D> InjectionPoints3D { get; set; }
+
+        public ObservableCollection<InjectionPoint3DCalib> InjectionPoints3DCalib { get; set; }
+
+        public ObservableCollection<InjectionPoint3D> InjectionPoints3DThisStep { get; set; }
 
         public int InsertionNeedle
         {
@@ -1327,7 +847,33 @@ namespace BeautySim2023
 
         public bool LoadingCase { get; internal set; }
 
+        public HelixToolkit.Wpf.SharpDX.Material MaterialAntenna { set; get; }
+
+        public HelixToolkit.Wpf.SharpDX.Material MaterialCable { get; set; }
+
+        public HelixToolkit.Wpf.SharpDX.Material MaterialConnector { get; set; }
+
+        public HelixToolkit.Wpf.SharpDX.Material MaterialHeadSkin { set; get; }
+
+        public HelixToolkit.Wpf.SharpDX.Material MaterialNeedle { get; set; }
+
+        public HelixToolkit.Wpf.SharpDX.Material MaterialProcerus { set; get; }
+
+        public HelixToolkit.Wpf.SharpDX.Material MaterialSensor { get; set; }
+
+        public HelixToolkit.Wpf.SharpDX.Material MaterialSphere { set; get; }
+
+        public HelixToolkit.Wpf.SharpDX.Material MaterialSphere2 { set; get; }
+
+        public string MessageCheckingFeedbacks { get; private set; } = "Check the feedback of your choices";
+
+        public string MessageCheckingFeedbacksTeacher { get; private set; } = "The student is checking the feedback of its choices";
+
+        public string MessageFinalScoreStep { get; private set; } = "Final score for this step";
+
         public double MinutesNeedlePhase { get; private set; }
+
+        public bool Model3DInitialized { get; set; }
 
         public HelixToolkit.Wpf.SharpDX.MeshGeometry3D ModelMask
         {
@@ -1376,30 +922,6 @@ namespace BeautySim2023
                 RaisePropertyChanged("NeedleAngleOk");
             }
         }
-
-        //public LineGeometry3D NeedleArea
-        //{
-        //    get
-        //    {
-        //        return needleArea;
-        //    }
-        //    set
-        //    {
-        //        SetValue(ref needleArea, value, "NeedleArea");
-        //    }
-        //}
-
-        //public LineGeometry3D NeedleAreaIndication
-        //{
-        //    get
-        //    {
-        //        return needleAreaIndication;
-        //    }
-        //    set
-        //    {
-        //        SetValue(ref needleAreaIndication, value, "NeedleAreaIndication");
-        //    }
-        //}
 
         public System.Windows.Media.Color NeedleColor
         {
@@ -1451,6 +973,16 @@ namespace BeautySim2023
             }
         }
 
+        public bool OrbicularisVisible
+        {
+            get { return orbicularisVisible; }
+            set
+            {
+                orbicularisVisible = value;
+                OnPropertyChanged(nameof(OrbicularisVisible));
+            }
+        }
+
         public string OrientationBeautySim { get; private set; }
 
         public Point3D OriginPlaneImage
@@ -1463,6 +995,16 @@ namespace BeautySim2023
             }
         }
 
+        public double PitchNeedle
+        {
+            get { return pitchNeedle; }
+            set
+            {
+                pitchNeedle = value;
+                OnPropertyChanged(nameof(PitchNeedle));
+            }
+        }
+
         public double PitchSensor02
         {
             get { return pitchSensor02; }
@@ -1470,6 +1012,26 @@ namespace BeautySim2023
             {
                 pitchSensor02 = value;
                 RaisePropertyChanged("PitchSensor02");
+            }
+        }
+
+        public Point3D PointEntrance
+        {
+            get { return pointEntrance; }
+            set
+            {
+                pointEntrance = value;
+                OnPropertyChanged(nameof(PointEntrance));
+            }
+        }
+
+        public bool ProcerusVisible
+        {
+            get { return procerusVisible; }
+            set
+            {
+                procerusVisible = value;
+                OnPropertyChanged(nameof(ProcerusVisible));
             }
         }
 
@@ -1484,6 +1046,28 @@ namespace BeautySim2023
                 RaisePropertyChanged("RollSensor02");
             }
         }
+
+        public System.Windows.Media.Media3D.Quaternion Rotation_Manikin
+        {
+            get { return rotation_Manikin; }
+            set
+            {
+                rotation_Manikin = value;
+                OnPropertyChanged(nameof(Rotation_Manikin));
+            }
+        }
+
+        //public float RotationAngleOffsetNeedle
+        //{
+        //    get { return rotationAngleOffsetNeedle; }
+        //    set
+        //    {
+        //        rotationAngleOffsetNeedle = value;
+        //        OnPropertyChanged(nameof(RotationAngleOffsetNeedle));
+        //    }
+        //}
+
+        public QuaternionRotation3D RotationManikin3D { get; private set; }
 
         public System.Windows.Media.Media3D.Quaternion RotationNeedle_WRS_real
         {
@@ -1507,6 +1091,20 @@ namespace BeautySim2023
             }
         }
 
+        public System.Windows.Media.Media3D.Quaternion RotationSensor_WRS_real
+        {
+            get { return rotationSensor_WRS; }
+            set
+            {
+                rotationSensor_WRS = value;
+                OnPropertyChanged(nameof(RotationSensor_WRS_real));
+            }
+        }
+
+        public int SelectedPoint3DIndex { get; private set; }
+
+        public ShowImagesWindow ShowImagesOn3D { get; internal set; }
+
         public bool ShowIndicationNeedle
         {
             get { return showIndicationNeedle; }
@@ -1526,6 +1124,16 @@ namespace BeautySim2023
             {
                 showTargetPosition = value;
                 RaisePropertyChanged("ShowTargetPosition");
+            }
+        }
+
+        public bool SkinVisible
+        {
+            get { return skinVisible; }
+            set
+            {
+                skinVisible = value;
+                OnPropertyChanged(nameof(SkinVisible));
             }
         }
 
@@ -1661,6 +1269,16 @@ namespace BeautySim2023
             }
         }
 
+        public string TextToShowYawPitch
+        {
+            get { return textToShowYawPitch; }
+            set
+            {
+                textToShowYawPitch = value;
+                OnPropertyChanged(nameof(TextToShowYawPitch));
+            }
+        }
+
         public string TextVascularWrong
         {
             get { return textVascularWrong; }
@@ -1711,6 +1329,16 @@ namespace BeautySim2023
             }
         }
 
+        public Point3D TipNeedle
+        {
+            get { return tipNeedle; }
+            set
+            {
+                tipNeedle = value;
+                OnPropertyChanged(nameof(TipNeedle));
+            }
+        }
+
         public string Title
         {
             get
@@ -1724,6 +1352,42 @@ namespace BeautySim2023
         }
 
         public bool ToElaborateData { get; set; } = false;
+
+        public Transform3DGroup TransformGroupMankin { get; private set; }
+
+        public TranslateTransform3D TransformSphere { set; get; } = new System.Windows.Media.Media3D.TranslateTransform3D(5, 0, 0);
+
+        public TranslateTransform3D TransformSphere2 { set; get; } = new System.Windows.Media.Media3D.TranslateTransform3D(5, 0, 0);
+
+        public TranslateTransform3D TranslationManikin3D { get; private set; }
+
+        public Point3D TranslationPointModel { get; set; }
+
+        public TranslateTransform3D TrasformAntenna { set; get; } = new System.Windows.Media.Media3D.TranslateTransform3D(0, 0, 0);
+
+        public Vector3D UpDirection
+        {
+            get { return upDirection; }
+            set
+            {
+                upDirection = value;
+                OnPropertyChanged(nameof(UpDirection));
+            }
+        }
+
+        public bool VeinsVisible
+        {
+            get { return veinsVisible; }
+            set
+            {
+                veinsVisible = value;
+                OnPropertyChanged(nameof(VeinsVisible));
+            }
+        }
+
+        public Visualization3DFrame Vis3DFrame { get; private set; }
+
+        public Visualization3DFrameStudent Vis3DFrameStudent { get; private set; }
 
         public Visibility VisibilityBorderArrowDown
         {
@@ -1935,6 +1599,16 @@ namespace BeautySim2023
             }
         }
 
+        public double YawNeedle
+        {
+            get { return yawNeedle; }
+            set
+            {
+                yawNeedle = value;
+                OnPropertyChanged(nameof(YawNeedle));
+            }
+        }
+
         public double YawSensor02
         {
             get { return yawSensor02; }
@@ -2010,6 +1684,32 @@ namespace BeautySim2023
             }
         }
 
+        public float FluxLiquid
+        {
+            get
+            {
+                return fluxLiquid;
+            }
+            set
+            {
+                fluxLiquid = value;
+                RaisePropertyChanged("FluxLiquid");
+            }
+        }
+
+        public float VolumeLiquid
+        {
+            get
+            {
+                return volumeLiquid;
+            }
+            set
+            {
+                volumeLiquid = value;
+                RaisePropertyChanged("VolumeLiquid");
+            }
+        }
+
         public float ZTipNeedle
         {
             get
@@ -2022,6 +1722,9 @@ namespace BeautySim2023
                 RaisePropertyChanged("ZTipNeedle");
             }
         }
+
+        public bool Calibrating { get; set; }
+        public bool ArePointsVisualizedOn3D { get; private set; } = false;
 
         public static BitmapImage Convert(System.Drawing.Image img)
         {
@@ -2040,6 +1743,32 @@ namespace BeautySim2023
             }
         }
 
+        public static System.Windows.Media.Media3D.Quaternion CreateQuaternionFromAxisAngle(float angleInDegrees, float axisX, float axisY, float axisZ)
+        {
+            float angleInRadians = (float)(Math.PI * angleInDegrees / 180.0);
+            float sinHalfAngle = (float)Math.Sin(angleInRadians / 2.0);
+            float cosHalfAngle = (float)Math.Cos(angleInRadians / 2.0);
+
+            return new System.Windows.Media.Media3D.Quaternion(sinHalfAngle * axisX, sinHalfAngle * axisY, sinHalfAngle * axisZ, cosHalfAngle);
+        }
+
+        public static System.Windows.Media.Media3D.Quaternion CreateRotationQuaternionAlongAxis(float angleInDegrees, int axis)
+        {
+            if (axis == 0)
+            {
+                return CreateQuaternionFromAxisAngle(angleInDegrees, 1, 0, 0);
+            }
+            if (axis == 1)
+            {
+                return CreateQuaternionFromAxisAngle(angleInDegrees, 0, 1, 0);
+            }
+            if (axis == 2)
+            {
+                return CreateQuaternionFromAxisAngle(angleInDegrees, 0, 0, 1);
+            }
+            return CreateQuaternionFromAxisAngle(angleInDegrees, 0, 0, 1);
+        }
+
         public static double DistanceBetween(Point3D a, Point3D b)
         {
             Point3D direction = new Point3D();
@@ -2056,99 +1785,6 @@ namespace BeautySim2023
         {
             System.Drawing.Point point = System.Windows.Forms.Control.MousePosition;
             return new SharpDX.Point(point.X, point.Y);
-        }
-
-        public void InitializeCoordinates()
-        {
-            var builder = new LineBuilder();
-            builder.AddLine(SharpDX.Vector3.Zero, SharpDX.Vector3.UnitX * 5);
-            builder.AddLine(SharpDX.Vector3.Zero, SharpDX.Vector3.UnitY * 5);
-            builder.AddLine(SharpDX.Vector3.Zero, SharpDX.Vector3.UnitZ * 5);
-            AppControl.Instance.Coordinate = builder.ToLineGeometry3D();
-            AppControl.Instance.Coordinate.Colors = new Color4Collection(Enumerable.Repeat<SharpDX.Color4>(SharpDX.Color.White, 6));
-            AppControl.Instance.Coordinate.Colors[0] = AppControl.Instance.Coordinate.Colors[1] = SharpDX.Color.Red;
-            AppControl.Instance.Coordinate.Colors[2] = AppControl.Instance.Coordinate.Colors[3] = SharpDX.Color.Green;
-            AppControl.Instance.Coordinate.Colors[4] = AppControl.Instance.Coordinate.Colors[5] = SharpDX.Color.Blue;
-
-            AppControl.Instance.CoordinateText = new BillboardText3D();
-            AppControl.Instance.CoordinateText.TextInfo.Add(new HelixToolkit.Wpf.SharpDX.TextInfo("X", SharpDX.Vector3.UnitX * 6));
-            AppControl.Instance.CoordinateText.TextInfo.Add(new HelixToolkit.Wpf.SharpDX.TextInfo("Y", SharpDX.Vector3.UnitY * 6));
-            AppControl.Instance.CoordinateText.TextInfo.Add(new HelixToolkit.Wpf.SharpDX.TextInfo("Z", SharpDX.Vector3.UnitZ * 6));
-        }
-
-        internal void DrawInjectionPointsSpecial()
-        {
-            AppControl.Instance.Feedback3DOn = true;
-            for (int i = 0; i < Vis3DFrame.hvView3D.Items.Count; i++)
-            {
-                if (Vis3DFrame.hvView3D.Items[i].Tag != null)
-                {
-                    if (Vis3DFrame.hvView3D.Items[i].Tag.ToString().StartsWith("ThisIsAPoint"))
-                    {
-                        string rr = Vis3DFrame.hvView3D.Items[i].Tag.ToString().Replace("ThisIsAPoint", "");
-                        int index = Int32.Parse(rr);
-                        MeshGeometryModel3D aa = (MeshGeometryModel3D)Vis3DFrame.hvView3D.Items[i];
-
-                        InjectionPoint3D ijP = (InjectionPoint3D)Vis3DFrame.InjectionPointListView.Items[index];
-
-                        if (ijP.IsError && ijP.ActuallyChosenOrPerformedQuantity > 0)
-                        {
-                            aa.Material = DiffuseMaterials.Red;
-                        }
-                        else
-                        {
-                            if (ijP.ActuallyChosenOrPerformedQuantity > ijP.PrescribedQuantity)
-                            {
-                                aa.Material = DiffuseMaterials.Orange;
-                            }
-                            else if (ijP.ActuallyChosenOrPerformedQuantity < ijP.PrescribedQuantity)
-                            {
-                                aa.Material = DiffuseMaterials.Yellow;
-                            }
-                            else
-                            {
-                                aa.Material = DiffuseMaterials.Green;
-                            }
-                        }
-                    }
-                }
-            }
-            AppControl.Instance.Feedback3DOn = true;
-            for (int i = 0; i < Vis3DFrameStudent.hvView3D.Items.Count; i++)
-            {
-                if (Vis3DFrameStudent.hvView3D.Items[i].Tag != null)
-                {
-                    if (Vis3DFrameStudent.hvView3D.Items[i].Tag.ToString().StartsWith("ThisIsAPoint"))
-                    {
-                        string rr = Vis3DFrameStudent.hvView3D.Items[i].Tag.ToString().Replace("ThisIsAPoint", "");
-                        int index = Int32.Parse(rr);
-                        MeshGeometryModel3D aa = (MeshGeometryModel3D)Vis3DFrameStudent.hvView3D.Items[i];
-
-                        InjectionPoint3D ijP = (InjectionPoint3D)Vis3DFrame.InjectionPointListView.Items[index];
-
-                        if (ijP.IsError && ijP.ActuallyChosenOrPerformedQuantity > 0)
-                        {
-                            aa.Material = DiffuseMaterials.Red;
-                        }
-                        else
-                        {
-                            if (ijP.ActuallyChosenOrPerformedQuantity > ijP.PrescribedQuantity)
-                            {
-                                aa.Material = DiffuseMaterials.Orange;
-                            }
-                            else if (ijP.ActuallyChosenOrPerformedQuantity < ijP.PrescribedQuantity)
-                            {
-                                aa.Material = DiffuseMaterials.Yellow;
-                            }
-                            else
-                            {
-                                aa.Material = DiffuseMaterials.Green;
-                            }
-                        }
-                    }
-                }
-            }
-
         }
 
         public void AdvancePartialAdvanceStep()
@@ -2680,12 +2316,13 @@ namespace BeautySim2023
                     {
                         case Enum_StepFace3DInteraction.LOADING:
                             AppControl.Instance.Feedback3DOn = false;
+                            ManageVisibilityPointsStudent(false);
                             c6.Step = Enum_StepFace3DInteraction.OPERATIVE;
                             t6.grIndications.Visibility = Visibility.Hidden;
                             break;
 
                         case Enum_StepFace3DInteraction.OPERATIVE:
-
+                            ManageVisibilityPointsStudent(true);
                             for (int i = 0; i < InjectionPoints3DThisStep.Count; i++)
                             {
                                 InjectionPoint3D ijP = InjectionPoints3DThisStep[i];
@@ -2736,11 +2373,6 @@ namespace BeautySim2023
             }
         }
 
-        //public Point3D TranslationPointModel { get; set; } = new Point3D(37.3, -134.1, 0);
-        public Point3D TranslationPointModel { get; set; }// = new Point3D(50, -140, 6.5);
-
-        public ObservableCollection<MeshGeometryModel3D> PointsToBeShown = new ObservableCollection<MeshGeometryModel3D>();
-
         public void AdvanceStep()
         {
             MainStudentFrame.bOk.IsEnabled = true;
@@ -2767,11 +2399,7 @@ namespace BeautySim2023
                     {
                         MainTeacherFrame.bNextStep.Content = "Close Case";
                     }
-                    //if (CurrentCase.Steps[CurrentCase.CurrentStepIndex].ToBeExcluded)
-                    //{
-                    //    AdvanceStep();
-                    //    return;
-                    //}
+
                     switch (CurrentCase.Steps[CurrentCase.CurrentStepIndex].Type)
                     {
                         case Enum_ClinicalCaseStepType.MESSAGE:
@@ -2785,8 +2413,6 @@ namespace BeautySim2023
 
                             if (mm1.MessageType == Enum_MessageType.SCORE)
                             {
-                                int counterScoreable = 0;
-
                                 CurrentCase.CalculateGlobalScore();
 
                                 float globalscore = CurrentCase.GlobalScore;
@@ -2909,7 +2535,7 @@ namespace BeautySim2023
                                 MainTeacherFrame.spFluidControls.Visibility = Visibility.Hidden;
                             }
                             MainTeacherFrame.frActivity.Navigate(TeacherFrame);
-                            MainTeacherFrame.bInsertAnaetheticMouse.Visibility = Visibility.Visible;
+                            MainTeacherFrame.bInsertAnaetheticMouse.Visibility = Properties.Settings.Default.DebugMode ? Visibility.Visible : Visibility.Collapsed;
                             MainTeacherFrame.bViewImages.Visibility = Visibility.Visible;
                             MainStudentFrame.frActivity.Navigate(StudentFrame);
                             AppControl.Instance.SetContent((ClinicalCaseStep_Face3DInteraction)caseStepCurrent);
@@ -2929,6 +2555,15 @@ namespace BeautySim2023
                     AppControl.Instance.WindowTeacher.Navigate(new FunctionalitiesFrame());
                 }
             }
+        }
+
+        public double CalcDistance(Point3D point1, Point3D point2)
+        {
+            double deltaX = point1.X - point2.X;
+            double deltaY = point1.Y - point2.Y;
+            double deltaZ = point1.Z - point2.Z;
+
+            return Math.Sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
         }
 
         public void CheckModulesActivation()
@@ -2952,6 +2587,44 @@ namespace BeautySim2023
             }
 
             ModulesChecked = true;
+        }
+
+        public void CheckSceneNode(SceneNode node, HitTestContext context, SharpDX.Vector3 rayDir, SharpDX.Vector3 tip, ref List<PointHit> pointsHit)//, ref List<string> nodeNames)
+        {
+            try
+            {
+                if (node is GroupNode gn)
+                {
+                    List<HitTestResult> hits = new List<HitTestResult>();
+                    gn.HitTest(context, ref hits);
+                    if (hits != null)
+                    {
+                        //List<string> nodeNames = new List<string>();
+                        foreach (var hit in hits)
+                        {
+                            foreach (var item in CollisionItemsGuid)
+                            {
+                                if (item.Value.Contains(hit.Geometry.GUID))
+                                {
+                                    SharpDX.Vector3 diff = hit.PointHit - tip;
+
+                                    double distance = SharpDX.Vector3.Dot(diff, rayDir);
+
+                                    //nodeNames.Add(item.Key);
+                                    pointsHit.Add(new PointHit(hit.PointHit, item.Key, distance));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            //in teoria questo sotto non serve
+            //ho visto che i modelli che carichi sono visti come gruppi
+
+            return;
         }
 
         public void CloseApp(bool forceClose = false)
@@ -2990,6 +2663,14 @@ namespace BeautySim2023
             }
         }
 
+        public HelixToolkit.Wpf.SharpDX.MeshGeometry3D CreateTruncatedConeGeometry(float baseRadius, float topRadius, float height, int thetaDiv, SharpDX.Vector3 normal, SharpDX.Vector3 origin, bool baseCap)
+        {
+            var builder = new HelixToolkit.Wpf.SharpDX.MeshBuilder(true, true);
+            builder.AddCone(origin, normal, baseRadius, topRadius, height, baseCap, false, thetaDiv);
+            var geometry = builder.ToMeshGeometry3D();
+            return geometry;
+        }
+
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
@@ -2998,10 +2679,10 @@ namespace BeautySim2023
             // GC.SuppressFinalize(this);
         }
 
-        internal void StartRotation()
+        public Point3D GetRotoTransatedPoint(Transform3DGroup tsg, Point3D origin)
         {
-            AppControl.Instance.UpDirection = new Vector3D(0, 0, -1);
-            //timerRotation.Start();
+            Point3D ptd = tsg.Transform(origin);
+            return ptd;
         }
 
         public void Init()
@@ -3017,13 +2698,10 @@ namespace BeautySim2023
             System.Windows.Media.Media3D.Quaternion qy = AppControl.CreateRotationQuaternionAlongAxis(0, 1);
             System.Windows.Media.Media3D.Quaternion qz = AppControl.CreateRotationQuaternionAlongAxis(0, 2);
             System.Windows.Media.Media3D.Quaternion qx = AppControl.CreateRotationQuaternionAlongAxis((float)Properties.Settings.Default.AngleRotationManikinAdjustment, 0);
-            //AppControl.Instance.Rotation_Manikin = qy * qz;
+            AppControl.Instance.Rotation_Manikin = qx;
+            UpdateRotationManikin3D();
 
             ReadCoordinateFile();
-            
-            AppControl.Instance.Rotation_Manikin = qx;
-
-            UpdateRotationManikin3D();
             UpdateTranslationManikin3D();
 
             TransformGroupMankin = new Transform3DGroup();
@@ -3031,40 +2709,22 @@ namespace BeautySim2023
             TransformGroupMankin.Children.Add(TranslationManikin3D);
         }
 
-        private void UpdateRotationManikin3D()
+        public void InitializeCoordinates()
         {
-            RotationManikin3D = new QuaternionRotation3D(Rotation_Manikin);
-        }
+            var builder = new LineBuilder();
+            builder.AddLine(SharpDX.Vector3.Zero, SharpDX.Vector3.UnitX * 5);
+            builder.AddLine(SharpDX.Vector3.Zero, SharpDX.Vector3.UnitY * 5);
+            builder.AddLine(SharpDX.Vector3.Zero, SharpDX.Vector3.UnitZ * 5);
+            AppControl.Instance.Coordinate = builder.ToLineGeometry3D();
+            AppControl.Instance.Coordinate.Colors = new Color4Collection(Enumerable.Repeat<SharpDX.Color4>(SharpDX.Color.White, 6));
+            AppControl.Instance.Coordinate.Colors[0] = AppControl.Instance.Coordinate.Colors[1] = SharpDX.Color.Red;
+            AppControl.Instance.Coordinate.Colors[2] = AppControl.Instance.Coordinate.Colors[3] = SharpDX.Color.Green;
+            AppControl.Instance.Coordinate.Colors[4] = AppControl.Instance.Coordinate.Colors[5] = SharpDX.Color.Blue;
 
-        public void ReadCoordinateFile()
-        {
-            using (StreamReader sr = new StreamReader(CoordFile))
-            {
-                string xLine, yLine, zLine, lengthNeedleLine;
-                double x = 0;
-                double y = 0;
-                double z = 0;
-                double lengthNeedleR = 0;
-                while ((xLine = sr.ReadLine()) != null &&
-                       (yLine = sr.ReadLine()) != null &&
-                       (zLine = sr.ReadLine()) != null &&
-                       (lengthNeedleLine = sr.ReadLine()) != null)
-                {
-                    if (double.TryParse(xLine, out x) &&
-                        double.TryParse(yLine, out y) &&
-                        double.TryParse(zLine, out z) &&
-                        double.TryParse(lengthNeedleLine, out lengthNeedleR))
-                    {
-                        Console.WriteLine($"Read coordinates: x={x}, y={y}, z={z}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Failed to parse coordinates");
-                    }
-                }
-                TranslationPointModel = new Point3D(x, y, z);
-                LengthNeedle = (float)lengthNeedleR;
-            }
+            AppControl.Instance.CoordinateText = new BillboardText3D();
+            AppControl.Instance.CoordinateText.TextInfo.Add(new HelixToolkit.Wpf.SharpDX.TextInfo("X", SharpDX.Vector3.UnitX * 6));
+            AppControl.Instance.CoordinateText.TextInfo.Add(new HelixToolkit.Wpf.SharpDX.TextInfo("Y", SharpDX.Vector3.UnitY * 6));
+            AppControl.Instance.CoordinateText.TextInfo.Add(new HelixToolkit.Wpf.SharpDX.TextInfo("Z", SharpDX.Vector3.UnitZ * 6));
         }
 
         public void InitializeCurrentTeacherStudentEvent()
@@ -3099,6 +2759,264 @@ namespace BeautySim2023
             }
         }
 
+        public void InitializeModels(string folder)
+        {
+            bool showSkinComplete = false;
+            bool showSkin = true;
+            bool showProcerus = false;
+            bool showOrbicularisSuperiorLateral = false;
+            bool showCorrugator = false;
+
+            var sphere = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+            sphere.AddSphere(new SharpDX.Vector3(0, 0, 0), 1);
+            AppControl.Instance.GeometrySphere = sphere.ToMeshGeometry3D();
+            AppControl.Instance.MaterialSphere = DiffuseMaterials.Green;
+
+            var sphere2 = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+            sphere2.AddSphere(new SharpDX.Vector3(0, 0, 0), 1);
+            AppControl.Instance.GeometrySphere2 = sphere2.ToMeshGeometry3D();
+            AppControl.Instance.MaterialSphere2 = DiffuseMaterials.Yellow;
+
+            var antenna = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+            antenna.AddBox(SharpDX.Vector3.Zero, 54, 54, 54);
+            AppControl.Instance.GeometryAntenna = antenna.ToMeshGeometry3D();
+            AppControl.Instance.MaterialAntenna = DiffuseMaterials.Gray;
+
+            AppControl.Instance.GeometrySensor = AppControl.Instance.CreateTruncatedConeGeometry(1, 1, LengthSensor, ThetaDivNeedle, new SharpDX.Vector3(1, 0, 0), new SharpDX.Vector3(-LengthSensor / 2.0f, 0, 0), true);
+            AppControl.Instance.MaterialSensor = DiffuseMaterials.Black;
+
+            AppControl.Instance.GeometryConnector = AppControl.Instance.CreateTruncatedConeGeometry(3, 3, 21.72f, ThetaDivNeedle, new SharpDX.Vector3(1, 0, 0), new SharpDX.Vector3(0, 0, 0), true);
+            AppControl.Instance.MaterialConnector = DiffuseMaterials.Gray;
+
+            AppControl.Instance.GeometryTConnector = AppControl.Instance.CreateTruncatedConeGeometry(2, 2, 10, ThetaDivNeedle, new SharpDX.Vector3(0, 1, 0), new SharpDX.Vector3(0, 0, 0), true);
+
+            AppControl.Instance.GeometryNeedle = AppControl.Instance.CreateTruncatedConeGeometry(0.4f, 0.1f, lengthNeedle, ThetaDivNeedle, new SharpDX.Vector3(1, 0, 0), new SharpDX.Vector3(LengthSensor / 2.0f, 0, 0), true);
+            AppControl.Instance.TipNeedleOrigin = new Point3D(lengthNeedle + LengthSensor / 2.0, 0, 0);
+            AppControl.Instance.BaseNeedleOrigin = new Point3D(LengthSensor / 2.0, 0, 0);
+            AppControl.Instance.MaterialNeedle = DiffuseMaterials.Blue;
+
+            AppControl.Instance.GeometryCable = AppControl.Instance.CreateTruncatedConeGeometry(0.5f, 0.5f, -LengthCable, ThetaDivNeedle, new SharpDX.Vector3(1, 0, 0), new SharpDX.Vector3(-LengthSensor, 0, 0), true);
+            AppControl.Instance.MaterialCable = DiffuseMaterials.Yellow;
+
+            CollisionItemsGuid = new Dictionary<string, List<Guid>>();
+            if (showSkin)
+            {
+                var builder = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+                builder.AddBox(SharpDX.Vector3.Zero, 1, 1, 1);
+                var reader = new HelixToolkit.Wpf.SharpDX.ObjReader();
+                //var models = reader.Read(folder + "\\Testa pelle mirror3.obj");
+                //var models = reader.Read(folder + "\\TestaNew3b.obj");
+                var models = reader.Read(folder + "\\Head_cut_base.obj");
+
+                AppControl.Instance.CollisionItemsGuid.Add("SKIN", new List<Guid>());
+
+                var material = new PhongMaterial
+                {
+                    DiffuseColor = new SharpDX.Color4(1f, 0.5f, 0.5f, 0.3f), // Imposta il quarto valore (alpha) per la trasparenza
+                                                                             // Altri parametri del materiale possono essere impostati qui
+                };
+
+                for (int i = 0; i < models.Count(); i++)
+                {
+                    var model = new MeshGeometryModel3D();
+                    model.Geometry = models[i].Geometry;
+                    model.Material = DiffuseMaterials.LightGray;
+                    model.CullMode = SharpDX.Direct3D11.CullMode.Back;
+                    //model.InvertNormal = true;
+                    //model.FrontCounterClockwise = true;
+
+                    model.FillMode = SharpDX.Direct3D11.FillMode.Wireframe;
+                    //model.WireframeColor = Colors.AliceBlue;
+
+                    Vis3DFrame.groupSkin.Children.Add(model);
+
+                    var modelS = new MeshGeometryModel3D();
+                    modelS.Geometry = models[i].Geometry;
+                    modelS.Material = DiffuseMaterials.LightGray;
+                    modelS.CullMode = SharpDX.Direct3D11.CullMode.Back;
+                    //model.InvertNormal = true;
+                    //model.FrontCounterClockwise = true;
+
+                    modelS.FillMode = SharpDX.Direct3D11.FillMode.Wireframe;
+                    //model.WireframeColor = Colors.AliceBlue;
+
+                    Vis3DFrameStudent.groupSkin.Children.Add(modelS);
+
+                    AppControl.Instance.CollisionItemsGuid["SKIN"].Add(model.Geometry.GUID);
+                }
+            }
+
+            if (showSkinComplete)
+            {
+                var builder = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+                builder.AddBox(SharpDX.Vector3.Zero, 1, 1, 1);
+                var reader = new HelixToolkit.Wpf.SharpDX.ObjReader();
+                var models = reader.Read(folder + "\\Pelle combinata5.obj");
+                AppControl.Instance.CollisionItemsGuid.Add("SKIN", new List<Guid>());
+                for (int i = 0; i < models.Count(); i++)
+                {
+                    var model = new MeshGeometryModel3D();
+                    model.Geometry = models[i].Geometry;
+                    model.Material = DiffuseMaterials.Gray;
+                    model.FillMode = SharpDX.Direct3D11.FillMode.Wireframe;
+                    Vis3DFrame.groupSkin.Children.Add(model);
+                    //Vis3DFrameStudent.groupSkin.Children.Add(model);
+                    AppControl.Instance.CollisionItemsGuid["SKIN"].Add(model.Geometry.GUID);
+                }
+            }
+
+            if (showProcerus)
+            {
+                var builder = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+                builder.AddBox(SharpDX.Vector3.Zero, 1, 1, 1);
+                var reader = new HelixToolkit.Wpf.SharpDX.ObjReader();
+                var modelProcerus = reader.Read(folder + "\\ProcerusSmoothed.obj");
+                AppControl.Instance.CollisionItemsGuid.Add("PROCERUS", new List<Guid>());
+                for (int i = 0; i < modelProcerus.Count(); i++)
+                {
+                    var model = new MeshGeometryModel3D();
+                    model.Geometry = modelProcerus[i].Geometry;
+                    model.Material = DiffuseMaterials.Orange;
+                    model.FillMode = SharpDX.Direct3D11.FillMode.Wireframe;
+                    Vis3DFrame.groupProcerus.Children.Add(model);
+                    //Vis3DFrameStudent.groupProcerus.Children.Add(model);
+                    AppControl.Instance.CollisionItemsGuid["PROCERUS"].Add(model.Geometry.GUID);
+                }
+            }
+
+            if (showOrbicularisSuperiorLateral)
+            {
+                var builder = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+                builder.AddBox(SharpDX.Vector3.Zero, 1, 1, 1);
+                var readerOrbicularisSuperiorLateral = new HelixToolkit.Wpf.SharpDX.ObjReader();
+                var modelOrbicularisSuperiorLateral = readerOrbicularisSuperiorLateral.Read(folder + "\\OrbicularisSuperiorLateralSmoothed.obj");
+                AppControl.Instance.CollisionItemsGuid.Add("ORBICULARIS", new List<Guid>());
+                for (int i = 0; i < modelOrbicularisSuperiorLateral.Count(); i++)
+                {
+                    var model = new MeshGeometryModel3D();
+                    model.Geometry = modelOrbicularisSuperiorLateral[i].Geometry;
+                    model.Material = DiffuseMaterials.Orange;
+                    model.FillMode = SharpDX.Direct3D11.FillMode.Wireframe;
+                    Vis3DFrame.groupOrbicularisSuperiorLateral.Children.Add(model);
+                    //Vis3DFrameStudent.groupOrbicularisSuperiorLateral.Children.Add(model);
+                    AppControl.Instance.CollisionItemsGuid["ORBICULARIS"].Add(model.Geometry.GUID);
+                }
+            }
+            if (showCorrugator)
+            {
+                var builder = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+                builder.AddBox(SharpDX.Vector3.Zero, 1, 1, 1);
+                var readerCorrugator = new HelixToolkit.Wpf.SharpDX.ObjReader();
+                var modelCorrugators = readerCorrugator.Read(folder + "\\CorrugatorSmoothed.obj");
+                AppControl.Instance.CollisionItemsGuid.Add("CORRUGATOR", new List<Guid>());
+                for (int i = 0; i < modelCorrugators.Count(); i++)
+                {
+                    var model = new MeshGeometryModel3D();
+                    model.Geometry = modelCorrugators[i].Geometry;
+                    model.Material = DiffuseMaterials.Orange;
+                    model.FillMode = SharpDX.Direct3D11.FillMode.Wireframe;
+                    Vis3DFrame.groupCorrugators.Children.Add(model);
+                    //Vis3DFrameStudent.groupCorrugators.Children.Add(model);
+                    AppControl.Instance.CollisionItemsGuid["CORRUGATOR"].Add(model.Geometry.GUID);
+                }
+            }
+
+            if (true)
+            {
+                var readerArteriesSX = new HelixToolkit.Wpf.SharpDX.ObjReader();
+                var readerArteriesDX = new HelixToolkit.Wpf.SharpDX.ObjReader();
+                var modelsArteriesSX = readerArteriesSX.Read(folder + "\\red_sx.obj");
+                var modelsArteriesDX = readerArteriesDX.Read(folder + "\\red_dx.obj");
+                AppControl.Instance.CollisionItemsGuid.Add("ARTERIES", new List<Guid>());
+                for (int i = 0; i < modelsArteriesSX.Count(); i++)
+                {
+                    var model = new MeshGeometryModel3D();
+                    model.Geometry = modelsArteriesSX[i].Geometry;
+                    model.Material = DiffuseMaterials.Red;
+                    model.FillMode = SharpDX.Direct3D11.FillMode.Solid;
+
+                    Vis3DFrame.groupArteries.Children.Add(model);
+                    AppControl.Instance.CollisionItemsGuid["ARTERIES"].Add(model.Geometry.GUID);
+                }
+                for (int i = 0; i < modelsArteriesDX.Count(); i++)
+                {
+                    var model = new MeshGeometryModel3D();
+                    model.Geometry = modelsArteriesDX[i].Geometry;
+                    model.Material = DiffuseMaterials.Red;
+                    model.FillMode = SharpDX.Direct3D11.FillMode.Solid;
+
+                    Vis3DFrame.groupArteries.Children.Add(model);
+                    AppControl.Instance.CollisionItemsGuid["ARTERIES"].Add(model.Geometry.GUID);
+                }
+
+                for (int i = 0; i < modelsArteriesSX.Count(); i++)
+                {
+                    var modelS = new MeshGeometryModel3D();
+                    modelS.Geometry = modelsArteriesSX[i].Geometry;
+                    modelS.Material = DiffuseMaterials.Red;
+                    modelS.FillMode = SharpDX.Direct3D11.FillMode.Solid;
+
+                    Vis3DFrameStudent.groupArteries.Children.Add(modelS);
+                }
+                for (int i = 0; i < modelsArteriesDX.Count(); i++)
+                {
+                    var modelS = new MeshGeometryModel3D();
+                    modelS.Geometry = modelsArteriesDX[i].Geometry;
+                    modelS.Material = DiffuseMaterials.Red;
+                    modelS.FillMode = SharpDX.Direct3D11.FillMode.Solid;
+
+                    Vis3DFrameStudent.groupArteries.Children.Add(modelS);
+                }
+            }
+
+            if (true)
+            {
+                var readerVeinsSX = new HelixToolkit.Wpf.SharpDX.ObjReader();
+                var readerVeinsDX = new HelixToolkit.Wpf.SharpDX.ObjReader();
+                var modelsVeinsSX = readerVeinsSX.Read(folder + "\\blue_sx.obj");
+                var modelsVeinsDX = readerVeinsDX.Read(folder + "\\blue_dx.obj");
+                AppControl.Instance.CollisionItemsGuid.Add("VEINS", new List<Guid>());
+                for (int i = 0; i < modelsVeinsSX.Count(); i++)
+                {
+                    var model = new MeshGeometryModel3D();
+                    model.Geometry = modelsVeinsSX[i].Geometry;
+                    model.Material = DiffuseMaterials.Blue;
+                    model.FillMode = SharpDX.Direct3D11.FillMode.Solid;
+                    AppControl.Instance.CollisionItemsGuid["VEINS"].Add(model.Geometry.GUID);
+                    Vis3DFrame.groupVeins.Children.Add(model);
+                }
+                for (int i = 0; i < modelsVeinsDX.Count(); i++)
+                {
+                    var model = new MeshGeometryModel3D();
+                    model.Geometry = modelsVeinsDX[i].Geometry;
+                    model.Material = DiffuseMaterials.Blue;
+                    model.FillMode = SharpDX.Direct3D11.FillMode.Solid;
+                    AppControl.Instance.CollisionItemsGuid["VEINS"].Add(model.Geometry.GUID);
+                    Vis3DFrame.groupVeins.Children.Add(model);
+                }
+                for (int i = 0; i < modelsVeinsSX.Count(); i++)
+                {
+                    var modelS = new MeshGeometryModel3D();
+                    modelS.Geometry = modelsVeinsSX[i].Geometry;
+                    modelS.Material = DiffuseMaterials.Blue;
+                    modelS.FillMode = SharpDX.Direct3D11.FillMode.Solid;
+                    Vis3DFrameStudent.groupVeins.Children.Add(modelS);
+                }
+                for (int i = 0; i < modelsVeinsDX.Count(); i++)
+                {
+                    var modelS = new MeshGeometryModel3D();
+                    modelS.Geometry = modelsVeinsDX[i].Geometry;
+                    modelS.Material = DiffuseMaterials.Blue;
+                    modelS.FillMode = SharpDX.Direct3D11.FillMode.Solid;
+                    Vis3DFrameStudent.groupVeins.Children.Add(modelS);
+                }
+            }
+
+            AppControl.Instance.StringSkinAreas.Add("ORBICULARIS");
+            AppControl.Instance.StringSkinAreas.Add("PROCERUS");
+            AppControl.Instance.StringSkinAreas.Add("CORRUGATOR");
+        }
+
         public void InjectAnesthetic()
         {
             if ((TeacherFrame is Visualization3DFrame) && (Model3DInitialized))
@@ -3111,7 +3029,7 @@ namespace BeautySim2023
                     {
                         InjectionPoints3DThisStep[index].ActualReleases.Add(new ActualRelease());
                     }
-                    InjectionPoints3DThisStep[index].ActualReleases.Last().InjectedQuantity = InjectionPoints3DThisStep[index].ActualReleases.Last().InjectedQuantity + 1;
+                    InjectionPoints3DThisStep[index].ActualReleases.Last().ArtificiallyInjectedQuantity = InjectionPoints3DThisStep[index].ActualReleases.Last().ArtificiallyInjectedQuantity + 0.1;
                     InjectionPoints3DThisStep[index].RefreshQuantities();
                 }
             }
@@ -3170,20 +3088,6 @@ namespace BeautySim2023
             MainStudentFrame.tbCaseName.Text = CurrentCase.Name;
         }
 
-        public Stream LoadTexture(string file)
-        {
-            var bytecode = global::SharpDX.IO.NativeFile.ReadAllBytes(file);
-            return new MemoryStream(bytecode);
-        }
-
-        public Stream LoadTextureCorrected(string file)
-        {
-            System.IO.FileStream fs = new System.IO.FileStream(file, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            System.IO.MemoryStream ms = new System.IO.MemoryStream();
-            fs.CopyTo(ms);
-            return fs;
-        }
-
         public void LogOut()
         {
             SelectStudent(null);
@@ -3206,216 +3110,6 @@ namespace BeautySim2023
                 }
             }
             return HitTestFilterBehavior.Continue;
-        }
-
-        public void PopulateAvailableCases()
-        {
-            // find all available cases
-            Cases.Clear();
-
-            var directories = Directory.GetDirectories(AppControl.CasesFolder);
-            foreach (string s in directories)
-            {
-                ClinicalCase cs = new ClinicalCase(s);
-
-                Cases.Add(cs);
-
-                cs.LoadCaseDescriptor();
-            }
-        }
-
-        public void RaisePropertyChanged(string property)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(property));
-            }
-        }
-
-        public void ResetPoints()
-        {
-        }
-
-        public void SaveResult()
-        {
-            Results result = new Results();
-            result.IdCase = 0;
-            result.CaseName = CurrentCase.Name;
-
-            DateTime now = DateTime.Now;
-            result.Date = DateTime.Now.ToString(new CultureInfo(16));
-
-            result.Score = CurrentCaseScore;
-            result.IdEvent = (CurrentEvent == null ? -1 : CurrentEvent.Id);
-            result.IdStudent = (CurrentStudent == null ? -1 : CurrentStudent.Id);
-            result.IdTeacher = (CurrentTeacher == null ? -1 : CurrentTeacher.Id);
-
-            DateTime tt = DateTime.Now;
-            string baseFolder = AppControl.SaveResultsFolder + result.CaseName + "_" +
-                tt.Year.ToString() + tt.Month.ToString() + tt.Day.ToString() + "_" +
-                tt.Hour.ToString() + tt.Minute.ToString() + tt.Second.ToString();
-
-            if (!Directory.Exists(baseFolder))
-            {
-                Directory.CreateDirectory(baseFolder);
-            }
-
-            string filePath = baseFolder + "\\CaseSaved.xml";
-            ResultToSave resToSave = new ResultToSave();
-            resToSave.NumberOfNeedleInsertions = InsertionNeedle;
-
-            resToSave.IsMultipleNeedleInjections = true;
-            resToSave.WrongInjections = TargetMissedNerve_Injections;
-
-            resToSave.IsMultipleNeedleInjections = false;
-
-            resToSave.Save<ResultToSave>(filePath);
-            result.FilePath = filePath;
-            DBConnector.Instance.InsertRow<Results>(result);
-        }
-
-        public void SetEnabled(UIElement lbl, bool enabled)
-        {
-            if (!WindowTeacher.Dispatcher.CheckAccess())
-            {
-                SetEnabledDelegate d = new SetEnabledDelegate(SetEnabled);
-                WindowTeacher.Dispatcher.Invoke(d, new object[] { lbl, enabled });
-            }
-            else
-            {
-                lbl.IsEnabled = enabled;
-            }
-        }
-
-        public void SetIndicator(System.Windows.Shapes.Ellipse bb, bool active)
-        {
-            if (!WindowTeacher.Dispatcher.CheckAccess())
-            {
-                SetIndicatorDelegate d = new SetIndicatorDelegate(SetIndicator);
-                WindowTeacher.Dispatcher.Invoke(d, new object[] { bb, active });
-            }
-            else
-            {
-                bb.Fill = active ? ActiveEllipse : Brushes.Gray;
-            }
-        }
-
-        public void SetText(TextBlock lbl, string text)
-        {
-            if (!WindowTeacher.Dispatcher.CheckAccess())
-            {
-                SetTextDelegate d = new SetTextDelegate(SetText);
-                WindowTeacher.Dispatcher.Invoke(d, new object[] { lbl, text });
-            }
-            else
-            {
-                lbl.Text = text;
-            }
-        }
-
-        public void SetTimer(bool enabledOrNot)
-        {
-            caseTimer.Enabled = enabledOrNot;
-        }
-
-        public void StopCase(bool IhaveToSaveResults)
-        {
-            if (CurrentCaseState == Enum_CaseState.LOADED)
-            {
-                CurrentCaseState = Enum_CaseState.NOTLOADED;
-
-                SetTimer(false);
-            }
-            if (IhaveToSaveResults)
-            {
-                Results resultToSave = new Results();
-                //AppControl.Instance.SaveResult(SelectedCase);
-            }
-            CurrentCase.ClearAllUserRelatedFields();
-            //AppControl.Instance.WindowTeacher.SetCase("");
-        }
-
-        public void WindowTeacherLoaded(object sender, RoutedEventArgs e)
-        {
-        }
-
-        public void ZeroCaseIndications()
-        {
-            if ((WindowTeacher.PageContainer.Content is FunctionalitiesFrame))
-            {
-                FunctionalitiesFrame wft = (FunctionalitiesFrame)WindowTeacher.PageContainer.Content;
-                if (CurrentCase != null)
-                {
-                    if (CurrentCase.Steps != null)
-                    {
-                        foreach (ClinicalCaseStep f in CurrentCase.Steps)
-                        {
-                            f.Selected = false;
-                        }
-                    }
-                }
-                foreach (ClinicalCase f in Cases)
-                {
-                    f.Selected = false;
-                }
-                wft.pbLoadCaseSingleStep.Value = 0;
-                SetText(wft.tbInfoLoadCase, StringLoadCase);
-                //SetText(wft.tCurrentCase, StringCurrentCase);
-            }
-        }
-
-        internal void ClearTempResults()
-        {
-            if (!Directory.Exists(AppControl.ResultsTempFolder))
-            {
-                Directory.CreateDirectory(AppControl.ResultsTempFolder);
-            }
-            DirectoryInfo di = new DirectoryInfo(AppControl.ResultsTempFolder);
-
-            FileInfo[] files = di.GetFiles("*.pdf");
-            foreach (FileInfo ff in files)
-            {
-                ff.Delete();
-            }
-        }
-
-        internal bool CloseCurrentCase()
-        {
-            try
-            {
-                if (CurrentCase.CurrentStepIndex == CurrentCase.Steps.Count - 1)
-                {
-                    StopCase(true);
-                    AppControl.Instance.WindowTeacher.Navigate(new FunctionalitiesFrame());
-                    AppControl.Instance.WindowStudent.Navigate(new MessageVoid());
-                }
-                else
-                {
-                    if (MessageBox.Show("Are you sure you want to stop this case? Results will not be saved", true, 1000))
-                    {
-                        StopCase(false);
-                        AppControl.Instance.WindowTeacher.Navigate(new FunctionalitiesFrame());
-                        AppControl.Instance.WindowStudent.Navigate(new MessageVoid());
-                    }
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
-
-        internal void ConnectBeautySim()
-        {
-            HwndSource hwnd = HwndSource.FromHwnd(new WindowInteropHelper(WindowTeacher).Handle);
-            BeautySimController.Instance.ScannedSimulatorsEvent += new BeautySimController.ScannedSimulatorsDelegate(ScannedSimulatorListener);
-            BeautySimController.Instance.AMessageArrivedEvent += new BeautySimController.AMessageArrivedDelegate(AMessageArriveListener);
-            BeautySimController.Instance.SerialNumberAcquired += BeautySim_SerialNumberAcquired;
-
-            BeautySimController.Instance.Go();
-            BeautySimController.Instance.StartHookDevices(hwnd);
         }
 
         public void OnMouseLeftButtonDownHandler(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -3540,6 +3234,413 @@ namespace BeautySim2023
             }
         }
 
+        public void PopulateAvailableCases()
+        {
+            // find all available cases
+            Cases.Clear();
+
+            var directories = Directory.GetDirectories(AppControl.CasesFolder);
+            foreach (string s in directories)
+            {
+                ClinicalCase cs = new ClinicalCase(s);
+
+                Cases.Add(cs);
+
+                cs.LoadCaseDescriptor();
+            }
+        }
+
+        public void RaisePropertyChanged(string property)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(property));
+            }
+        }
+
+        public void ReadCoordinateFile()
+        {
+            using (StreamReader sr = new StreamReader(CoordFile))
+            {
+                string xLine, yLine, zLine, lengthNeedleLine;
+                double x = 0;
+                double y = 0;
+                double z = 0;
+                double lengthNeedleR = 0;
+                while ((xLine = sr.ReadLine()) != null &&
+                       (yLine = sr.ReadLine()) != null &&
+                       (zLine = sr.ReadLine()) != null &&
+                       (lengthNeedleLine = sr.ReadLine()) != null)
+                {
+                    if (double.TryParse(xLine, out x) &&
+                        double.TryParse(yLine, out y) &&
+                        double.TryParse(zLine, out z) &&
+                        double.TryParse(lengthNeedleLine, out lengthNeedleR))
+                    {
+                        Console.WriteLine($"Read coordinates: x={x}, y={y}, z={z}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Failed to parse coordinates");
+                    }
+                }
+                TranslationPointModel = new Point3D(x, y, z);
+                LengthNeedle = (float)lengthNeedleR;
+            }
+        }
+
+        public void SaveResult()
+        {
+            Results result = new Results();
+            result.IdCase = 0;
+            result.CaseName = CurrentCase.Name;
+
+            DateTime now = DateTime.Now;
+            result.Date = DateTime.Now.ToString(new CultureInfo(16));
+
+            result.Score = CurrentCaseScore;
+            result.IdEvent = (CurrentEvent == null ? -1 : CurrentEvent.Id);
+            result.IdStudent = (CurrentStudent == null ? -1 : CurrentStudent.Id);
+            result.IdTeacher = (CurrentTeacher == null ? -1 : CurrentTeacher.Id);
+
+            DateTime tt = DateTime.Now;
+            string baseFolder = AppControl.SaveResultsFolder + result.CaseName + "_" +
+                tt.Year.ToString() + tt.Month.ToString() + tt.Day.ToString() + "_" +
+                tt.Hour.ToString() + tt.Minute.ToString() + tt.Second.ToString();
+
+            if (!Directory.Exists(baseFolder))
+            {
+                Directory.CreateDirectory(baseFolder);
+            }
+
+            string filePath = baseFolder + "\\CaseSaved.xml";
+            ResultToSave resToSave = new ResultToSave();
+            resToSave.NumberOfNeedleInsertions = InsertionNeedle;
+
+            resToSave.IsMultipleNeedleInjections = true;
+            resToSave.WrongInjections = TargetMissedNerve_Injections;
+
+            resToSave.IsMultipleNeedleInjections = false;
+
+            resToSave.Save<ResultToSave>(filePath);
+            result.FilePath = filePath;
+            DBConnector.Instance.InsertRow<Results>(result);
+        }
+
+        public void SetEnabled(UIElement lbl, bool enabled)
+        {
+            if (!WindowTeacher.Dispatcher.CheckAccess())
+            {
+                SetEnabledDelegate d = new SetEnabledDelegate(SetEnabled);
+                WindowTeacher.Dispatcher.Invoke(d, new object[] { lbl, enabled });
+            }
+            else
+            {
+                lbl.IsEnabled = enabled;
+            }
+        }
+
+        public void SetIndicator(System.Windows.Shapes.Ellipse bb, bool active)
+        {
+            if (!WindowTeacher.Dispatcher.CheckAccess())
+            {
+                SetIndicatorDelegate d = new SetIndicatorDelegate(SetIndicator);
+                WindowTeacher.Dispatcher.Invoke(d, new object[] { bb, active });
+            }
+            else
+            {
+                bb.Fill = active ? ActiveEllipse : Brushes.Gray;
+            }
+        }
+
+        public void SetText(TextBlock lbl, string text)
+        {
+            if (!WindowTeacher.Dispatcher.CheckAccess())
+            {
+                SetTextDelegate d = new SetTextDelegate(SetText);
+                WindowTeacher.Dispatcher.Invoke(d, new object[] { lbl, text });
+            }
+            else
+            {
+                lbl.Text = text;
+            }
+        }
+
+        public void SetTimer(bool enabledOrNot)
+        {
+            caseTimer.Enabled = enabledOrNot;
+        }
+
+        public void StopCase(bool IhaveToSaveResults)
+        {
+            if (CurrentCaseState == Enum_CaseState.LOADED)
+            {
+                CurrentCaseState = Enum_CaseState.NOTLOADED;
+
+                SetTimer(false);
+            }
+            if (IhaveToSaveResults)
+            {
+                Results resultToSave = new Results();
+                //AppControl.Instance.SaveResult(SelectedCase);
+            }
+            CurrentCase.ClearAllUserRelatedFields();
+            //AppControl.Instance.WindowTeacher.SetCase("");
+        }
+
+        public void UpdateVisibilityItems(bool firstLoad, object sender = null)
+        {
+            if (firstLoad)
+            {
+                Vis3DFrame.cbSkin.IsChecked = true;
+                Vis3DFrame.cbSkinWireframe.IsChecked = false;
+                Vis3DFrame.cbVeins.IsEnabled = false;
+                Vis3DFrame.cbArteries.IsEnabled = false;
+                Vis3DFrame.cbVeins.IsChecked = false;
+                Vis3DFrame.cbArteries.IsChecked = false;
+            }
+            else
+            {
+                if (sender != null)
+                {
+                    CheckBox cb = (CheckBox)sender;
+                    if ((cb.Name == "cbSkin") && (cb.IsChecked == true))
+                    {
+                        Vis3DFrame.cbSkinWireframe.IsChecked = false;
+                        Vis3DFrame.cbVeins.IsEnabled = false;
+                        Vis3DFrame.cbArteries.IsEnabled = false;
+                        Vis3DFrame.cbVeins.IsChecked = false;
+                        Vis3DFrame.cbArteries.IsChecked = false;
+                    }
+
+                    if ((cb.Name == "cbSkinWireframe") && (cb.IsChecked == true))
+                    {
+                        Vis3DFrame.cbSkin.IsChecked = false;
+                        Vis3DFrame.cbVeins.IsEnabled = true;
+                        Vis3DFrame.cbArteries.IsEnabled = true;
+                    }
+                }
+            }
+
+            AppControl.Instance.ProcerusVisible = Vis3DFrame.cbProcerus.IsChecked.Value;
+            AppControl.Instance.CorrugatorVisible = Vis3DFrame.cbCorrugator.IsChecked.Value;
+            AppControl.Instance.OrbicularisVisible = Vis3DFrame.cbOrbicularis.IsChecked.Value;
+            AppControl.Instance.VeinsVisible = Vis3DFrame.cbVeins.IsChecked.Value;
+            AppControl.Instance.ArteriesVisible = Vis3DFrame.cbArteries.IsChecked.Value;
+            AppControl.Instance.SkinVisible = Vis3DFrame.cbSkin.IsChecked.Value || Vis3DFrame.cbSkinWireframe.IsChecked.Value;
+
+            AppControl.Instance.UpdateSkinVisibilityOn3DModels();
+        }
+
+        public void UpdateVisizationZoom()
+        {
+            switch (AppControl.Instance.CurrentArea)
+            {
+                case Enum_AreaDefinition.FRONTAL:
+
+                    //FRONTAL!!
+                    Vis3DFrame.hvView3D.Camera.UpDirection = new Vector3D(.7, .7, 0);
+                    Vis3DFrame.hvView3D.Camera.LookDirection = new Vector3D(-.4, .6, 0);
+
+                    Vis3DFrame.hvView3D.Camera.Position = new Point3D(450 + AppControl.Instance.TranslationPointModel.X, -500 + AppControl.Instance.TranslationPointModel.Y, 0 + AppControl.Instance.TranslationPointModel.Z);
+                    Vis3DFrame.hvView3D.LookAt(new Point3D(360 + AppControl.Instance.TranslationPointModel.X, -200 + AppControl.Instance.TranslationPointModel.Y, 0 + AppControl.Instance.TranslationPointModel.Z), 3000);
+
+                    break;
+
+                case Enum_AreaDefinition.CENTRAL:
+
+                    //CENTRAL!!
+                    Vis3DFrame.hvView3D.Camera.UpDirection = new Vector3D(1, 0, 0);
+                    Vis3DFrame.hvView3D.Camera.LookDirection = new Vector3D(-.3, .7, 0);
+                    Vis3DFrame.hvView3D.Camera.Position = new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -500 + AppControl.Instance.TranslationPointModel.Y, 0 + AppControl.Instance.TranslationPointModel.Z);
+                    Vis3DFrame.hvView3D.LookAt(new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -200 + AppControl.Instance.TranslationPointModel.Y, 0 + AppControl.Instance.TranslationPointModel.Z), 3000);
+                    break;
+
+                case Enum_AreaDefinition.ORBICULAR_LEFT:
+                    //ORBICULAR LEFT!
+                    Vis3DFrame.hvView3D.Camera.UpDirection = new Vector3D(.7, .30, 0);
+                    Vis3DFrame.hvView3D.Camera.LookDirection = new Vector3D(-.3, .7, .7);
+                    Vis3DFrame.hvView3D.Camera.Position = new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -200 + AppControl.Instance.TranslationPointModel.Y, -300 + AppControl.Instance.TranslationPointModel.Z);
+                    Vis3DFrame.hvView3D.LookAt(new Point3D(250 + AppControl.Instance.TranslationPointModel.X, -150 + AppControl.Instance.TranslationPointModel.Y, -130 + AppControl.Instance.TranslationPointModel.Z), 3000);
+                    break;
+
+                case Enum_AreaDefinition.ORBICULAR_RIGHT:
+                    //ORBILULAR RIGHT!
+                    Vis3DFrame.hvView3D.Camera.UpDirection = new Vector3D(.7, .30, 0);
+                    Vis3DFrame.hvView3D.Camera.LookDirection = new Vector3D(-.3, .7, -.7);
+                    Vis3DFrame.hvView3D.Camera.Position = new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -300 + AppControl.Instance.TranslationPointModel.Y, 300 + AppControl.Instance.TranslationPointModel.Z);
+                    Vis3DFrame.hvView3D.LookAt(new Point3D(250 + AppControl.Instance.TranslationPointModel.X, -250 + AppControl.Instance.TranslationPointModel.Y, 130 + AppControl.Instance.TranslationPointModel.Z), 3000);
+                    break;
+
+                case Enum_AreaDefinition.NASAL:
+                    break;
+
+                case Enum_AreaDefinition.ORBICULAR:
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (AppControl.Instance.CurrentArea)
+            {
+                case Enum_AreaDefinition.FRONTAL:
+
+                    //FRONTAL!!
+                    Vis3DFrameStudent.hvView3D.Camera.UpDirection = new Vector3D(.7, .7, 0);
+                    Vis3DFrameStudent.hvView3D.Camera.LookDirection = new Vector3D(-.4, .6, 0);
+
+                    Vis3DFrameStudent.hvView3D.Camera.Position = new Point3D(450 + AppControl.Instance.TranslationPointModel.X, -500 + AppControl.Instance.TranslationPointModel.Y, 0 + AppControl.Instance.TranslationPointModel.Z);
+                    Vis3DFrameStudent.hvView3D.LookAt(new Point3D(360 + AppControl.Instance.TranslationPointModel.X, -200 + AppControl.Instance.TranslationPointModel.Y, 0 + AppControl.Instance.TranslationPointModel.Z), 3000);
+
+                    break;
+
+                case Enum_AreaDefinition.CENTRAL:
+
+                    //CENTRAL!!
+                    Vis3DFrameStudent.hvView3D.Camera.UpDirection = new Vector3D(1, 0, 0);
+                    Vis3DFrameStudent.hvView3D.Camera.LookDirection = new Vector3D(-.3, .7, 0);
+                    Vis3DFrameStudent.hvView3D.Camera.Position = new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -500 + AppControl.Instance.TranslationPointModel.Y, 0 + AppControl.Instance.TranslationPointModel.Z);
+                    Vis3DFrameStudent.hvView3D.LookAt(new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -200 + AppControl.Instance.TranslationPointModel.Y, 0 + AppControl.Instance.TranslationPointModel.Z), 3000);
+                    break;
+
+                case Enum_AreaDefinition.ORBICULAR_LEFT:
+                    //ORBICULAR LEFT!
+                    Vis3DFrameStudent.hvView3D.Camera.UpDirection = new Vector3D(.7, .30, 0);
+                    Vis3DFrameStudent.hvView3D.Camera.LookDirection = new Vector3D(-.3, .7, .7);
+                    Vis3DFrameStudent.hvView3D.Camera.Position = new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -200 + AppControl.Instance.TranslationPointModel.Y, -300 + AppControl.Instance.TranslationPointModel.Z);
+                    Vis3DFrameStudent.hvView3D.LookAt(new Point3D(250 + AppControl.Instance.TranslationPointModel.X, -150 + AppControl.Instance.TranslationPointModel.Y, -130 + AppControl.Instance.TranslationPointModel.Z), 3000);
+                    break;
+
+                case Enum_AreaDefinition.ORBICULAR_RIGHT:
+                    //ORBILULAR RIGHT!
+                    Vis3DFrameStudent.hvView3D.Camera.UpDirection = new Vector3D(.7, .30, 0);
+                    Vis3DFrameStudent.hvView3D.Camera.LookDirection = new Vector3D(-.3, .7, -.7);
+                    Vis3DFrameStudent.hvView3D.Camera.Position = new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -300 + AppControl.Instance.TranslationPointModel.Y, 300 + AppControl.Instance.TranslationPointModel.Z);
+                    Vis3DFrameStudent.hvView3D.LookAt(new Point3D(250 + AppControl.Instance.TranslationPointModel.X, -250 + AppControl.Instance.TranslationPointModel.Y, 130 + AppControl.Instance.TranslationPointModel.Z), 3000);
+                    break;
+
+                case Enum_AreaDefinition.NASAL:
+                    break;
+
+                case Enum_AreaDefinition.ORBICULAR:
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        internal void ChangeSelectionPointListView()
+        {
+            if (!AppControl.Instance.Feedback3DOn)
+            {
+                for (int i = 0; i < Vis3DFrame.hvView3D.Items.Count; i++)
+                {
+                    if (Vis3DFrame.hvView3D.Items[i].Tag != null)
+                    {
+                        if (Vis3DFrame.hvView3D.Items[i].Tag.ToString().StartsWith("ThisIsAPoint"))
+                        {
+                            string rr = Vis3DFrame.hvView3D.Items[i].Tag.ToString().Replace("ThisIsAPoint", "");
+                            MeshGeometryModel3D aa = (MeshGeometryModel3D)Vis3DFrame.hvView3D.Items[i];
+                            if (Int32.Parse(rr) == Vis3DFrame.InjectionPointListView.SelectedIndex)
+                            {
+                                aa.Material = DiffuseMaterials.Blue;
+                            }
+                            else
+                            {
+                                aa.Material = DiffuseMaterials.LightBlue;
+                            }
+                        }
+                    }
+                }
+
+                for (int i = 0; i < Vis3DFrameStudent.hvView3D.Items.Count; i++)
+                {
+                    if (Vis3DFrameStudent.hvView3D.Items[i].Tag != null)
+                    {
+                        if (Vis3DFrameStudent.hvView3D.Items[i].Tag.ToString().StartsWith("ThisIsAPoint"))
+                        {
+                            string rr = Vis3DFrameStudent.hvView3D.Items[i].Tag.ToString().Replace("ThisIsAPoint", "");
+                            MeshGeometryModel3D aa = (MeshGeometryModel3D)Vis3DFrameStudent.hvView3D.Items[i];
+                            if (Int32.Parse(rr) == Vis3DFrame.InjectionPointListView.SelectedIndex)
+                            {
+                                aa.Material = DiffuseMaterials.Blue;
+                            }
+                            else
+                            {
+                                aa.Material = DiffuseMaterials.LightBlue;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        internal void ClearTempResults()
+        {
+            if (!Directory.Exists(AppControl.ResultsTempFolder))
+            {
+                Directory.CreateDirectory(AppControl.ResultsTempFolder);
+            }
+            DirectoryInfo di = new DirectoryInfo(AppControl.ResultsTempFolder);
+
+            FileInfo[] files = di.GetFiles("*.pdf");
+            foreach (FileInfo ff in files)
+            {
+                ff.Delete();
+            }
+        }
+
+        internal bool CloseCurrentCase()
+        {
+            try
+            {
+                if (CurrentCase.CurrentStepIndex == CurrentCase.Steps.Count - 1)
+                {
+                    StopCase(true);
+                    AppControl.Instance.WindowTeacher.Navigate(new FunctionalitiesFrame());
+                    AppControl.Instance.WindowStudent.Navigate(new MessageVoid());
+                }
+                else
+                {
+                    if (MessageBox.Show("Are you sure you want to stop this case? Results will not be saved", true, 1000))
+                    {
+                        StopCase(false);
+                        AppControl.Instance.WindowTeacher.Navigate(new FunctionalitiesFrame());
+                        AppControl.Instance.WindowStudent.Navigate(new MessageVoid());
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        internal void CloseWindowImages()
+        {
+            if (AppControl.Instance.ShowImagesOn3D != null)
+            {
+                AppControl.Instance.ShowImagesOn3D.Close();
+                AppControl.Instance.ShowImagesOn3D = null;
+                WindowStudent.IsEnabled = true;
+            }
+        }
+
+        internal void ConnectBeautySim()
+        {
+            HwndSource hwnd = HwndSource.FromHwnd(new WindowInteropHelper(WindowTeacher).Handle);
+            BeautySimController.Instance.ScannedSimulatorsEvent += new BeautySimController.ScannedSimulatorsDelegate(ScannedSimulatorListener);
+            BeautySimController.Instance.AMessageArrivedEvent += new BeautySimController.AMessageArrivedDelegate(AMessageArriveListener);
+            BeautySimController.Instance.SerialNumberAcquired += BeautySim_SerialNumberAcquired;
+
+            BeautySimController.Instance.Go();
+            BeautySimController.Instance.StartHookDevices(hwnd);
+        }
+
         internal void ConnectPDI()
         {
             pDIClass.OnConnectionStatusChanged += PDIClass_OnConnectionStatusChanged;
@@ -3567,6 +3668,80 @@ namespace BeautySim2023
             pDIClass.Disconnect();
         }
 
+        internal void DrawInjectionPointsSpecial()
+        {
+            AppControl.Instance.Feedback3DOn = true;
+            for (int i = 0; i < Vis3DFrame.hvView3D.Items.Count; i++)
+            {
+                if (Vis3DFrame.hvView3D.Items[i].Tag != null)
+                {
+                    if (Vis3DFrame.hvView3D.Items[i].Tag.ToString().StartsWith("ThisIsAPoint"))
+                    {
+                        string rr = Vis3DFrame.hvView3D.Items[i].Tag.ToString().Replace("ThisIsAPoint", "");
+                        int index = Int32.Parse(rr);
+                        MeshGeometryModel3D aa = (MeshGeometryModel3D)Vis3DFrame.hvView3D.Items[i];
+
+                        InjectionPoint3D ijP = (InjectionPoint3D)Vis3DFrame.InjectionPointListView.Items[index];
+
+                        if (ijP.IsError && ijP.ActuallyChosenOrPerformedQuantity > 0)
+                        {
+                            aa.Material = DiffuseMaterials.Red;
+                        }
+                        else
+                        {
+                            if (ijP.ActuallyChosenOrPerformedQuantity > ijP.PrescribedQuantity)
+                            {
+                                aa.Material = DiffuseMaterials.Orange;
+                            }
+                            else if (ijP.ActuallyChosenOrPerformedQuantity < ijP.PrescribedQuantity)
+                            {
+                                aa.Material = DiffuseMaterials.Yellow;
+                            }
+                            else
+                            {
+                                aa.Material = DiffuseMaterials.Green;
+                            }
+                        }
+                    }
+                }
+            }
+            AppControl.Instance.Feedback3DOn = true;
+            for (int i = 0; i < Vis3DFrameStudent.hvView3D.Items.Count; i++)
+            {
+                if (Vis3DFrameStudent.hvView3D.Items[i].Tag != null)
+                {
+                    if (Vis3DFrameStudent.hvView3D.Items[i].Tag.ToString().StartsWith("ThisIsAPoint"))
+                    {
+                        string rr = Vis3DFrameStudent.hvView3D.Items[i].Tag.ToString().Replace("ThisIsAPoint", "");
+                        int index = Int32.Parse(rr);
+                        MeshGeometryModel3D aa = (MeshGeometryModel3D)Vis3DFrameStudent.hvView3D.Items[i];
+
+                        InjectionPoint3D ijP = (InjectionPoint3D)Vis3DFrame.InjectionPointListView.Items[index];
+
+                        if (ijP.IsError && ijP.ActuallyChosenOrPerformedQuantity > 0)
+                        {
+                            aa.Material = DiffuseMaterials.Red;
+                        }
+                        else
+                        {
+                            if (ijP.ActuallyChosenOrPerformedQuantity > ijP.PrescribedQuantity)
+                            {
+                                aa.Material = DiffuseMaterials.Orange;
+                            }
+                            else if (ijP.ActuallyChosenOrPerformedQuantity < ijP.PrescribedQuantity)
+                            {
+                                aa.Material = DiffuseMaterials.Yellow;
+                            }
+                            else
+                            {
+                                aa.Material = DiffuseMaterials.Green;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         internal List<string> GetListOfStringCases(string module)
         {
             List<string> toRet = new List<string>();
@@ -3576,17 +3751,6 @@ namespace BeautySim2023
                 {
                     toRet.Add(cs.Name);
                 }
-            }
-
-            return toRet;
-        }
-
-        internal List<string> GetListOfStringCases()
-        {
-            List<string> toRet = new List<string>();
-            foreach (ClinicalCase item in AvailableCases)
-            {
-                toRet.Add(item.Name);
             }
 
             return toRet;
@@ -3618,20 +3782,6 @@ namespace BeautySim2023
             return toRet;
         }
 
-        internal Brush GiveMeColorOk()
-        {
-            BrushConverter bc = new BrushConverter();
-            return (Brush)bc.ConvertFrom("#009688");
-        }
-
-        internal Brush GiveMeColorWrong()
-        {
-            BrushConverter bc = new BrushConverter();
-            return (Brush)bc.ConvertFrom("#DB4C4C");
-            //BrushConverter bc = new BrushConverter();
-            //return Brushes.DarkRed;
-        }
-
         internal string GiveMeTheEvent(int idEvent)
         {
             Events entries = DBConnector.Instance.FindRowById<Events>(new BsonValue(idEvent));
@@ -3652,6 +3802,65 @@ namespace BeautySim2023
                 return entries.Name + " " + entries.Surname;
             }
             return "";
+        }
+
+        internal void InitViewModel()
+        {
+            if (!Model3DInitialized)
+            {
+                EffectsManager = new DefaultEffectsManager();
+
+                if (TeacherFrame is Visualization3DFrame)
+                {
+                    InitializeModels(AppControl.CadsFolder);
+                    InitializeCoordinates();
+
+                    //((Visualization3DFrameStudent)StudentFrame).bModelView.DataContext = ((Visualization3DFrame)TeacherFrame).MainGrid;
+
+                    double h = ((Visualization3DFrame)TeacherFrame).MainGrid.ActualHeight;
+                    double w = ((Visualization3DFrame)TeacherFrame).MainGrid.ActualWidth;
+                    //double hs = ((Visualization3DFrameStudent)StudentFrame).bModelView.ActualHeight;
+                    //double ws = ((Visualization3DFrameStudent)StudentFrame).bModelView.ActualWidth;
+                    //((Visualization3DFrameStudent)StudentFrame).bModelView.Height = hs;
+                    //((Visualization3DFrameStudent)StudentFrame).bModelView.Width = hs * w / h;
+
+                    //((Visualization3DFrameStudent)StudentFrame).MainGrid.ColumnDefinitions[1].Width = new GridLength(hs * w / h);
+                }
+                Model3DInitialized = true;
+            }
+        }
+
+        internal void ManageViewImagesOn3D()
+        {
+            // PIRINI TO ADD HERE VISUALIZATION OF IMAGES FOR THE USER
+            if (AppControl.Instance.AreImagesVisualizedOn3D)
+            {
+                CloseWindowImages();
+            }
+            else
+            {
+                AppControl.Instance.ShowImagesOn3D = new ShowImagesWindow();
+                AppControl.Instance.ShowImagesOn3D.Loaded += AppControl.Instance.ShowImagesOn3D_Loaded;
+
+                string nameFileA = AppControl.Instance.CurrentCase.Folder + "\\" + ((ClinicalCaseStep_Face3DInteraction)AppControl.Instance.CurrentCase.Steps[AppControl.Instance.CurrentCase.CurrentStepIndex]).ImageName;
+                if (File.Exists(nameFileA))
+                {
+                    AppControl.Instance.ShowImagesOn3D.imStatic.Source = new BitmapImage(new Uri(nameFileA, UriKind.RelativeOrAbsolute));
+                }
+                string nameFileB = AppControl.Instance.CurrentCase.Folder + "\\" + ((ClinicalCaseStep_Face3DInteraction)AppControl.Instance.CurrentCase.Steps[AppControl.Instance.CurrentCase.CurrentStepIndex]).ImageNameReference;
+                if (File.Exists(nameFileB))
+                {
+                    AppControl.Instance.ShowImagesOn3D.imDynamic.Source = new BitmapImage(new Uri(nameFileB, UriKind.RelativeOrAbsolute));
+                }
+                AppControl.Instance.ShowImagesOn3D.Show();
+                WindowStudent.IsEnabled = false;
+            }
+            AppControl.Instance.AreImagesVisualizedOn3D = !AppControl.Instance.AreImagesVisualizedOn3D;
+
+            if ((AppControl.Instance.WindowTeacher.PageContainer.Content is CaseTeacherFrame))
+            {
+                ((CaseTeacherFrame)(AppControl.Instance.WindowTeacher.PageContainer.Content)).tbViewImages.Text = AppControl.Instance.AreImagesVisualizedOn3D ? BeautySim.Globalization.Language.hide_images : BeautySim.Globalization.Language.view_images;
+            }
         }
 
         internal void RegisterStudent(CaseStudentFrame caseStudentFrame)
@@ -3710,50 +3919,167 @@ namespace BeautySim2023
             }
         }
 
-        internal void ShowNeedleIndication(object sender)
+        internal void SetContent(ClinicalCaseStep_Face3DInteraction caseStepCurrent)
         {
-            ShowIndicationNeedle = (bool)(sender as ToggleButton).IsChecked;
-            Properties.Settings.Default.ShowNeedleTrajectory = ShowIndicationNeedle;
-            Properties.Settings.Default.Save();
-            NeedleIndicationColor = System.Windows.Media.Color.FromArgb((ShowIndicationNeedle ? (byte)255 : (byte)0), 150, 150, 150);
-            if ((bool)(sender as ToggleButton).IsChecked)
+            string filePoints = AppControl.Instance.CurrentCase.Folder + "\\" + caseStepCurrent.PointDefinitionFileName;
+            if (File.Exists(filePoints))
             {
-                // Code for Checked state
+                XmlSerializer deserializer = new XmlSerializer(typeof(List<InjectionPointSpecific2D>));
+
+                // Deserialize from file
+                using (FileStream fileStream = new FileStream(filePoints, FileMode.Open))
+                {
+                    List<InjectionPointSpecific2D> anjectionPoints2D = (List<InjectionPointSpecific2D>)deserializer.Deserialize(fileStream);
+                    AppControl.Instance.InjectionPoints2D = new ObservableCollection<InjectionPointSpecific2D>(anjectionPoints2D);
+
+                    Console.WriteLine("Deserialized List:");
+                }
+            }
+
+            if (File.Exists(AppControl.PathFilePointsBase3D))
+            {
+                AppControl.Instance.InjectionPoints3D = PointsManager.Instance.LoadInjectionPoints3D(AppControl.PathFilePointsBase3D);
+            }
+            AppControl.Instance.InjectionPoints3DThisStep = new ObservableCollection<InjectionPoint3D>();
+
+            CurrentArea = caseStepCurrent.AreaDefinition;
+
+            for (int i = 0; i < AppControl.Instance.InjectionPoints3D.Count; i++)
+            {
+                if (AppControl.Instance.InjectionPoints3D[i].AreaDef == caseStepCurrent.AreaDefinition)
+                {
+                    AppControl.Instance.InjectionPoints3DThisStep.Add(AppControl.Instance.InjectionPoints3D[i]);
+                }
+            }
+
+            //var vertices = new List<Vertex4Triangulation>();
+
+            //foreach (InjectionPoint3D item in AppControl.Instance.InjectionPoints3DThisStep)
+            //{
+            //    vertices.Add(new Vertex4Triangulation(item.X, item.Y, item.Z));
+            //}
+
+            //// Create a convex hull from the vertices
+            //ConvexHullCreationResult<Vertex4Triangulation, DefaultConvexFace<Vertex4Triangulation>> convexHull = ConvexHull.Create(vertices);
+
+            //ConvexHull<Vertex4Triangulation, DefaultConvexFace<Vertex4Triangulation>> delaunayTriangulation = convexHull.Result;
+
+            //foreach (DefaultConvexFace<Vertex4Triangulation> item in delaunayTriangulation.Faces)
+            //{
+            //}
+
+            foreach (InjectionPoint3D toCalc in AppControl.Instance.InjectionPoints3DThisStep)
+            {
+                double minDistance = 1000000;
+                foreach (InjectionPoint3D toCalc2 in AppControl.Instance.InjectionPoints3DThisStep)
+                {
+                    if (toCalc != toCalc2)
+                    {
+                        double distance = Math.Sqrt(Math.Pow(toCalc.X - toCalc2.X, 2) + Math.Pow(toCalc.Y - toCalc2.Y, 2) + Math.Pow(toCalc.Z - toCalc2.Z, 2));
+                        if (distance < minDistance)
+                        {
+                            minDistance = distance;
+                        }
+                    }
+                }
+
+                toCalc.MinDistanceFromNeighbours = minDistance;
+            }
+
+            foreach (InjectionPoint3D item3D in AppControl.Instance.InjectionPoints3DThisStep)
+            {
+                var dueDP = AppControl.Instance.InjectionPoints2D.Where(x => x.PointDefinition == item3D.PointDefinition).FirstOrDefault();
+                if (dueDP != null)
+                {
+                    item3D.PrescribedQuantity = dueDP.PrescribedQuantity;
+                }
+            }
+            //WindowMain.pointsListView3D.SelectionChanged += PointsListView3D_SelectionChanged;
+            //SaveDynamicInfo3DXML(pathFilePointsBase3D);
+
+            InitializePointsToBeShown();
+            UpdateVisizationZoom();
+
+            HasBeen3DPointsLoaded = true;
+        }
+
+        internal void ShowImagesOn3D_Loaded(object sender, RoutedEventArgs e)
+        {
+            if ((AppControl.Instance.ShowImagesOn3D != null) && (AppControl.Instance.WindowStudent != null))
+            {
+                double left = AppControl.Instance.WindowStudent.Left + (AppControl.Instance.WindowStudent.Width - AppControl.Instance.ShowImagesOn3D.Width) / 2;
+                double top = AppControl.Instance.WindowStudent.Top + (AppControl.Instance.WindowStudent.Height - AppControl.Instance.ShowImagesOn3D.Height) / 2;
+
+                AppControl.Instance.ShowImagesOn3D.Left = left;
+                AppControl.Instance.ShowImagesOn3D.Top = top;
+                AppControl.Instance.ShowImagesOn3D.Topmost = true;
+            }
+        }
+
+        internal void SwitchMousePosition(CaseTeacherFrame caseTeacherFrame)
+        {
+            if (CurrentLocateMouseSOrT)
+            {
+                AppControl.Instance.WindowTeacher.SetCursor((int)AppControl.Instance.WindowTeacher.Width / 2, (int)AppControl.Instance.WindowTeacher.Height / 2);
             }
             else
             {
-                // Code for Un-Checked state
+                AppControl.Instance.WindowStudent.SetCursor((int)AppControl.Instance.WindowStudent.Width / 2, (int)AppControl.Instance.WindowStudent.Height / 2);
             }
+            CurrentLocateMouseSOrT = !CurrentLocateMouseSOrT;
+            //frame.tbLocateMouse.Text = CurrentLocateMouseSOrT ? "mouse to teacher" : "mouse to student";
         }
 
-        internal void StopLoadingCase()
+        internal void UpdateSkinVisibilityOn3DModels()
         {
-            if (CurrentCaseState == Enum_CaseState.LOADING)
+            for (int i = 0; i < Vis3DFrame.groupSkin.Children.Count(); i++)
             {
-                StopLoadCommand = true;
+                MeshGeometryModel3D u = (MeshGeometryModel3D)Vis3DFrame.groupSkin.Children[i];
+                u.FillMode = Vis3DFrame.cbSkinWireframe.IsChecked.Value ? SharpDX.Direct3D11.FillMode.Wireframe : SharpDX.Direct3D11.FillMode.Solid;
+                u.Material = Vis3DFrame.cbSkinWireframe.IsChecked.Value ? DiffuseMaterials.Glass : DiffuseMaterials.Gray;
+            }
+
+            for (int i = 0; i < Vis3DFrameStudent.groupSkin.Children.Count(); i++)
+            {
+                MeshGeometryModel3D u = (MeshGeometryModel3D)Vis3DFrameStudent.groupSkin.Children[i];
+                u.FillMode = Vis3DFrame.cbSkinWireframe.IsChecked.Value ? SharpDX.Direct3D11.FillMode.Wireframe : SharpDX.Direct3D11.FillMode.Solid;
+                u.Material = Vis3DFrame.cbSkinWireframe.IsChecked.Value ? DiffuseMaterials.Glass : DiffuseMaterials.Gray;
             }
         }
 
-        internal void TbShowFasciaPosition(object sender)
+        internal void UpdateTheConsequences(int selectedConsequenceIndex)
         {
-            //ShowTargetPosition = (bool)(sender as ToggleButton).IsChecked;
-            //Properties.Settings.Default.ShowTargetPosition = ShowTargetPosition;
-            //Properties.Settings.Default.Save();
-            //if ((!EffectFasciaHitActivated) && (ModelMaterialDeformableArea != null))
-            //{
-            //    ModelMaterialDeformableArea.DiffuseColor = new SharpDX.Color4(0, 255, 255, ((ShowTargetPosition && TargetStructureAvailableInFrame && !CurrentPhase.MuscularBlock) ? 0.5f : 0));
-            //}
+            if (StudentFrame is InteractionFrame)
+            {
+                ((InteractionFrame)StudentFrame).UpdateTheConsequence(selectedConsequenceIndex);
+            }
+            if (TeacherFrame is InteractionFrame)
+            {
+                ((InteractionFrame)TeacherFrame).UpdateTheConsequence(selectedConsequenceIndex);
+            }
 
-            //if ((bool)(sender as ToggleButton).IsChecked)
-            //{
-            //    // Code for Checked state
-            //}
-            //else
-            //{
-            //    // Code for Un-Checked state
-            //}
+            CaseStudentFrame csf = (CaseStudentFrame)WindowStudent.PageContainer.Content;
+            if (selectedConsequenceIndex >= ((InteractionFrame)StudentFrame).ConsequencesToShow.Count - 1)
+            {
+                csf.bOk.Visibility = Visibility.Visible;
+                ((InteractionFrame)StudentFrame).AlreadyCheckedAllConsequencies = true;
+            }
+            else
+            {
+                if (!((InteractionFrame)StudentFrame).AlreadyCheckedAllConsequencies)
+                {
+                    csf.bOk.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    csf.bOk.Visibility = Visibility.Visible;
+                }
+            }
+        }
 
-            //WindowStudent.spLegenda.Visibility = (bool)(sender as ToggleButton).IsChecked ? Visibility.Visible : Visibility.Hidden;
+        internal void UpdateTranslationManikin3D()
+        {
+            AppControl.Instance.TranslationManikin3D = new System.Windows.Media.Media3D.TranslateTransform3D(AppControl.Instance.TranslationPointModel.X, AppControl.Instance.TranslationPointModel.Y, AppControl.Instance.TranslationPointModel.Z);
         }
 
         internal void WindowStudentLoaded(object sender, RoutedEventArgs e)
@@ -3764,11 +4090,6 @@ namespace BeautySim2023
             VisibilityBorderArrowRotation = Visibility.Hidden;
             VisibilityBorderArrowRotation2 = Visibility.Hidden;
             VisibilityBorderArrowUp = Visibility.Hidden;
-        }
-
-        internal void WorkingFrameLoaded(object sender, RoutedEventArgs e)
-        {
-            AppControl.Instance.VisibilityResults = Visibility.Hidden;
         }
 
         protected virtual void Dispose(bool disposing)
@@ -3827,7 +4148,17 @@ namespace BeautySim2023
                             OrientationBeautySim = (BeautySimController.Instance.Simulator).Orientation;
                             LastOrientationBeautySimArrived = DateTime.Now;
                         }
+                        if (type == (byte)Enum_SimulatorMessageType.FLUX)
+                        {
+                            VolumeLiquid = (BeautySimController.Instance.Simulator).CurrentVolume;
+                            FluxLiquid = (BeautySimController.Instance.Simulator).Flux;
+                        }
+                        //        case (byte)Enum_SimulatorMessageType.FLUX:
 
+                        //            wft.tbFlux.Text = BeautySim.Globalization.Language.str_flux + " " + (BeautySimController.Instance.Simulator).Flux.ToString("00.00");
+                        //            wft.tbVolume.Text = BeautySim.Globalization.Language.str_volume + " " + (BeautySimController.Instance.Simulator).CurrentVolume.ToString("00.00");
+
+                        //            break;
                         //if ((WindowTeacher.PageContainer.Content is WorkingFrameTeacher))
                         //{
                         //    WorkingFrameTeacher wft = (WorkingFrameTeacher)WindowTeacher.PageContainer.Content;
@@ -3839,13 +4170,6 @@ namespace BeautySim2023
 
                         //        case (byte)Enum_SimulatorMessageType.SERIAL:
                         //            wft.tbSerial.Text = BeautySim.Globalization.Language.str_serial + " " + (BeautySimController.Instance.Simulator).SerialNumber;
-                        //            break;
-
-                        //        case (byte)Enum_SimulatorMessageType.FLUX:
-
-                        //            wft.tbFlux.Text = BeautySim.Globalization.Language.str_flux + " " + (BeautySimController.Instance.Simulator).Flux.ToString("00.00");
-                        //            wft.tbVolume.Text = BeautySim.Globalization.Language.str_volume + " " + (BeautySimController.Instance.Simulator).CurrentVolume.ToString("00.00");
-
                         //            break;
 
                         //        case (byte)Enum_SimulatorMessageType.FLUXGYRO:
@@ -3879,155 +4203,12 @@ namespace BeautySim2023
             }
         }
 
-        private void AnimationTick(object sender, EventArgs e)
-        {
-        }
-
-        //private bool AreModulesChecked()
-        //{
-        //    bool areChecked = false;
-
-        //    if (CurrentTeacher != null && CurrentTeacher.UserName == ADMIN_USERNAME)
-        //    {
-        //        areChecked = true;
-        //    }
-        //    else
-        //    {
-        //        for (int i = 0; i < ModulesActivation.Length; i++)
-        //        {
-        //            if (ModulesActivation[i])
-        //            {
-        //                areChecked = true;
-        //                break;
-        //            }
-        //        }
-        //    }
-
-        //    return areChecked;
-        //}
-
         private void BeautySim_SerialNumberAcquired(object sender, EventArgs e)
         {
             //if (BTYSimulatorConnected)
             //{
             //    UpdateModules();
             //}
-        }
-
-        private void CalculateAndShowResults()
-        {
-            decimal offset = 0;
-            DurationNeedlePhase = DateTime.Now - StartNeedlePhaseTime;
-            MinutesNeedlePhase = DurationNeedlePhase.Minutes;
-            TextTime = DurationNeedlePhase.Minutes.ToString() + ":" + DurationNeedlePhase.Seconds.ToString();
-            TextNeedlePuntures = insertionNeedle.ToString();
-
-            string comment = BeautySim.Globalization.Language.str_ok;
-            if (insertionNeedle == 0)
-            {
-                comment = BeautySim.Globalization.Language.str_anomaly;
-            }
-
-            string comment2 = BeautySim.Globalization.Language.str_lt_3min;
-            if (DurationNeedlePhase.Minutes > 2)
-            {
-                comment2 = BeautySim.Globalization.Language.str_too_lengthy + " " + (5 * (DurationNeedlePhase.Minutes - 2)).ToString();
-            }
-
-            TextNeedlePunturesExp = comment;
-            TextTimeExp = comment2;
-
-            //TextNerveWrongIntro = "";
-            //TextNerveWrong = "";
-            //TextNerveWrongExp = "";
-            //TextVascularWrongIntro = "";
-            //TextVascularWrong = "";
-            //TextVascularWrongExp = "";
-
-            //if (CurrentPhase.NerveMultipleInjections)
-            //{
-            //    int hitCorrectTarget = CurrentPhase.TargetPointsNerve.Where(x => ((x.Injections.Count > 0) && (x.T == 0))).Count();
-            //    int hitWrongNerve = CurrentPhase.TargetPointsNerve.Where(x => ((x.AreaEnteredFromNeedle > 0) && (x.T == 1))).Count();
-            //    int hitWrongVascular = CurrentPhase.TargetPointsNerve.Where(x => ((x.AreaEnteredFromNeedle > 0) && (x.T == 2))).Count();
-
-            //    int totalCorrectTargets = CurrentPhase.TargetPointsNerve.Where(x => x.T == 0).Count();
-
-            //    TextNerveTarget = hitCorrectTarget.ToString() + " / " + totalCorrectTargets.ToString();
-            //    TextWrongInjections = TargetMissedNerve_Injections.ToString();
-
-            //    TextNerveTargetExp = "hit " + hitCorrectTarget.ToString() + " / " + totalCorrectTargets.ToString() + " targets";
-            //    TextWrongInjectionsExp = TargetMissedNerve_Injections.ToString() + " injections. Score diminished by 10 for each wrong hit.";
-
-            //    if (hitWrongNerve > 0)
-            //    {
-            //        TextNerveWrongIntro = "wrong nerve hits";
-            //        TextNerveWrong = hitWrongNerve.ToString();
-            //        TextNerveWrongExp = "hit " + hitWrongNerve.ToString() + " wrong nerve areas. Score dimished by 50 for each wrong hit.";
-            //    }
-
-            //    if (hitWrongVascular > 0)
-            //    {
-            //        TextVascularWrongIntro = "wrong vascular hits";
-            //        TextVascularWrong = hitWrongVascular.ToString();
-            //        TextVascularWrongExp = "hit " + hitWrongVascular.ToString() + " vascular areas. Score set to 0.";
-            //    }
-
-            //    if (hitCorrectTarget < totalCorrectTargets)
-            //    {
-            //        offset = offset - (100 * (decimal)(totalCorrectTargets - hitCorrectTarget) / (decimal)totalCorrectTargets);
-            //    }
-
-            //    if (TargetMissedNerve_Injections > 0)
-            //    {
-            //        offset = offset - (10 * (TargetMissedNerve_Injections));
-            //    }
-
-            //    offset = offset - (50 * hitWrongNerve);
-            //    offset = offset - (100 * hitWrongVascular);
-            //    CurrentCaseScore = 100 + offset;
-            //}
-            //else
-            //{
-            //    if (insertionNeedle > 1)
-            //    {
-            //        offset = offset - (10 * (insertionNeedle - 1));
-            //    }
-
-            //    if (MinutesNeedlePhase > 2)
-            //    {
-            //        offset = offset - (5 * ((int)MinutesNeedlePhase - 2));
-            //    }
-            //    CurrentCaseScore = NeedleTargetedFascia ? (100 + offset) : 0;
-
-            //    TextFasciaTarget = NeedleTargetedFascia ? BeautySim.Globalization.Language.str_yes : BeautySim.Globalization.Language.str_no;
-
-            //    TextFasciaTargetExp = NeedleTargetedFascia ? BeautySim.Globalization.Language.str_ok : BeautySim.Globalization.Language.str_score_set_to_zero;
-            //}
-            if (CurrentCaseScore < 0)
-            {
-                CurrentCaseScore = 0;
-            }
-            TextScore = CurrentCaseScore.ToString("00.00");
-
-            VisibilityResults = Visibility.Visible;
-        }
-
-        private float CalculateDistanceNeedleToTarget(SharpDX.Vector3 vector3, out float t, out bool upOrLow, out SharpDX.Vector3 vectorToCentral)
-        {
-            t = 0;
-            upOrLow = false;
-            vectorToCentral = new SharpDX.Vector3();
-
-            return 1000f;
-        }
-
-        public IEffectsManager EffectsManager
-        {
-            get { return effectsManager; }
-            protected set
-            {
-                SetValue(ref effectsManager, value);
-            }
         }
 
         private void CaseTimeTickListener(object sender, EventArgs e)
@@ -4058,11 +4239,6 @@ namespace BeautySim2023
             caseTimer.Start();
         }
 
-        private bool CheckInSkin_WRS(VectorMath.Vector3 position, double histUp, double histDown, double histUpPadD, double histDownPadD, bool valuePreviousStep, bool imPadD)
-        {
-            return false;
-        }
-
         private void EvaluateAvailableSimulators()
         {
             try
@@ -4077,6 +4253,97 @@ namespace BeautySim2023
             }
         }
 
+        private void InitializePointsToBeShown()
+        {
+            //PIRINI 201231218
+            for (int i = Vis3DFrame.hvView3D.Items.Count - 1; i >= 0; i--)
+            {
+                if (Vis3DFrame.hvView3D.Items[i].Tag != null)
+                {
+                    if (Vis3DFrame.hvView3D.Items[i].Tag.ToString().StartsWith("ThisIsAPoint"))
+                    {
+                        Vis3DFrame.hvView3D.Items.RemoveAt(i);
+                    }
+                }
+            }
+
+            for (int i = Vis3DFrameStudent.hvView3D.Items.Count - 1; i >= 0; i--)
+            {
+                if (Vis3DFrameStudent.hvView3D.Items[i].Tag != null)
+                {
+                    if (Vis3DFrameStudent.hvView3D.Items[i].Tag.ToString().StartsWith("ThisIsAPoint"))
+                    {
+                        Vis3DFrameStudent.hvView3D.Items.RemoveAt(i);
+                    }
+                }
+            }
+
+            for (int i = 0; i < AppControl.Instance.InjectionPoints3DThisStep.Count; i++)
+            {
+                MeshGeometryModel3D aa = new MeshGeometryModel3D();
+                aa.Tag = "ThisIsAPoint" + i.ToString();
+                aa.CullMode = SharpDX.Direct3D11.CullMode.Back;
+
+                var sphereA = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+                sphereA.AddSphere(new SharpDX.Vector3(0, 0, 0), AppControl.Instance.Diameter3DPoints);
+                HelixToolkit.Wpf.SharpDX.Geometry3D geometrySphere = sphereA.ToMeshGeometry3D();
+                HelixToolkit.Wpf.SharpDX.Material MaterialSphere = DiffuseMaterials.LightBlue;
+                aa.Geometry = geometrySphere;
+                aa.Material = MaterialSphere;
+
+                if (AppControl.Instance.InjectionPoints3DThisStep[i].Assigned)
+                {
+                    Transform3DGroup transform3DGroup = new Transform3DGroup();
+                    transform3DGroup.Children.Add(new TranslateTransform3D(
+                        AppControl.Instance.InjectionPoints3DThisStep[i].X,
+                        AppControl.Instance.InjectionPoints3DThisStep[i].Y,
+                        AppControl.Instance.InjectionPoints3DThisStep[i].Z));
+
+                    transform3DGroup.Children.Add(new RotateTransform3D(AppControl.Instance.RotationManikin3D));
+                    transform3DGroup.Children.Add(AppControl.Instance.TranslationManikin3D);
+
+                    aa.Transform = transform3DGroup;
+                }
+
+                AppControl.Instance.PointsToBeShown.Add(aa);
+
+                Vis3DFrame.hvView3D.Items.Add(aa);
+            }
+
+            for (int i = 0; i < AppControl.Instance.InjectionPoints3DThisStep.Count; i++)
+            {
+                MeshGeometryModel3D aa = new MeshGeometryModel3D();
+                aa.Tag = "ThisIsAPoint" + i.ToString();
+                aa.CullMode = SharpDX.Direct3D11.CullMode.Back;
+
+                var sphereA = new HelixToolkit.Wpf.SharpDX.MeshBuilder();
+                sphereA.AddSphere(new SharpDX.Vector3(0, 0, 0), AppControl.Instance.Diameter3DPoints);
+                HelixToolkit.Wpf.SharpDX.Geometry3D geometrySphere = sphereA.ToMeshGeometry3D();
+                HelixToolkit.Wpf.SharpDX.Material MaterialSphere = DiffuseMaterials.LightBlue;
+                aa.Geometry = geometrySphere;
+                aa.Material = MaterialSphere;
+
+                if (AppControl.Instance.InjectionPoints3DThisStep[i].Assigned)
+                {
+                    Transform3DGroup transform3DGroup = new Transform3DGroup();
+                    transform3DGroup.Children.Add(new TranslateTransform3D(
+                        AppControl.Instance.InjectionPoints3DThisStep[i].X,
+                        AppControl.Instance.InjectionPoints3DThisStep[i].Y,
+                        AppControl.Instance.InjectionPoints3DThisStep[i].Z));
+                    transform3DGroup.Children.Add(new RotateTransform3D(AppControl.Instance.RotationManikin3D));
+                    transform3DGroup.Children.Add(AppControl.Instance.TranslationManikin3D);
+
+                    aa.Transform = transform3DGroup;
+                }
+
+                AppControl.Instance.PointsToBeShown.Add(aa);
+                aa.Visibility = Visibility.Hidden;
+                Vis3DFrameStudent.hvView3D.Items.Add(aa);
+            }
+
+            Vis3DFrame.InjectionPointListView.ItemsSource = AppControl.Instance.InjectionPoints3DThisStep;
+        }
+
         private void PDIClass_OnConnectionStatusChanged(Device.Motion.CONNECTIONSTATUS status)
         {
             SetIndicator(WindowTeacher.elSensors, status == Device.Motion.CONNECTIONSTATUS.ACQUIRING);
@@ -4084,230 +4351,325 @@ namespace BeautySim2023
 
         private void PDIClass_OnNewFrameAvailable(List<Device.Motion.FRAME> frames) // MODIFY EVERYTHING HERE
         {
-            try
+            if (Calibrating)
             {
-                WindowTeacher.Dispatcher.Invoke((Action)(() =>
+                try
                 {
-                    if (!alreadyConnectedPolhemus)
+                    if (CalibrationWindow != null)
                     {
-                        alreadyConnectedPolhemus = true;
-                        SetIndicator(WindowTeacher.elSensors, alreadyConnectedPolhemus);
-                    }
-
-                    if (frames.Count > 0)
-                    {
-                        f1 = frames[0];
-                        XPosSensor02 = f1.Pos.X * 10;
-                        YPosSensor02 = f1.Pos.Y * 10;
-                        ZPosSensor02 = f1.Pos.Z * 10;
-                        RotationSensor_WRS_real = new System.Windows.Media.Media3D.Quaternion(f1.Ori.X, f1.Ori.Y, f1.Ori.Z, f1.Ori.W);
-
-                        AxisAngleRotation3D T1pre = new AxisAngleRotation3D(new Vector3D(1, 0, 0), AppControl.Instance.RotationAngleOffsetNeedle);
-                        RotateTransform3D T1 = new RotateTransform3D(T1pre);
-                        TranslateTransform3D T2 = new TranslateTransform3D(0, AxisPositionOffsetNeedle, 0);
-                        QuaternionRotation3D rotation = new QuaternionRotation3D(RotationSensor_WRS_real);
-                        RotateTransform3D T3 = new RotateTransform3D(rotation);
-                        TranslateTransform3D T4 = new TranslateTransform3D(XPosSensor02, YPosSensor02, ZPosSensor02);
-
-                        Transform3DGroup transformGroup = new Transform3DGroup();
-                        transformGroup.Children.Add(T1);
-                        transformGroup.Children.Add(T2);
-                        transformGroup.Children.Add(T3);
-                        transformGroup.Children.Add(T4);
-
-                        TipNeedle = transformGroup.Transform(TipNeedleOrigin);
-                        BaseNeedle = transformGroup.Transform(BaseNeedleOrigin);
-
-                        TransformSphere2.OffsetX = TipNeedle.X;
-                        TransformSphere2.OffsetY = TipNeedle.Y;
-                        TransformSphere2.OffsetZ = TipNeedle.Z;
-
-                        OnPropertyChanged(nameof(TransformSphere2));
-
-                        Vector3D directionNeedle = TipNeedle - BaseNeedle;
-
-                        PitchNeedle = Math.Atan2(directionNeedle.X, Math.Sqrt(Math.Pow(directionNeedle.Z, 2) + Math.Pow(directionNeedle.Y, 2))) * 180.0 / Math.PI; ;
-                        YawNeedle = Math.Atan2(-directionNeedle.Z, directionNeedle.X) * 180.0 / Math.PI;
-
-                        TextToShowYawPitch = "Elevation: " + PitchNeedle.ToString("00.0") + " Azimuth: " + YawNeedle.ToString("00.0");
-
-                        if ((TeacherFrame is Visualization3DFrame) && (Model3DInitialized))
+                        CalibrationWindow.Dispatcher.Invoke((Action)(() =>
                         {
-                            var viewport = AppControl.Instance.Vis3DFrame.hvView3D;
-
-                            actualPointsHit = new List<PointHit>();
-                            //SharpDX.Ray ray = new Ray(new Vector3((float)TipNeedle.X, (float)TipNeedle.Y, (float)TipNeedle.Z), new SharpDX.Vector3((float)directionNeedle.X, (float)directionNeedle.Y, (float)directionNeedle.Z));
-                            SharpDX.Ray ray = new SharpDX.Ray(new SharpDX.Vector3((float)BaseNeedle.X, (float)BaseNeedle.Y, (float)BaseNeedle.Z), new SharpDX.Vector3((float)directionNeedle.X, (float)directionNeedle.Y, (float)directionNeedle.Z));
-
-                            var hitContext = new HitTestContext(viewport.RenderHost.RenderContext, ref ray);
-                            List<HitTestResult> hits = new List<HitTestResult>();
-
-                            var rend = viewport.Renderables.ToList();
-
-                            stopwatch.Restart();
-
-                            foreach (var element in rend)
+                            if (!alreadyConnectedPolhemus)
                             {
-                                var t = element.GetType().ToString();
-                                CheckSceneNode(element, hitContext, ray.Direction, new SharpDX.Vector3((float)TipNeedle.X, (float)TipNeedle.Y, (float)TipNeedle.Z), ref actualPointsHit);//, ref hitNames);
-                            }
-                            stopwatch.Stop();
-
-                            averageCollisionTime.Add(stopwatch.ElapsedMilliseconds);
-
-                            while (averageCollisionTime.Count > 100)
-                            {
-                                averageCollisionTime.RemoveAt(0);
+                                alreadyConnectedPolhemus = true;
+                                SetIndicator(CalibrationWindow.elSensors, alreadyConnectedPolhemus);
                             }
 
-                            double average = averageCollisionTime.Average() / 1000;
-
-                            double minDistance = double.MaxValue;
-                            int indexMin = -1;
-                            if (actualPointsHit.Count > 0)
+                            if (frames.Count > 0)
                             {
-                                for (int i = 0; i < actualPointsHit.Count; i++)
+                                AppControl.Instance.F1 = frames[0];
+                                AppControl.Instance.XPosSensor02 = AppControl.Instance.F1.Pos.X * 10;
+                                AppControl.Instance.YPosSensor02 = AppControl.Instance.F1.Pos.Y * 10;
+                                AppControl.Instance.ZPosSensor02 = AppControl.Instance.F1.Pos.Z * 10;
+                                AppControl.Instance.RotationSensor_WRS_real = new System.Windows.Media.Media3D.Quaternion(AppControl.Instance.F1.Ori.X, AppControl.Instance.F1.Ori.Y, AppControl.Instance.F1.Ori.Z, AppControl.Instance.F1.Ori.W);
+
+                                //AxisAngleRotation3D T1pre = new AxisAngleRotation3D(new Vector3D(1, 0, 0), AppControl.Instance.RotationAngleOffsetNeedle);
+                                //RotateTransform3D T1 = new RotateTransform3D(T1pre);
+                                //TranslateTransform3D T2 = new TranslateTransform3D(0, AppControl.Instance.AxisPositionOffsetNeedle, 0);
+                                QuaternionRotation3D rotation = new QuaternionRotation3D(AppControl.Instance.RotationSensor_WRS_real);
+                                RotateTransform3D T3 = new RotateTransform3D(rotation);
+                                TranslateTransform3D T4 = new TranslateTransform3D(AppControl.Instance.XPosSensor02, AppControl.Instance.YPosSensor02, AppControl.Instance.ZPosSensor02);
+
+                                Transform3DGroup transformGroup = new Transform3DGroup();
+                                //transformGroup.Children.Add(T2);
+                                //transformGroup.Children.Add(T1);
+                                transformGroup.Children.Add(T3);
+                                transformGroup.Children.Add(T4);
+
+                                AppControl.Instance.TipNeedle = transformGroup.Transform(AppControl.Instance.TipNeedleOrigin);
+                                AppControl.Instance.BaseNeedle = transformGroup.Transform(AppControl.Instance.BaseNeedleOrigin);
+
+                                AppControl.Instance.TransformSphere2.OffsetX = AppControl.Instance.TipNeedle.X;
+                                AppControl.Instance.TransformSphere2.OffsetY = AppControl.Instance.TipNeedle.Y;
+                                AppControl.Instance.TransformSphere2.OffsetZ = AppControl.Instance.TipNeedle.Z;
+
+                                OnPropertyChanged(nameof(AppControl.Instance.TransformSphere2));
+
+                                Vector3D directionNeedle = AppControl.Instance.TipNeedle - AppControl.Instance.BaseNeedle;
+                                directionNeedle.Normalize();
+
+                                AppControl.Instance.PitchNeedle = -Math.Atan2(directionNeedle.X, Math.Sqrt(Math.Pow(directionNeedle.Z, 2) + Math.Pow(directionNeedle.Y, 2))) * 180.0 / Math.PI; ;
+                                AppControl.Instance.YawNeedle = Math.Atan2(-directionNeedle.Y, -directionNeedle.X) * 180.0 / Math.PI;
+                                var viewport = CalibrationWindow.hvView3D;
+
+                                AppControl.Instance.ActualPointsHit = new List<PointHit>();
+                                SharpDX.Ray ray = new SharpDX.Ray(new SharpDX.Vector3((float)AppControl.Instance.BaseNeedle.X, (float)AppControl.Instance.BaseNeedle.Y, (float)AppControl.Instance.BaseNeedle.Z), new SharpDX.Vector3((float)directionNeedle.X, (float)directionNeedle.Y, (float)directionNeedle.Z));
+
+                                var hitContext = new HitTestContext(viewport.RenderHost.RenderContext, ref ray);
+                                List<HitTestResult> hits = new List<HitTestResult>();
+
+                                var rend = viewport.Renderables.ToList();
+
+                                foreach (var element in rend)
                                 {
-                                    var distance = CalcDistance(actualPointsHit[i].Point, TipNeedle);
-                                    if ((distance >= 0) && (distance < minDistance))
+                                    if (Calibrating)
                                     {
-                                        minDistance = distance;
-                                        indexMin = i;
+                                        var t = element.GetType().ToString();
+                                        AppControl.Instance.CheckSceneNode(element, hitContext, ray.Direction, new SharpDX.Vector3((float)AppControl.Instance.TipNeedle.X, (float)AppControl.Instance.TipNeedle.Y, (float)AppControl.Instance.TipNeedle.Z), ref AppControl.Instance.ActualPointsHit);//, ref hitNames);
                                     }
                                 }
 
-                                TransformSphere.OffsetX = actualPointsHit[indexMin].Point.X;
-                                TransformSphere.OffsetY = actualPointsHit[indexMin].Point.Y;
-                                TransformSphere.OffsetZ = actualPointsHit[indexMin].Point.Z;
-
-                                OnPropertyChanged(nameof(TransformSphere));
-                                HitStructure = "next: " + actualPointsHit[indexMin].Name + " " + actualPointsHit.Count;
-                                //Debug.WriteLine(HitStructure);
-                            }
-                            else
-                            {
-                                HitStructure = "next: none";
-                            }
-
-                            //ELABORATE TO UNDERSTAND
-                            for (int i = 0; i < actualPointsHit.Count; i++)
-                            {
-                                PointHit pointHit = actualPointsHit[i];
-
-                                bool furtherInvestigateForEntrance = false;
-                                bool furtherInvestigateForExiting = false;
-                                bool furtherInvestigateForUpdate = false;
-                                bool createEntrance = false;
-                                bool closeEntrance = false;
-                                PointHit previousHit = (from db in previousPointsHit where (db.Name == pointHit.Name) select db).LastOrDefault();
-                                //INVESTIGATE FOR ENTRANCE
-                                if (pointHit.Distance < 0) //entered
+                                double minDistance = double.MaxValue;
+                                int indexMin = -1;
+                                if (AppControl.Instance.ActualPointsHit.Count > 0)
                                 {
-                                    if (previousHit != null)
+                                    for (int i = 0; i < AppControl.Instance.ActualPointsHit.Count; i++)
                                     {
-                                        if (previousHit.Distance >= 0) //entered
+                                        var distance = AppControl.Instance.CalcDistance(AppControl.Instance.ActualPointsHit[i].Point, AppControl.Instance.TipNeedle);
+                                        if ((distance >= 0) && (distance < minDistance))
                                         {
-                                            furtherInvestigateForEntrance = true;
+                                            minDistance = distance;
+                                            indexMin = i;
                                         }
                                     }
 
-                                    if (furtherInvestigateForEntrance)
+                                    AppControl.Instance.TransformSphere.OffsetX = AppControl.Instance.ActualPointsHit[indexMin].Point.X;
+                                    AppControl.Instance.TransformSphere.OffsetY = AppControl.Instance.ActualPointsHit[indexMin].Point.Y;
+                                    AppControl.Instance.TransformSphere.OffsetZ = AppControl.Instance.ActualPointsHit[indexMin].Point.Z;
+
+                                    OnPropertyChanged(nameof(AppControl.Instance.TransformSphere));
+                                }
+                                else
+                                {
+                                }
+                            }
+                        }));
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
+            else
+            {
+                try
+                {
+                    WindowTeacher.Dispatcher.Invoke((Action)(() =>
+                    {
+                        if (!alreadyConnectedPolhemus)
+                        {
+                            alreadyConnectedPolhemus = true;
+                            SetIndicator(WindowTeacher.elSensors, alreadyConnectedPolhemus);
+                        }
+
+                        if (frames.Count > 0)
+                        {
+                            F1 = frames[0];
+                            XPosSensor02 = F1.Pos.X * 10;
+                            YPosSensor02 = F1.Pos.Y * 10;
+                            ZPosSensor02 = F1.Pos.Z * 10;
+                            RotationSensor_WRS_real = new System.Windows.Media.Media3D.Quaternion(F1.Ori.X, F1.Ori.Y, F1.Ori.Z, F1.Ori.W);
+
+                            //AxisAngleRotation3D T1pre = new AxisAngleRotation3D(new Vector3D(1, 0, 0), AppControl.Instance.RotationAngleOffsetNeedle);
+                            //RotateTransform3D T1 = new RotateTransform3D(T1pre);
+                            //TranslateTransform3D T2 = new TranslateTransform3D(0, AxisPositionOffsetNeedle, 0);
+                            QuaternionRotation3D rotation = new QuaternionRotation3D(RotationSensor_WRS_real);
+                            RotateTransform3D T3 = new RotateTransform3D(rotation);
+                            TranslateTransform3D T4 = new TranslateTransform3D(XPosSensor02, YPosSensor02, ZPosSensor02);
+
+                            Transform3DGroup transformGroup = new Transform3DGroup();
+                            //transformGroup.Children.Add(T1);
+                            //transformGroup.Children.Add(T2);
+                            transformGroup.Children.Add(T3);
+                            transformGroup.Children.Add(T4);
+
+                            TipNeedle = transformGroup.Transform(TipNeedleOrigin);
+                            BaseNeedle = transformGroup.Transform(BaseNeedleOrigin);
+
+                            TransformSphere2.OffsetX = TipNeedle.X;
+                            TransformSphere2.OffsetY = TipNeedle.Y;
+                            TransformSphere2.OffsetZ = TipNeedle.Z;
+
+                            OnPropertyChanged(nameof(TransformSphere2));
+
+                            Vector3D directionNeedle = TipNeedle - BaseNeedle;
+
+                            PitchNeedle = Math.Atan2(directionNeedle.X, Math.Sqrt(Math.Pow(directionNeedle.Z, 2) + Math.Pow(directionNeedle.Y, 2))) * 180.0 / Math.PI; ;
+                            YawNeedle = Math.Atan2(-directionNeedle.Z, directionNeedle.X) * 180.0 / Math.PI;
+
+                            TextToShowYawPitch = "Elevation: " + PitchNeedle.ToString("00.0") + " Azimuth: " + YawNeedle.ToString("00.0");
+
+                            if ((TeacherFrame is Visualization3DFrame) && (Model3DInitialized))
+                            {
+                                var viewport = AppControl.Instance.Vis3DFrame.hvView3D;
+
+                                ActualPointsHit = new List<PointHit>();
+                                SharpDX.Ray ray = new SharpDX.Ray(new SharpDX.Vector3((float)BaseNeedle.X, (float)BaseNeedle.Y, (float)BaseNeedle.Z), new SharpDX.Vector3((float)directionNeedle.X, (float)directionNeedle.Y, (float)directionNeedle.Z));
+
+                                var hitContext = new HitTestContext(viewport.RenderHost.RenderContext, ref ray);
+                                List<HitTestResult> hits = new List<HitTestResult>();
+
+                                var rend = viewport.Renderables.ToList();
+
+                                foreach (var element in rend)
+                                {
+                                    var t = element.GetType().ToString();
+                                    CheckSceneNode(element, hitContext, ray.Direction, new SharpDX.Vector3((float)TipNeedle.X, (float)TipNeedle.Y, (float)TipNeedle.Z), ref ActualPointsHit);//, ref hitNames);
+                                }
+
+                                double minDistance = double.MaxValue;
+                                int indexMin = -1;
+                                if (ActualPointsHit.Count > 0)
+                                {
+                                    for (int i = 0; i < ActualPointsHit.Count; i++)
                                     {
-                                        //CREA
-                                        if (pointHit.Name == "SKIN")
+                                        var distance = CalcDistance(ActualPointsHit[i].Point, TipNeedle);
+                                        if ((distance >= 0) && (distance < minDistance))
                                         {
-                                            bool foundOtherSkinAreas = false;
-                                            for (int j = 0; j < actualPointsHit.Count; j++)
+                                            minDistance = distance;
+                                            indexMin = i;
+                                        }
+                                    }
+
+                                    TransformSphere.OffsetX = ActualPointsHit[indexMin].Point.X;
+                                    TransformSphere.OffsetY = ActualPointsHit[indexMin].Point.Y;
+                                    TransformSphere.OffsetZ = ActualPointsHit[indexMin].Point.Z;
+
+                                    OnPropertyChanged(nameof(TransformSphere));
+                                    HitStructure = "next: " + ActualPointsHit[indexMin].Name + " " + ActualPointsHit.Count;
+                                    //Debug.WriteLine(HitStructure);
+                                }
+                                else
+                                {
+                                    HitStructure = "next: none";
+                                }
+
+                                //ELABORATE TO UNDERSTAND
+                                for (int i = 0; i < ActualPointsHit.Count; i++)
+                                {
+                                    PointHit pointHit = ActualPointsHit[i];
+
+                                    bool furtherInvestigateForEntrance = false;
+                                    bool furtherInvestigateForExiting = false;
+                                    bool furtherInvestigateForUpdate = false;
+                                    bool createEntrance = false;
+                                    bool closeEntrance = false;
+                                    PointHit previousHit = (from db in previousPointsHit where (db.Name == pointHit.Name) select db).LastOrDefault();
+
+                                    //INVESTIGATE FOR ENTRANCE
+                                    if (pointHit.Distance < 0) //entered
+                                    {
+                                        if (previousHit != null)
+                                        {
+                                            if (previousHit.Distance >= 0) //previously not entered
                                             {
-                                                if (j != i)
+                                                furtherInvestigateForEntrance = true;
+                                            }
+                                        }
+
+                                        if (furtherInvestigateForEntrance)
+                                        {
+                                            if (pointHit.Name == "SKIN")
+                                            {
+                                                bool foundOtherSkinAreas = false;
+                                                for (int j = 0; j < ActualPointsHit.Count; j++)
                                                 {
-                                                    if (StringSkinAreas.Contains(actualPointsHit[j].Name))
+                                                    if (j != i)
                                                     {
-                                                        foundOtherSkinAreas = true;
-                                                        break;
+                                                        if (StringSkinAreas.Contains(ActualPointsHit[j].Name))
+                                                        {
+                                                            foundOtherSkinAreas = true;
+                                                            break;
+                                                        }
                                                     }
                                                 }
+                                                if (!foundOtherSkinAreas)
+                                                {
+                                                    createEntrance = true;
+                                                }
                                             }
-                                            if (!foundOtherSkinAreas)
+                                            else
                                             {
                                                 createEntrance = true;
                                             }
                                         }
                                         else
                                         {
-                                            createEntrance = true;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        for (int k = EntranceDataList.Count - 1; k >= 0; k--)
-                                        {
-                                            if (EntranceDataList[k].StructureEntered == pointHit.Name && (EntranceDataList[k].ToBeClosed))
+                                            //If inside, update depth if needed on the corresponding EntranceData
+                                            for (int k = EntranceDataList.Count - 1; k >= 0; k--)
                                             {
-                                                double absDepth = Math.Abs(pointHit.Distance);
-                                                if (absDepth > EntranceDataList[k].Depth)
+                                                if (EntranceDataList[k].StructureEntered == pointHit.Name && (EntranceDataList[k].ToBeClosed))
                                                 {
-                                                    EntranceDataList[k].Depth = absDepth;
+                                                    //Update depth
+                                                    double absDepth = Math.Abs(pointHit.Distance);
+                                                    if (absDepth > EntranceDataList[k].Depth)
+                                                    {
+                                                        EntranceDataList[k].Depth = absDepth;
+                                                    }
+                                                    DepthInjection = absDepth;
+
+                                                    //Update injected volume
+                                                    // PIRINI
+
+                                                    break;
                                                 }
-                                                DepthInjection = absDepth;
-                                                break;
                                             }
                                         }
-                                    }
-                                    if (createEntrance)
-                                    {
-                                        EntranceData entData = new EntranceData();
-                                        entData.EntranceTime = DateTime.Now;
-                                        entData.StructureEntered = pointHit.Name;
-                                        entData.EntryingPointPitch = 0;
-                                        entData.EntryingPointYaw = 0;
-                                        entData.CollisionPoint = pointHit.Point;
-                                        entData.ToBeClosed = true;
-                                        entData.Index = EntranceDataList.Count;
-                                        entData.EntryingPointPitch = PitchNeedle;
-                                        entData.EntryingPointYaw = YawNeedle;
-                                        EntranceDataList.Add(entData);
-                                        PointEntrance = new Point3D(EntranceDataList.Last().CollisionPoint.X, EntranceDataList.Last().CollisionPoint.Y, EntranceDataList.Last().CollisionPoint.Z);
-                                        AppControl.Instance.Vis3DFrame.entranceListView.ScrollIntoView(entData);
-
-                                        Debug.WriteLine(entData.ToReadableString());
-
-                                        CurrentInjectedQUantity = 0;
-                                        ImpactPoint = pointHit.Point;
-
-                                        // Initialize variables to track the nearest and second nearest points
-                                        double minimumDistance = Double.MaxValue; // Smallest distance found
-                                        int minimumDistancePointIndex = -1; // Index of the nearest point
-                                        double secondMinimumDistance = Double.MaxValue; // Second smallest distance found
-                                        int secondMinimumDistancePointIndex = -1; // Index of the second nearest point
-
-                                        for (int ww = 0; ww < InjectionPoints3DThisStep.Count; ww++)
+                                        if (createEntrance)
                                         {
-                                            Point3D toCheck = InjectionPoints3DThisStep[ww].GetRotoTransatedPoint(TransformGroupMankin);
-                                            double distance = CalcDistance(toCheck, PointEntrance);
+                                            //Create new EntranceData
+                                            EntranceData entData = new EntranceData();
+                                            entData.EntranceTime = DateTime.Now;
+                                            entData.StructureEntered = pointHit.Name;
+                                            entData.CollisionPoint = pointHit.Point;
+                                            entData.ToBeClosed = true;
+                                            entData.Index = EntranceDataList.Count;
+                                            entData.EntryingPointPitch = PitchNeedle;
+                                            entData.EntryingPointYaw = YawNeedle;
+                                            EntranceDataList.Add(entData);
+                                            PointEntrance = new Point3D(EntranceDataList.Last().CollisionPoint.X, EntranceDataList.Last().CollisionPoint.Y, EntranceDataList.Last().CollisionPoint.Z);
+                                            ZeroVolume();
+                                            AppControl.Instance.Vis3DFrame.entranceListView.ScrollIntoView(entData);
 
-                                            if (distance < minimumDistance)
+                                            Debug.WriteLine(entData.ToReadableString());
+
+
+                                            ImpactPointToShow = pointHit.Point;
+
+                                            // Find the nearest point in the grid with the SmartGridAssigner algorithm
+                                            //      Initialize variables to track the nearest and second nearest points
+                                            double minimumDistance = Double.MaxValue; // Smallest distance found
+                                            int minimumDistancePointIndex = -1; // Index of the nearest point
+                                            double secondMinimumDistance = Double.MaxValue; // Second smallest distance found
+                                            int secondMinimumDistancePointIndex = -1; // Index of the second nearest point
+
+                                            for (int ww = 0; ww < InjectionPoints3DThisStep.Count; ww++)
                                             {
-                                                // Update second nearest with the previous nearest
-                                                secondMinimumDistance = minimumDistance;
-                                                secondMinimumDistancePointIndex = minimumDistancePointIndex;
+                                                Point3D toCheck = InjectionPoints3DThisStep[ww].GetRotoTransatedPoint(TransformGroupMankin);
+                                                double distance = CalcDistance(toCheck, PointEntrance);
 
-                                                // Update nearest with the new nearest
-                                                minimumDistance = distance;
-                                                minimumDistancePointIndex = ww;
+                                                if (distance < minimumDistance)
+                                                {
+                                                    // Update second nearest with the previous nearest
+                                                    secondMinimumDistance = minimumDistance;
+                                                    secondMinimumDistancePointIndex = minimumDistancePointIndex;
+
+                                                    // Update nearest with the new nearest
+                                                    minimumDistance = distance;
+                                                    minimumDistancePointIndex = ww;
+                                                }
+                                                else if (distance < secondMinimumDistance && distance != minimumDistance)
+                                                {
+                                                    // Update second nearest if this point is closer than the current second nearest but not equal to the current nearest
+                                                    secondMinimumDistance = distance;
+                                                    secondMinimumDistancePointIndex = ww;
+                                                }
                                             }
-                                            else if (distance < secondMinimumDistance && distance != minimumDistance)
+
+                                            //  Check if the nearest point is close enough to the second nearest point to be considered a good match and if so, select it
+                                            if (minDistance < Math.Max(InjectionPoints3DThisStep[minimumDistancePointIndex].MinDistanceFromNeighbours * 0.55, InjectionPoints3DThisStep[secondMinimumDistancePointIndex].MinDistanceFromNeighbours * 0.55))
                                             {
-                                                // Update second nearest if this point is closer than the current second nearest but not equal to the current nearest
-                                                secondMinimumDistance = distance;
-                                                secondMinimumDistancePointIndex = ww;
-                                            }
-                                        }
-
-                                        if (minDistance < Math.Max(InjectionPoints3DThisStep[minimumDistancePointIndex].MinDistanceFromNeighbours*0.55, InjectionPoints3DThisStep[secondMinimumDistancePointIndex].MinDistanceFromNeighbours*0.55))
-                                        {
-
-                                            //Point3D toCheck = new Point3D(toEval.X + TranslationPointModel.X, toEval.Y + TranslationPointModel.Y, toEval.Z + TranslationPointModel.Z);
+                                                //Point3D toCheck = new Point3D(toEval.X + TranslationPointModel.X, toEval.Y + TranslationPointModel.Y, toEval.Z + TranslationPointModel.Z);
                                                 SelectedPoint3DIndex = minimumDistancePointIndex;
                                                 AppControl.instance.Vis3DFrame.InjectionPointListView.ScrollIntoView(InjectionPoints3DThisStep[minimumDistancePointIndex]);
                                                 AppControl.instance.Vis3DFrame.InjectionPointListView.SelectedIndex = minimumDistancePointIndex;
@@ -4322,314 +4684,94 @@ namespace BeautySim2023
 
                                                 InjectionPoints3DThisStep[minimumDistancePointIndex].ActualReleases.Add(actualRelease);
                                                 break;
+                                            }
                                         }
                                     }
-                                }
-                                if (pointHit.Distance > 0) //exited
-                                {
-                                    if (previousHit != null)
+                                    if (pointHit.Distance > 0) //exited
                                     {
-                                        if (previousHit.Distance < 0) //exited
+                                        if (previousHit != null)
                                         {
-                                            furtherInvestigateForExiting = true;
-                                        }
-                                    }
-
-                                    if (furtherInvestigateForExiting)
-                                    {
-                                        if (pointHit.Name == "SKIN")
-                                        {
-                                            bool foundOtherSkinAreas = false;
-                                            for (int j = 0; j < actualPointsHit.Count; j++)
+                                            if (previousHit.Distance < 0) //previous was inside
                                             {
-                                                if (j != i)
+                                                furtherInvestigateForExiting = true;
+                                            }
+                                        }
+
+                                        if (furtherInvestigateForExiting)
+                                        {
+                                            if (pointHit.Name == "SKIN")
+                                            {
+                                                bool foundOtherSkinAreas = false;
+                                                for (int j = 0; j < ActualPointsHit.Count; j++)
                                                 {
-                                                    if (StringSkinAreas.Contains(actualPointsHit[j].Name))
+                                                    if (j != i)
                                                     {
-                                                        foundOtherSkinAreas = true;
-                                                        break;
+                                                        if (StringSkinAreas.Contains(ActualPointsHit[j].Name))
+                                                        {
+                                                            foundOtherSkinAreas = true;
+                                                            break;
+                                                        }
                                                     }
                                                 }
+                                                if (!foundOtherSkinAreas)
+                                                {
+                                                    closeEntrance = true;
+                                                }
                                             }
-                                            if (!foundOtherSkinAreas)
+                                            else
                                             {
                                                 closeEntrance = true;
                                             }
                                         }
-                                        else
+                                        if (closeEntrance)
                                         {
-                                            closeEntrance = true;
-                                        }
-                                    }
-                                    if (closeEntrance)
-                                    {
-                                        for (int k = EntranceDataList.Count - 1; k >= 0; k--)
+                                            for (int k = EntranceDataList.Count - 1; k >= 0; k--)
 
-                                        {
-                                            if (EntranceDataList[k].StructureEntered == pointHit.Name && (EntranceDataList[k].ToBeClosed))
                                             {
-                                                EntranceDataList[k].ToBeClosed = false;
-                                                EntranceDataList[k].ExitingTime = DateTime.Now;
-
-                                                if (SelectedPoint3DIndex != -1)
+                                                if (EntranceDataList[k].StructureEntered == pointHit.Name && (EntranceDataList[k].ToBeClosed))
                                                 {
-                                                    //ActualRelease actualRelease = new ActualRelease();
-                                                    //actualRelease.PitchEntrance = EntranceDataList.Last().EntryingPointPitch;
-                                                    //actualRelease.YawEntrance = EntranceDataList.Last().EntryingPointYaw;
-                                                    //actualRelease.DepthInjection = EntranceDataList.Last().Depth;
-                                                    //actualRelease.ActualX = EntranceDataList.Last().CollisionPoint.X;
-                                                    //actualRelease.ActualY = EntranceDataList.Last().CollisionPoint.Y;
-                                                    //actualRelease.ActualZ = EntranceDataList.Last().CollisionPoint.Z;
-                                                    //actualRelease.InjectedQuantity = CurrentInjectedQUantity;
-                                                    //InjectionPoints3DThisStep[SelectedPoint3DIndex].ActualReleases.Add(actualRelease);
+                                                    EntranceDataList[k].ToBeClosed = false;
+                                                    EntranceDataList[k].ExitingTime = DateTime.Now;
 
-                                                    //AppControl.instance.Vis3DFrame.InjectionPointListView.SelectedIndex = -1;
-                                                    //SelectedPoint3DIndex = -1;
-                                                    //ImpactPoint = new Point3D(0, 0, 0);
-                                                    if (InjectionPoints3DThisStep[SelectedPoint3DIndex].ActualReleases.Count > 0)
+                                                    if (SelectedPoint3DIndex != -1)
                                                     {
-                                                        InjectionPoints3DThisStep[SelectedPoint3DIndex].ActualReleases.Last().InjectedQuantity = CurrentInjectedQUantity;
+
+
+                                                        AppControl.instance.Vis3DFrame.InjectionPointListView.SelectedIndex = -1;
+                                                        SelectedPoint3DIndex = -1;
+                                                        ImpactPointToShow = new Point3D(0, 0, 0);
+
                                                     }
-
-                                                    AppControl.instance.Vis3DFrame.InjectionPointListView.SelectedIndex = -1;
-                                                    SelectedPoint3DIndex = -1;
-                                                    ImpactPoint = new Point3D(0, 0, 0);
-
-                                                    CurrentInjectedQUantity = 0;
+                                                    break;
                                                 }
-                                                break;
                                             }
                                         }
+                                        DepthInjection = 0;
                                     }
-                                    DepthInjection = 0;
                                 }
-                            }
-                            //CREATE THE VARIABLES TO BE SHOWN
-
-                            if (EntranceDataList.Count > 0)
-                            {
-                                if (EntranceDataList.Last().ToBeClosed)
+                                
+                                
+                                if (EntranceDataList.Count > 0)
                                 {
-                                    PointEntrance = new Point3D(EntranceDataList.Last().CollisionPoint.X, EntranceDataList.Last().CollisionPoint.Y, EntranceDataList.Last().CollisionPoint.Z);
+                                    if (EntranceDataList.Last().ToBeClosed)
+                                    {
+                                        PointEntrance = new Point3D(EntranceDataList.Last().CollisionPoint.X, EntranceDataList.Last().CollisionPoint.Y, EntranceDataList.Last().CollisionPoint.Z);
+                                    }
                                 }
-                            }
 
-                            previousPointsHit.Clear();
-                            for (int nn = 0; nn < actualPointsHit.Count; nn++)
-                            {
-                                previousPointsHit.Add(actualPointsHit[nn].DeepCopy());
-                            }
-                        }
-                    }
-                }));
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        private List<PointHit> previousPointsHit = new List<PointHit>();
-        public List<string> StringSkinAreas = new List<string>();
-        public Dictionary<string, List<Guid>> CollisionItemsGuid = new Dictionary<string, List<Guid>>();
-        private Stopwatch stopwatch = new Stopwatch();
-        private List<long> averageCollisionTime = new List<long>();
-
-        private void CheckSceneNode(SceneNode node, HitTestContext context, SharpDX.Vector3 rayDir, SharpDX.Vector3 tip, ref List<PointHit> pointsHit)//, ref List<string> nodeNames)
-        {
-            try
-            {
-                if (node is GroupNode gn)
-                {
-                    List<HitTestResult> hits = new List<HitTestResult>();
-                    gn.HitTest(context, ref hits);
-                    if (hits != null)
-                    {
-                        //List<string> nodeNames = new List<string>();
-                        foreach (var hit in hits)
-                        {
-                            foreach (var item in CollisionItemsGuid)
-                            {
-                                if (item.Value.Contains(hit.Geometry.GUID))
+                                //UPDATE THE PREVIOUS POINTS HITS
+                                previousPointsHit.Clear();
+                                for (int nn = 0; nn < ActualPointsHit.Count; nn++)
                                 {
-                                    SharpDX.Vector3 diff = hit.PointHit - tip;
-
-                                    double distance = SharpDX.Vector3.Dot(diff, rayDir);
-
-                                    //nodeNames.Add(item.Key);
-                                    pointsHit.Add(new PointHit(hit.PointHit, item.Key, distance));
+                                    previousPointsHit.Add(ActualPointsHit[nn].DeepCopy());
                                 }
                             }
                         }
-                    }
+                    }));
                 }
-            }
-            catch (Exception ex)
-            {
-            }
-            //in teoria questo sotto non serve
-            //ho visto che i modelli che carichi sono visti come gruppi
-
-            return;
-        }
-
-        public Point3D BaseNeedle
-        {
-            get { return baseNeedle; }
-            set
-            {
-                baseNeedle = value;
-                OnPropertyChanged(nameof(BaseNeedle));
-            }
-        }
-
-        public string TextToShowYawPitch
-        {
-            get { return textToShowYawPitch; }
-            set
-            {
-                textToShowYawPitch = value;
-                OnPropertyChanged(nameof(TextToShowYawPitch));
-            }
-        }
-
-        public float AxisPositionOffsetNeedle
-        {
-            get { return axisPositionOffsetNeedle; }
-            set
-            {
-                axisPositionOffsetNeedle = value;
-                OnPropertyChanged(nameof(AxisPositionOffsetNeedle));
-            }
-        }
-
-        public bool Model3DInitialized { get; set; }
-
-        public double PitchNeedle
-        {
-            get { return pitchNeedle; }
-            set
-            {
-                pitchNeedle = value;
-                OnPropertyChanged(nameof(PitchNeedle));
-            }
-        }
-
-        public double YawNeedle
-        {
-            get { return yawNeedle; }
-            set
-            {
-                yawNeedle = value;
-                OnPropertyChanged(nameof(YawNeedle));
-            }
-        }
-
-        private bool corrugatorVsible;
-        private bool orbicularisVisible;
-        private bool veinsVisible;
-        private bool arteriesVisible;
-        private bool skinVisible;
-        public ObservableCollection<EntranceData> EntranceDataList { get; set; }
-        private List<PointHit> actualPointsHit = new List<PointHit>();
-        private double pitchNeedle;
-        private double yawNeedle;
-        private Point3D pointEntrance;
-
-        private Point3D impactPoint;
-        private double depthInjection;
-
-        public bool CorrugatorVisible
-        {
-            get { return corrugatorVsible; }
-            set
-            {
-                corrugatorVsible = value;
-                OnPropertyChanged(nameof(CorrugatorVisible));
-            }
-        }
-
-        public bool OrbicularisVisible
-        {
-            get { return orbicularisVisible; }
-            set
-            {
-                orbicularisVisible = value;
-                OnPropertyChanged(nameof(OrbicularisVisible));
-            }
-        }
-
-        public bool VeinsVisible
-        {
-            get { return veinsVisible; }
-            set
-            {
-                veinsVisible = value;
-                OnPropertyChanged(nameof(VeinsVisible));
-            }
-        }
-
-        public bool ArteriesVisible
-        {
-            get { return arteriesVisible; }
-            set
-            {
-                arteriesVisible = value;
-                OnPropertyChanged(nameof(ArteriesVisible));
-            }
-        }
-
-        public ObservableCollection<InjectionPointSpecific2D> InjectionPoints2D { get; set; }
-        public ObservableCollection<InjectionPoint3D> InjectionPoints3D { get; set; }
-
-        public ObservableCollection<InjectionPoint3D> InjectionPoints3DThisStep { get; set; }
-
-        public bool SkinVisible
-        {
-            get { return skinVisible; }
-            set
-            {
-                skinVisible = value;
-                OnPropertyChanged(nameof(SkinVisible));
-            }
-        }
-
-        public bool HasBeen3DPointsLoaded { get; private set; }
-
-        public Point3D PointEntrance
-        {
-            get { return pointEntrance; }
-            set
-            {
-                pointEntrance = value;
-                OnPropertyChanged(nameof(PointEntrance));
-            }
-        }
-
-        public double Diameter3DPoints { get; internal set; } = 2;
-        public int SelectedPoint3DIndex { get; private set; }
-
-        public Point3D ImpactPoint
-        {
-            get { return impactPoint; }
-            set
-            {
-                impactPoint = value;
-                OnPropertyChanged(nameof(ImpactPoint));
-            }
-        }
-
-        public double CurrentInjectedQUantity { get; private set; } = 0;
-
-        public double DepthInjection
-        {
-            get
-            {
-                return depthInjection;
-            }
-            set
-            {
-                depthInjection = value;
-                OnPropertyChanged(nameof(DepthInjection));
+                catch (Exception)
+                {
+                }
             }
         }
 
@@ -4736,264 +4878,49 @@ namespace BeautySim2023
             }
         }
 
-        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        private void UpdateRotationManikin3D()
         {
+            RotationManikin3D = new QuaternionRotation3D(Rotation_Manikin);
         }
 
-        public void UpdateVisibilityItems(bool firstLoad, object sender = null)
+        internal void ZeroVolume()
         {
-            if (firstLoad)
-            {
-                Vis3DFrame.cbSkin.IsChecked = true;
-                Vis3DFrame.cbSkinWireframe.IsChecked = false;
-                Vis3DFrame.cbVeins.IsEnabled = false;
-                Vis3DFrame.cbArteries.IsEnabled = false;
-                Vis3DFrame.cbVeins.IsChecked = false;
-                Vis3DFrame.cbArteries.IsChecked = false;
-            }
-            else
-            {
-                if (sender != null)
-                {
-                    CheckBox cb = (CheckBox)sender;
-                    if ((cb.Name == "cbSkin") && (cb.IsChecked == true))
-                    {
-                        Vis3DFrame.cbSkinWireframe.IsChecked = false;
-                        Vis3DFrame.cbVeins.IsEnabled = false;
-                        Vis3DFrame.cbArteries.IsEnabled = false;
-                        Vis3DFrame.cbVeins.IsChecked = false;
-                        Vis3DFrame.cbArteries.IsChecked = false;
-                    }
-
-                    if ((cb.Name == "cbSkinWireframe") && (cb.IsChecked == true))
-                    {
-                        Vis3DFrame.cbSkin.IsChecked = false;
-                        Vis3DFrame.cbVeins.IsEnabled = true;
-                        Vis3DFrame.cbArteries.IsEnabled = true;
-                    }
-                }
-            }
-
-            AppControl.Instance.ProcerusVisible = Vis3DFrame.cbProcerus.IsChecked.Value;
-            AppControl.Instance.CorrugatorVisible = Vis3DFrame.cbCorrugator.IsChecked.Value;
-            AppControl.Instance.OrbicularisVisible = Vis3DFrame.cbOrbicularis.IsChecked.Value;
-            AppControl.Instance.VeinsVisible = Vis3DFrame.cbVeins.IsChecked.Value;
-            AppControl.Instance.ArteriesVisible = Vis3DFrame.cbArteries.IsChecked.Value;
-            AppControl.Instance.SkinVisible = Vis3DFrame.cbSkin.IsChecked.Value || Vis3DFrame.cbSkinWireframe.IsChecked.Value;
-
-            AppControl.Instance.UpdateSkinVisibilityOn3DModels();
+            BeautySimController.Instance.Simulator.ZeroVolume();
         }
 
-        //PIRINI 20231218 this is important
-        internal void InitViewModel()
+        internal void ManageViewPointsOn3D(bool destination)
         {
-            if (!Model3DInitialized)
-            {
-                EffectsManager = new DefaultEffectsManager();
-
-                if (TeacherFrame is Visualization3DFrame)
-                {
-                    InitializeModels(AppControl.CadsFolder);
-                    InitializeCoordinates();
-
-                    //((Visualization3DFrameStudent)StudentFrame).bModelView.DataContext = ((Visualization3DFrame)TeacherFrame).MainGrid;
-
-                    double h = ((Visualization3DFrame)TeacherFrame).MainGrid.ActualHeight;
-                    double w = ((Visualization3DFrame)TeacherFrame).MainGrid.ActualWidth;
-                    //double hs = ((Visualization3DFrameStudent)StudentFrame).bModelView.ActualHeight;
-                    //double ws = ((Visualization3DFrameStudent)StudentFrame).bModelView.ActualWidth;
-                    //((Visualization3DFrameStudent)StudentFrame).bModelView.Height = hs;
-                    //((Visualization3DFrameStudent)StudentFrame).bModelView.Width = hs * w / h;
-
-                    //((Visualization3DFrameStudent)StudentFrame).MainGrid.ColumnDefinitions[1].Width = new GridLength(hs * w / h);
-                }
-                Model3DInitialized = true;
-            }
-        }
-
-        public bool CurrentLocateMouseSOrT { get; private set; }
-        public Transform3DGroup TransformGroupMankin { get; private set; }
-        public string MessageFinalScoreStep { get; private set; } = "Final score for this step";
-        public string EvaluateTheCorrectAnswers { get; private set; } = "Evaluate the correct answers";
-        public string EvaluateTheCorrectAnswersTeacher { get; private set; } = "The student is evaluation feedbacks on the answers provided";
-        public string MessageCheckingFeedbacks { get; private set; } = "Check the feedback of your choices";
-        public string MessageCheckingFeedbacksTeacher { get; private set; } = "The student is checking the feedback of its choices";
-        public bool Feedback3DOn { get; set; }
-        public bool AreImagesVisualizedOn3D { get; internal set; }
-        public ShowImagesWindow ShowImagesOn3D { get; internal set; }
-
-        public const string DBPath = "C:\\BeautySim\\Database\\BeautySimDB.db";
-
-        public const string SaveReportsFolder = "C:\\BeautySim_SavedReports";
-        public const string SaveResultsFolder = "C:\\BeautySim\\DataBase\\Results\\";
-
-        internal void SwitchMousePosition(CaseTeacherFrame caseTeacherFrame)
-        {
-            if (CurrentLocateMouseSOrT)
-            {
-                AppControl.Instance.WindowTeacher.SetCursor((int)AppControl.Instance.WindowTeacher.Width / 2, (int)AppControl.Instance.WindowTeacher.Height / 2);
-            }
-            else
-            {
-                AppControl.Instance.WindowStudent.SetCursor((int)AppControl.Instance.WindowStudent.Width / 2, (int)AppControl.Instance.WindowStudent.Height / 2);
-            }
-            CurrentLocateMouseSOrT = !CurrentLocateMouseSOrT;
-            //frame.tbLocateMouse.Text = CurrentLocateMouseSOrT ? "mouse to teacher" : "mouse to student";
-        }
-
-        internal void UpdateTheConsequences(int selectedConsequenceIndex)
-        {
-            if (StudentFrame is InteractionFrame)
-            {
-                ((InteractionFrame)StudentFrame).UpdateTheConsequence(selectedConsequenceIndex);
-            }
-            if (TeacherFrame is InteractionFrame)
-            {
-                ((InteractionFrame)TeacherFrame).UpdateTheConsequence(selectedConsequenceIndex);
-            }
-
-            CaseStudentFrame csf = (CaseStudentFrame)WindowStudent.PageContainer.Content;
-            if (selectedConsequenceIndex >= ((InteractionFrame)StudentFrame).ConsequencesToShow.Count - 1)
-            {
-                csf.bOk.Visibility = Visibility.Visible;
-                ((InteractionFrame)StudentFrame).AlreadyCheckedAllConsequencies = true;
-            }
-            else
-            {
-                if (!((InteractionFrame)StudentFrame).AlreadyCheckedAllConsequencies)
-                {
-                    csf.bOk.Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    csf.bOk.Visibility = Visibility.Visible;
-                }
-            }
-        }
-
-        internal void ShowImagesOn3D_Loaded(object sender, RoutedEventArgs e)
-        {
-            if ((AppControl.Instance.ShowImagesOn3D != null) && (AppControl.Instance.WindowStudent != null))
-            {
-                double left = AppControl.Instance.WindowStudent.Left + (AppControl.Instance.WindowStudent.Width - AppControl.Instance.ShowImagesOn3D.Width) / 2;
-                double top = AppControl.Instance.WindowStudent.Top + (AppControl.Instance.WindowStudent.Height - AppControl.Instance.ShowImagesOn3D.Height) / 2;
-
-                AppControl.Instance.ShowImagesOn3D.Left = left;
-                AppControl.Instance.ShowImagesOn3D.Top = top;
-                AppControl.Instance.ShowImagesOn3D.Topmost = true;
-            }
-        }
-
-        internal void ManageViewImagesOn3D()
-        {
-            // PIRINI TO ADD HERE VISUALIZATION OF IMAGES FOR THE USER
-            if (AppControl.Instance.AreImagesVisualizedOn3D)
-            {
-                CloseWindowImages();
-            }
-            else
-            {
-                AppControl.Instance.ShowImagesOn3D = new ShowImagesWindow();
-                AppControl.Instance.ShowImagesOn3D.Loaded += AppControl.Instance.ShowImagesOn3D_Loaded;
-
-                string nameFileA = AppControl.Instance.CurrentCase.Folder + "\\" + ((ClinicalCaseStep_Face3DInteraction)AppControl.Instance.CurrentCase.Steps[AppControl.Instance.CurrentCase.CurrentStepIndex]).ImageName;
-                if (File.Exists(nameFileA))
-                {
-                    AppControl.Instance.ShowImagesOn3D.imStatic.Source = new BitmapImage(new Uri(nameFileA, UriKind.RelativeOrAbsolute));
-                }
-                string nameFileB = AppControl.Instance.CurrentCase.Folder + "\\" + ((ClinicalCaseStep_Face3DInteraction)AppControl.Instance.CurrentCase.Steps[AppControl.Instance.CurrentCase.CurrentStepIndex]).ImageNameReference;
-                if (File.Exists(nameFileB))
-                {
-                    AppControl.Instance.ShowImagesOn3D.imDynamic.Source = new BitmapImage(new Uri(nameFileB, UriKind.RelativeOrAbsolute));
-                }
-                AppControl.Instance.ShowImagesOn3D.Show();
-                WindowStudent.IsEnabled = false;
-            }
-            AppControl.Instance.AreImagesVisualizedOn3D = !AppControl.Instance.AreImagesVisualizedOn3D;
+            AppControl.Instance.ArePointsVisualizedOn3D = destination;
 
             if ((AppControl.Instance.WindowTeacher.PageContainer.Content is CaseTeacherFrame))
             {
-                ((CaseTeacherFrame)(AppControl.Instance.WindowTeacher.PageContainer.Content)).tbViewImages.Text = AppControl.Instance.AreImagesVisualizedOn3D ? BeautySim.Globalization.Language.hide_images : BeautySim.Globalization.Language.view_images;
+                ((CaseTeacherFrame)(AppControl.Instance.WindowTeacher.PageContainer.Content)).tbViewPoints.Text = AppControl.Instance.ArePointsVisualizedOn3D ? BeautySim.Globalization.Language.hide_points : BeautySim.Globalization.Language.view_points;
             }
+
+            ManageVisibilityPointsStudent(AppControl.Instance.ArePointsVisualizedOn3D);
         }
 
-        internal void CloseWindowImages()
+        internal void ManageVisibilityPointsStudent(bool visibleOrHidden)
         {
-            if (AppControl.Instance.ShowImagesOn3D != null)
+            for (int i = 0; i < Vis3DFrameStudent.hvView3D.Items.Count; i++)
             {
-                AppControl.Instance.ShowImagesOn3D.Close();
-                AppControl.Instance.ShowImagesOn3D = null;
-                WindowStudent.IsEnabled = true;
-            }
-        }
-
-        internal void UpdateSkinVisibilityOn3DModels()
-        {
-            for (int i = 0; i < Vis3DFrame.groupSkin.Children.Count(); i++)
-            {
-                MeshGeometryModel3D u = (MeshGeometryModel3D)Vis3DFrame.groupSkin.Children[i];
-                u.FillMode = Vis3DFrame.cbSkinWireframe.IsChecked.Value ? SharpDX.Direct3D11.FillMode.Wireframe : SharpDX.Direct3D11.FillMode.Solid;
-                u.Material = Vis3DFrame.cbSkinWireframe.IsChecked.Value ? DiffuseMaterials.Glass : DiffuseMaterials.Gray;
-            }
-
-            for (int i = 0; i < Vis3DFrameStudent.groupSkin.Children.Count(); i++)
-            {
-                MeshGeometryModel3D u = (MeshGeometryModel3D)Vis3DFrameStudent.groupSkin.Children[i];
-                u.FillMode = Vis3DFrame.cbSkinWireframe.IsChecked.Value ? SharpDX.Direct3D11.FillMode.Wireframe : SharpDX.Direct3D11.FillMode.Solid;
-                u.Material = Vis3DFrame.cbSkinWireframe.IsChecked.Value ? DiffuseMaterials.Glass : DiffuseMaterials.Gray;
-            }
-        }
-
-        internal void ChangeSelectionPointListView()
-        {
-            if (!AppControl.Instance.Feedback3DOn)
-            {
-                for (int i = 0; i < Vis3DFrame.hvView3D.Items.Count; i++)
+                MeshGeometryModel3D aa = new MeshGeometryModel3D();
+                if (Vis3DFrameStudent.hvView3D.Items[i].Tag != null)
                 {
-                    if (Vis3DFrame.hvView3D.Items[i].Tag != null)
+                    if (Vis3DFrameStudent.hvView3D.Items[i].Tag.ToString().StartsWith("ThisIsAPoint"))
                     {
-                        if (Vis3DFrame.hvView3D.Items[i].Tag.ToString().StartsWith("ThisIsAPoint"))
+                        aa = (MeshGeometryModel3D)Vis3DFrameStudent.hvView3D.Items[i];
+                        if (visibleOrHidden)
                         {
-                            string rr = Vis3DFrame.hvView3D.Items[i].Tag.ToString().Replace("ThisIsAPoint", "");
-                            MeshGeometryModel3D aa = (MeshGeometryModel3D)Vis3DFrame.hvView3D.Items[i];
-                            if (Int32.Parse(rr) == Vis3DFrame.InjectionPointListView.SelectedIndex)
-                            {
-                                aa.Material = DiffuseMaterials.Blue;
-                            }
-                            else
-                            {
-                                aa.Material = DiffuseMaterials.LightBlue;
-                            }
+                            aa.Visibility = Visibility.Visible;
                         }
-                    }
-                }
-
-                for (int i = 0; i < Vis3DFrameStudent.hvView3D.Items.Count; i++)
-                {
-                    if (Vis3DFrameStudent.hvView3D.Items[i].Tag != null)
-                    {
-                        if (Vis3DFrameStudent.hvView3D.Items[i].Tag.ToString().StartsWith("ThisIsAPoint"))
+                        else
                         {
-                            string rr = Vis3DFrameStudent.hvView3D.Items[i].Tag.ToString().Replace("ThisIsAPoint", "");
-                            MeshGeometryModel3D aa = (MeshGeometryModel3D)Vis3DFrameStudent.hvView3D.Items[i];
-                            if (Int32.Parse(rr) == Vis3DFrame.InjectionPointListView.SelectedIndex)
-                            {
-                                aa.Material = DiffuseMaterials.Blue;
-                            }
-                            else
-                            {
-                                aa.Material = DiffuseMaterials.LightBlue;
-                            }
+                            aa.Visibility = Visibility.Hidden;
                         }
                     }
                 }
             }
-        }
-
-        internal void UpdateTranslationManikin3D()
-        {
-            AppControl.Instance.TranslationManikin3D = new System.Windows.Media.Media3D.TranslateTransform3D(AppControl.Instance.TranslationPointModel.X, AppControl.Instance.TranslationPointModel.Y, AppControl.Instance.TranslationPointModel.Z);
-
         }
     }
 }
