@@ -7,17 +7,41 @@ namespace BeautySim2023
 {
     public class ClinicalCaseStep_Face3DInteraction : ClinicalCaseStep
     {
+
+        internal void DecreaseConsequence()
+        {
+            AppControl.Instance.CurrentClinicalCaseStep_Face3DInteraction.SelectedConsequenceIndex = AppControl.Instance.CurrentClinicalCaseStep_Face3DInteraction.SelectedConsequenceIndex - 1;
+            if (AppControl.Instance.CurrentClinicalCaseStep_Face3DInteraction.SelectedConsequenceIndex < 0)
+            {
+                AppControl.Instance.CurrentClinicalCaseStep_Face3DInteraction.SelectedConsequenceIndex = 0;
+            }
+        }
+
+        internal void IncreaseConsequence()
+        {
+            AppControl.Instance.CurrentClinicalCaseStep_Face3DInteraction.SelectedConsequenceIndex = AppControl.Instance.CurrentClinicalCaseStep_Face3DInteraction.SelectedConsequenceIndex + 1;
+            if (AppControl.Instance.CurrentClinicalCaseStep_Face3DInteraction.SelectedConsequenceIndex >= AppControl.Instance.CurrentClinicalCaseStep_Face3DInteraction.Consequences.Count)
+            {
+                AppControl.Instance.CurrentClinicalCaseStep_Face3DInteraction.SelectedConsequenceIndex = AppControl.Instance.CurrentClinicalCaseStep_Face3DInteraction.Consequences.Count - 1;
+            }
+        }
+
         public double OperativityScore = 0;
         public string ImageName { get; set; }
         public int NumInjectionsPoints { get; set; }
         public List<InjectionPoint3D> InjectionPoints3D { get; set; }
 
+        public List<AnalysResult> Consequences { get; internal set; }
         public Enum_StepFace3DInteraction Step { get; internal set; }
         public string PointDefinitionFileName { get; private set; }
         public Enum_AreaDefinition AreaDefinition { get; private set; }
         public string MessageToStudentConsequences { get; private set; }
         public string MessageToTeacherConsequences { get; private set; }
         public string ImageNameReference { get; private set; }
+        public bool AlreadyCheckedAllConsequencies { get; internal set; }
+        public List<string> ErrorsDescription { get; internal set; }
+
+        public int SelectedConsequenceIndex = 0;
 
         public ClinicalCaseStep_Face3DInteraction() : base(Enum_ClinicalCaseStepType.FACE3D_INTERACTION)
         {
@@ -31,7 +55,10 @@ namespace BeautySim2023
             }
 
             InjectionPoints3D = new List<InjectionPoint3D>();
+            ErrorsActive = new List<string>();
         }
+
+        public List<string> ErrorsActive { get; internal set; }
 
         public override void ClearAllUserRelatedFields()
         {

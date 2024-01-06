@@ -280,5 +280,17 @@ namespace BeautySim2023.Properties {
                 this["CalibrationMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public double MultiplierMlToU {
+            get {
+                return ((double)(this["MultiplierMlToU"]));
+            }
+            set {
+                this["MultiplierMlToU"] = value;
+            }
+        }
     }
 }

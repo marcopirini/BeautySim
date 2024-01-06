@@ -1294,7 +1294,7 @@ namespace BeautySim.Globalization {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a insert 0.1 ml.
+        ///   Cerca una stringa localizzata simile a insert 0.5 u.
         /// </summary>
         public static string str_insertAnestetic_ctrl {
             get {

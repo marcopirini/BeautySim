@@ -40,6 +40,8 @@ namespace BeautySim.Common
         F_4_L2,
         F_4_R1,
         F_4_R2,
+        F_4_L3,
+        F_4_R3,
         P_U0,
         P_L0,
         C_L1,
@@ -88,6 +90,6 @@ namespace BeautySim.Common
         LE_INT,
         LL_CORNER,
         RE_INT,
-        NOSEPOINT,
+        NOSEPOINT
     }
 }

@@ -390,28 +390,6 @@ namespace Device.BeautySim
             }
         }
 
-        private void UpdateReadVolume()
-        {
-            try
-            {
-                if (firstReadingFlux)
-                {
-                    CurrentVolume = CurrentVolume + (LastReadFlux) * (float)(DateTime.Now - LastFluxReadingTime).TotalMilliseconds;
-                }
-                else
-                {
-                    firstReadingFlux = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message + ex.StackTrace);
-                if (verbose)
-                {
-                    MessageBox.Show(ex.Message + ex.StackTrace);
-                }
-            }
-        }
 
         /// <summary>
         /// Handle

@@ -753,7 +753,6 @@ namespace Manager3D
                 }
             }
 
-            //PIRINI
             EffectsManager = new DefaultEffectsManager();
 
             InitializeModels("C:\\BeautySim\\Models3D");

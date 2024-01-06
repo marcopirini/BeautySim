@@ -1,30 +1,55 @@
-﻿using System.Xml.Serialization;
+﻿using System.Collections.Generic;
+using System.Windows.Documents;
+using System.Xml.Serialization;
 
 namespace BeautySim2023
 {
     public class ResultToSave : XMLBase 
     {
         [XmlAttribute]
-        public int NumberOfNeedleInsertions { get; set; }
+        public string CaseName { get; set; }
+        [XmlAttribute]
+        public string CaseDescription{ get; set; }
 
         [XmlAttribute]
-        public bool IsMultipleNeedleInjections { get; set; }
+        public bool IsBotoxCase { get; set; }
 
-        [XmlAttribute]
-        public int WrongInjections { get; set; }
-
-        [XmlAttribute]
-        public int TotalTargetNerves { get; set; }
-
-        [XmlAttribute]
-        public int TotalTargetInjected { get; set; }
-
-        [XmlAttribute]
-        public int TotalVascular { get; set; }
-
+        [XmlArray]
+        public List<ResultPhaseToSave> ResultPhases { get; set; }
 
         public ResultToSave()
         {
+            ResultPhases = new List<ResultPhaseToSave>();
         }
+    }
+
+    public class ResultPhaseToSave
+    {
+        [XmlAttribute]
+        public string PhaseName { get; set; }
+
+        [XmlAttribute]
+        public Enum_ClinicalCaseStepType PhaseType { get; set; }
+
+        [XmlAttribute]
+        public double QuestionnaireScore { get; set; }
+
+        [XmlAttribute]
+        public double TotalScore { get; set; }
+
+        [XmlAttribute]
+        public double ActionScore { get; set; }
+
+        [XmlAttribute]
+        public int NumErrorsQuestionnaire { get; set; }
+
+        [XmlArray]
+        public List<string> ActionsOnError { get; set; }
+
+        public ResultPhaseToSave()
+        {
+            ActionsOnError = new List<string>();
+        }
+
     }
 }

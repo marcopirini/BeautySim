@@ -70,7 +70,14 @@ namespace InjectionPointManager
                 Console.WriteLine(cbSelectArea.SelectedValue as string);
                 Enum_AreaDefinition area = (Enum_AreaDefinition)Enum.Parse(typeof(Enum_AreaDefinition), cbSelectArea.SelectedValue as string);
 
-                pointsToWorkOn = PointsManager.Instance.GiveMePointsBasedOnArea(area);
+                List<Enum_AreaDefinition> areas = new List<Enum_AreaDefinition>();
+                areas.Add(area);
+                if (area== Enum_AreaDefinition.CENTRAL)
+                {
+                    areas.Add(Enum_AreaDefinition.NASAL);
+                }
+
+                pointsToWorkOn = PointsManager.Instance.GiveMePointsBasedOnArea(areas);
                 LoadImage(imagePath);
                 LoadDynamicInfoXML();
                 DrawInjectionPoints();

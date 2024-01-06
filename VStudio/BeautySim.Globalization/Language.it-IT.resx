@@ -1240,7 +1240,7 @@
     <value>Informazioni ago</value>
   </data>
   <data name="str_insertAnestetic_ctrl" xml:space="preserve">
-    <value>inserisci 0.1 ml</value>
+    <value>inserisci 0.5 u</value>
   </data>
   <data name="str_calibrate" xml:space="preserve">
     <value>calibra</value>

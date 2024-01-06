@@ -404,7 +404,7 @@ namespace BeautySim.Common
                             break;
 
                         case Enum_AnaysisVariablesToCheck.H_ANGULAR_INJECTION_PROCERUS_TOWARD_LEFT:
-                            if (isThis3D)
+                            if ((isThis3D) && (area == Enum_AreaDefinition.CENTRAL))
                             {
                                 InjectionPoint3D injectionPoint3D1 = injectionPointsWorked.Where(x => x.PointDefinition == Enum_PointDefinition.P_L0).FirstOrDefault() as InjectionPoint3D;
                                 InjectionPoint3D injectionPoint3D2 = injectionPointsWorked.Where(x => x.PointDefinition == Enum_PointDefinition.P_U0).FirstOrDefault() as InjectionPoint3D;
@@ -416,7 +416,7 @@ namespace BeautySim.Common
                             break;
 
                         case Enum_AnaysisVariablesToCheck.H_ANGULAR_INJECTION_PROCERUS_TOWARD_RIGHT:
-                            if (isThis3D)
+                            if ((isThis3D) && (area == Enum_AreaDefinition.CENTRAL))
                             {
                                 InjectionPoint3D injectionPoint3D1 = injectionPointsWorked.Where(x => x.PointDefinition == Enum_PointDefinition.P_L0).FirstOrDefault() as InjectionPoint3D;
                                 InjectionPoint3D injectionPoint3D2 = injectionPointsWorked.Where(x => x.PointDefinition == Enum_PointDefinition.P_U0).FirstOrDefault() as InjectionPoint3D;
@@ -428,7 +428,7 @@ namespace BeautySim.Common
                             break;
 
                         case Enum_AnaysisVariablesToCheck.H_ANGULAR_INJECTION_PROCERUS_TOWARD_UP:
-                            if (isThis3D)
+                            if ((isThis3D) && (area == Enum_AreaDefinition.CENTRAL))
                             {
                                 InjectionPoint3D injectionPoint3D2 = injectionPointsWorked.Where(x => x.PointDefinition == Enum_PointDefinition.P_U0).FirstOrDefault() as InjectionPoint3D;
                                 if ((injectionPoint3D2.GiveMeMaxEntrancePitch() > injectionPoint3D2.PitchMax))
@@ -943,36 +943,49 @@ namespace BeautySim.Common
             {
                 errorCasesFiltered.Add(GiveMeNoError(errorCasesFiltered, area));
             }
-
-            return errorCases;
+            //PIRINI 20240103
+            //return errorCases;
+            return errorCasesFiltered;
+            
         }
 
-        public List<Enum_PointDefinition> GiveMePointsBasedOnArea(Enum_AreaDefinition area)
+        public List<Enum_PointDefinition> GiveMePointsBasedOnArea(List<Enum_AreaDefinition> areas)
         {
-            switch (area)
+            List<Enum_PointDefinition> toRet = new List<Enum_PointDefinition>();
+            List<Enum_PointDefinition> toRetGlobal = new List<Enum_PointDefinition>();
+            foreach (Enum_AreaDefinition area in areas)
             {
-                case Enum_AreaDefinition.FRONTAL:
-                    return GetEnumSubList(0, 32);
-                    break;
 
-                case Enum_AreaDefinition.CENTRAL:
-                    return GetEnumSubList(32, 12);
-                    break;
+                switch (area)
+                {
+                    case Enum_AreaDefinition.FRONTAL:
+                        toRet = GetEnumSubList(0, 34);
+                        break;
 
-                case Enum_AreaDefinition.ORBICULAR_LEFT:
-                    return GetEnumSubList(60, 14);
-                    break;
+                    case Enum_AreaDefinition.CENTRAL:
+                        toRet = GetEnumSubList(34, 12);
+                        break;
 
-                case Enum_AreaDefinition.ORBICULAR_RIGHT:
-                    return GetEnumSubList(46, 14);
-                    break;
+                    case Enum_AreaDefinition.ORBICULAR_LEFT:
+                        toRet = GetEnumSubList(62, 14);
+                        break;
 
-                case Enum_AreaDefinition.NASAL:
-                    return GetEnumSubList(44, 2);
-                    break;
+                    case Enum_AreaDefinition.ORBICULAR_RIGHT:
+                        toRet = GetEnumSubList(48, 14);
+                        break;
+
+                    case Enum_AreaDefinition.NASAL:
+                        toRet = GetEnumSubList(46, 2);
+                        break;
+                }
+
+                foreach (Enum_PointDefinition item in toRet)
+                {
+                    toRetGlobal.Add(item);
+                }
             }
 
-            return new List<Enum_PointDefinition>();
+            return toRetGlobal;
         }
 
         public List<InjectionPointBase> LoadInjectionPoints(string pathFilePointsBase)
@@ -1076,6 +1089,8 @@ namespace BeautySim.Common
             InjectionPoints.Add(new InjectionPointBase(Enum_PointDefinition.F_4_R1, stDepth, dpOptions, false, standardYawMin, standardYawMax, standardPitchMin, standardPitchMax, Enum_AreaDefinition.FRONTAL, qtOptions));
             InjectionPoints.Add(new InjectionPointBase(Enum_PointDefinition.F_4_L2, stDepth, dpOptions, false, standardYawMin, standardYawMax, standardPitchMin, standardPitchMax, Enum_AreaDefinition.FRONTAL, qtOptions));
             InjectionPoints.Add(new InjectionPointBase(Enum_PointDefinition.F_4_R2, stDepth, dpOptions, false, standardYawMin, standardYawMax, standardPitchMin, standardPitchMax, Enum_AreaDefinition.FRONTAL, qtOptions));
+            InjectionPoints.Add(new InjectionPointBase(Enum_PointDefinition.F_4_L3, stDepth, dpOptions, false, standardYawMin, standardYawMax, standardPitchMin, standardPitchMax, Enum_AreaDefinition.FRONTAL, qtOptions));
+            InjectionPoints.Add(new InjectionPointBase(Enum_PointDefinition.F_4_R3, stDepth, dpOptions, false, standardYawMin, standardYawMax, standardPitchMin, standardPitchMax, Enum_AreaDefinition.FRONTAL, qtOptions));
 
             InjectionPoints.Add(new InjectionPointBase(Enum_PointDefinition.P_U0, stDepth, dpOptions, false, procerusYawMin, procerusYawMax, procerusPitchMin, procerusPitchMax, Enum_AreaDefinition.CENTRAL, qtOptions));
             InjectionPoints.Add(new InjectionPointBase(Enum_PointDefinition.P_L0, stDepth, dpOptions, false, procerusYawMin, procerusYawMax, procerusPitchMin, procerusPitchMax, Enum_AreaDefinition.CENTRAL, qtOptions));

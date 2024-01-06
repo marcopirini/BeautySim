@@ -68,5 +68,8 @@
     <Setting Name="CalibrationMode" Type="System.String" Scope="User">
       <Value Profile="(Default)">Mean</Value>
     </Setting>
+    <Setting Name="MultiplierMlToU" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">4</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

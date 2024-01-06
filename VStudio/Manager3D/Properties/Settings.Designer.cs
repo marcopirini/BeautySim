@@ -25,7 +25,7 @@ namespace Manager3D.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int WorkingModel {
             get {
                 return ((int)(this["WorkingModel"]));

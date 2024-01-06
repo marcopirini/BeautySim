@@ -393,7 +393,7 @@ namespace BeautySim2023
             {
                 temporaryList = PointsManager.Instance.LoadInjectionPoints3D(AppControl.Instance.pathFilePointsBase3DCalib);
             }
-
+            AppControl.Instance.InjectionPoints3DCalib.Clear();
             foreach (InjectionPoint3D item in temporaryList)
             {
                 AppControl.Instance.InjectionPoints3DCalib.Add(new InjectionPoint3DCalib(item));
@@ -670,8 +670,6 @@ namespace BeautySim2023
                 }
             }
         }
-
- 
 
         public bool CurrentLocateMouseSOrT { get; private set; }
 
@@ -1886,16 +1884,6 @@ namespace BeautySim2023
 
                         case Enum_StepQuestionnaire.FEEDBACK:
 
-                            //Save the results
-
-                            //if (c3.MultipleSelectionAllowed)
-                            //{
-                            //    c3.Score = ((float)c3.SelectableItems.Count - (float)c3.NumErrors) / (float)c3.SelectableItems.Count * 100;
-                            //}
-                            //else
-                            //{
-                            //    c3.Score = c3.NumErrors > 0 ? 0 : 100;
-                            //}
                             s3.PrepareFor(Enum_StepDynamicAnalysis.FINAL_FEEDBACK_SIMPLE);
                             t3.PrepareFor(Enum_StepDynamicAnalysis.FINAL_FEEDBACK_SIMPLE);
                             s3.tbMessage.Text = AppControl.Instance.MessageFinalScoreStep;
@@ -1908,15 +1896,15 @@ namespace BeautySim2023
 
                             //Save the results
 
-                            //if (c3.MultipleSelectionAllowed)
-                            //{
-                            //    c3.Score = ((float)c3.SelectableItems.Count - (float)c3.NumErrors) / (float)c3.SelectableItems.Count * 100;
-                            //}
-                            //else
-                            //{
-                            //    c3.Score = c3.NumErrors > 0 ? 0 : 100;
-                            //}
-                            //s3.Step = Enum_QuestionnaireMultipleFrameStep.FINISHED;
+                            ResultPhaseToSave ph2Save = new ResultPhaseToSave();
+                            ph2Save.TotalScore = c3.Score;
+                            ph2Save.QuestionnaireScore = c3.QuestionnaireScore;
+                            ph2Save.NumErrorsQuestionnaire = c3.NumErrors;
+                            ph2Save.PhaseName = c3.NameStep;
+                            ph2Save.PhaseType = Enum_ClinicalCaseStepType.QUESTIONNAIRE;
+
+                            ResultCaseToSave.ResultPhases.Add(ph2Save);
+
                             PrepareAdvanceStudent("Next");
 
                             AdvanceStep();
@@ -2018,16 +2006,6 @@ namespace BeautySim2023
 
                         case Enum_StepQuestionnaire.FEEDBACK:
 
-                            //Save the results
-
-                            //if (c3.MultipleSelectionAllowed)
-                            //{
-                            //    c3.Score = ((float)c3.SelectableItems.Count - (float)c3.NumErrors) / (float)c3.SelectableItems.Count * 100;
-                            //}
-                            //else
-                            //{
-                            //    c3.Score = c3.NumErrors > 0 ? 0 : 100;
-                            //}
                             s4.PrepareFor(Enum_StepDynamicAnalysis.FINAL_FEEDBACK_SIMPLE);
                             t4.PrepareFor(Enum_StepDynamicAnalysis.FINAL_FEEDBACK_SIMPLE);
                             s4.tbMessage.Text = AppControl.Instance.MessageFinalScoreStep;
@@ -2038,6 +2016,16 @@ namespace BeautySim2023
 
                         case Enum_StepQuestionnaire.FINALSCORE:
                             PrepareAdvanceStudent("Next");
+
+                            ResultPhaseToSave ph2Save = new ResultPhaseToSave();
+                            ph2Save.TotalScore = c4.Score;
+                            ph2Save.QuestionnaireScore = c4.QuestionnaireScore;
+                            ph2Save.NumErrorsQuestionnaire = c4.NumErrors;
+                            ph2Save.PhaseName = c4.NameStep;
+                            ph2Save.PhaseType = Enum_ClinicalCaseStepType.ANALYSIS_STATIC_FACE;
+
+                            ResultCaseToSave.ResultPhases.Add(ph2Save);
+
                             AdvanceStep();
                             break;
 
@@ -2242,7 +2230,7 @@ namespace BeautySim2023
                             c5.Consequences = consequences;
                             c5.OperativityScore = scoreFinal;
                             c5.Score = (float)(c5.OperativityScore * .75f + c5.QuestionnaireScore * 0.25f);
-
+                            c5.ErrorsActive = errors;
                             s5.PassInfoOperativity(c5.Consequences, errors, c5.OperativityScore);
                             t5.PassInfoOperativity(c5.Consequences, errors, c5.OperativityScore);
                             s5.PassFinalScore(c5.Score);
@@ -2281,17 +2269,19 @@ namespace BeautySim2023
 
                         case Enum_StepDynamicAnalysis.FINAL_FEEDBACK:
 
-                            //Save the results
+                            ResultPhaseToSave ph2Save = new ResultPhaseToSave();
+                            ph2Save.TotalScore = c5.Score;
+                            ph2Save.ActionScore = c5.OperativityScore;
+                            ph2Save.QuestionnaireScore = c5.QuestionnaireScore;
+                            ph2Save.NumErrorsQuestionnaire = c5.NumErrors;
+                            ph2Save.PhaseName = c5.NameStep;
+                            foreach (string vv in c5.ErrorsActive)
+                            {
+                                ph2Save.ActionsOnError.Add(vv);
+                            }
+                            ph2Save.PhaseType = Enum_ClinicalCaseStepType.DIDACTIC_DYNAMIC_FACE;
 
-                            //if (c3.MultipleSelectionAllowed)
-                            //{
-                            //    c3.Score = ((float)c3.SelectableItems.Count - (float)c3.NumErrors) / (float)c3.SelectableItems.Count * 100;
-                            //}
-                            //else
-                            //{
-                            //    c3.Score = c3.NumErrors > 0 ? 0 : 100;
-                            //}
-                            //s3.Step = Enum_QuestionnaireMultipleFrameStep.FINISHED;
+                            ResultCaseToSave.ResultPhases.Add(ph2Save);
                             PrepareAdvanceStudent("Next");
 
                             AdvanceStep();
@@ -2311,18 +2301,24 @@ namespace BeautySim2023
 
                     Visualization3DFrameStudent s6 = (Visualization3DFrameStudent)StudentFrame;
                     Visualization3DFrame t6 = (Visualization3DFrame)TeacherFrame;
-                    ClinicalCaseStep_Face3DInteraction c6 = (ClinicalCaseStep_Face3DInteraction)caseStepCurrent;
-                    switch (c6.Step)
+
+                    AppControl.Instance.CurrentClinicalCaseStep_Face3DInteraction = (ClinicalCaseStep_Face3DInteraction)caseStepCurrent;
+
+                    switch (CurrentClinicalCaseStep_Face3DInteraction.Step)
                     {
                         case Enum_StepFace3DInteraction.LOADING:
                             AppControl.Instance.Feedback3DOn = false;
-                            ManageVisibilityPointsStudent(false);
-                            c6.Step = Enum_StepFace3DInteraction.OPERATIVE;
-                            t6.grIndications.Visibility = Visibility.Hidden;
+                            ManageViewPointsOn3D(false);
+                            MainTeacherFrame.bViewPoints.Visibility = Visibility.Visible;
+
+                            CurrentClinicalCaseStep_Face3DInteraction.Step = Enum_StepFace3DInteraction.OPERATIVE;
+                            t6.PrepareFor(CurrentClinicalCaseStep_Face3DInteraction.Step);
+                            s6.PrepareFor(CurrentClinicalCaseStep_Face3DInteraction.Step);
                             break;
 
                         case Enum_StepFace3DInteraction.OPERATIVE:
-                            ManageVisibilityPointsStudent(true);
+                            ManageViewPointsOn3D(true);
+                            MainTeacherFrame.bViewPoints.Visibility = Visibility.Hidden;
                             for (int i = 0; i < InjectionPoints3DThisStep.Count; i++)
                             {
                                 InjectionPoint3D ijP = InjectionPoints3DThisStep[i];
@@ -2349,13 +2345,109 @@ namespace BeautySim2023
                                     }
                                 }
                             }
-
                             DrawInjectionPointsSpecial();
-                            c6.Step = Enum_StepFace3DInteraction.FEEDBACK;
-                            t6.grIndications.Visibility = Visibility.Visible;
+                            CurrentClinicalCaseStep_Face3DInteraction.Step = Enum_StepFace3DInteraction.FEEDBACK_ON_INJECTIONS_PERFORMED;
+                            t6.PrepareFor(CurrentClinicalCaseStep_Face3DInteraction.Step);
+                            s6.PrepareFor(CurrentClinicalCaseStep_Face3DInteraction.Step);
                             break;
 
-                        case Enum_StepFace3DInteraction.FEEDBACK:
+                        case Enum_StepFace3DInteraction.FEEDBACK_ON_INJECTIONS_PERFORMED:
+                            CurrentClinicalCaseStep_Face3DInteraction.Step = Enum_StepFace3DInteraction.FEEDBACK_INJECTIONPOINTS_EFFECTS;
+                            List<InjectionPointBase> injectionPointBases = new List<InjectionPointBase>();
+                            foreach (InjectionPoint3D item in InjectionPoints3DThisStep)
+                            {
+                                injectionPointBases.Add(item);
+                            }
+
+                            List<AnalysResult> consequences = PointsManager.Instance.EvaluateWhatHasBeenDone(injectionPointBases, CurrentClinicalCaseStep_Face3DInteraction.AreaDefinition, false);
+                            CurrentClinicalCaseStep_Face3DInteraction.Consequences = consequences;
+
+                            double scoreFinal = 100;
+                            List<string> errors = new List<string>();
+                            for (int i = 0; i < consequences.Count; i++)
+                            {
+                                switch (consequences[i].ScoreEffect)
+                                {
+                                    case Enum_ScoreEffect.SET0:
+                                        errors.Add(consequences[i].WhatYouDidDescription + " Activity Score: Set to 0.");
+                                        scoreFinal = 0;
+                                        break;
+
+                                    case Enum_ScoreEffect.MINUS50:
+                                        scoreFinal = scoreFinal - 50;
+                                        errors.Add(consequences[i].WhatYouDidDescription + " Activity Score: -50%.");
+                                        break;
+
+                                    case Enum_ScoreEffect.MIN20:
+                                        errors.Add(consequences[i].WhatYouDidDescription + " Activity Score: -20%.");
+                                        scoreFinal = scoreFinal - 20;
+                                        break;
+
+                                    case Enum_ScoreEffect.MIN10:
+                                        errors.Add(consequences[i].WhatYouDidDescription + " Activity Score: -10%.");
+                                        break;
+
+                                    case Enum_ScoreEffect.MIN5:
+                                        errors.Add(consequences[i].WhatYouDidDescription + " Activity Score: -5%.");
+                                        scoreFinal = scoreFinal - 5;
+                                        break;
+
+                                    case Enum_ScoreEffect.NOEFFECT:
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            if (scoreFinal < 0)
+                            {
+                                scoreFinal = 0;
+                            }
+                            CurrentClinicalCaseStep_Face3DInteraction.ErrorsDescription = errors;
+                            CurrentClinicalCaseStep_Face3DInteraction.OperativityScore = scoreFinal;
+                            CurrentClinicalCaseStep_Face3DInteraction.Score = (float)(CurrentClinicalCaseStep_Face3DInteraction.OperativityScore);
+
+                            t6.PrepareFor(CurrentClinicalCaseStep_Face3DInteraction.Step);
+                            s6.PrepareFor(CurrentClinicalCaseStep_Face3DInteraction.Step);
+
+                            t6.UpdateTheConsequence();
+                            s6.UpdateTheConsequence();
+
+                            CaseStudentFrame csf = (CaseStudentFrame)WindowStudent.PageContainer.Content;
+                            if (CurrentClinicalCaseStep_Face3DInteraction.Consequences.Count > 1)
+                            {
+                                csf.bOk.Visibility = Visibility.Hidden;
+                            }
+                            else
+                            {
+                                csf.bOk.Visibility = Visibility.Visible;
+                                CurrentClinicalCaseStep_Face3DInteraction.AlreadyCheckedAllConsequencies = true;
+                            }
+
+                            break;
+
+                        case Enum_StepFace3DInteraction.FEEDBACK_INJECTIONPOINTS_EFFECTS:
+                            CurrentClinicalCaseStep_Face3DInteraction.Step = Enum_StepFace3DInteraction.FINAL_FEEDBACK;
+                            //PIRINI 20240103 s6.PrepareFor(Enum_StepDynamicAnalysis.FINAL_FEEDBACK);
+                            t6.PrepareFor(CurrentClinicalCaseStep_Face3DInteraction.Step);
+                            s6.PrepareFor(CurrentClinicalCaseStep_Face3DInteraction.Step);
+                            break;
+
+                        case Enum_StepFace3DInteraction.FINAL_FEEDBACK:
+
+                            ResultPhaseToSave ph2Save = new ResultPhaseToSave();
+                            ph2Save.TotalScore = CurrentClinicalCaseStep_Face3DInteraction.Score;
+                            ph2Save.ActionScore = CurrentClinicalCaseStep_Face3DInteraction.OperativityScore;
+                            ph2Save.PhaseName = CurrentClinicalCaseStep_Face3DInteraction.NameStep;
+                            foreach (string vv in CurrentClinicalCaseStep_Face3DInteraction.ErrorsActive)
+                            {
+                                ph2Save.ActionsOnError.Add(vv);
+                            }
+                            ph2Save.PhaseType = Enum_ClinicalCaseStepType.FACE3D_INTERACTION;
+
+                            ResultCaseToSave.ResultPhases.Add(ph2Save);
+
                             PrepareAdvanceStudent("Next");
                             AdvanceStep();
                             break;
@@ -2372,6 +2464,8 @@ namespace BeautySim2023
                     break;
             }
         }
+
+        public ResultToSave ResultCaseToSave { get; set; }
 
         public void AdvanceStep()
         {
@@ -2541,6 +2635,7 @@ namespace BeautySim2023
                             AppControl.Instance.SetContent((ClinicalCaseStep_Face3DInteraction)caseStepCurrent);
                             SelectedPoint3DIndex = -1;
                             ((ClinicalCaseStep_Face3DInteraction)caseStepCurrent).Step = Enum_StepFace3DInteraction.LOADING;
+
                             AdvancePartialAdvanceStep();
                             break;
 
@@ -3029,7 +3124,7 @@ namespace BeautySim2023
                     {
                         InjectionPoints3DThisStep[index].ActualReleases.Add(new ActualRelease());
                     }
-                    InjectionPoints3DThisStep[index].ActualReleases.Last().ArtificiallyInjectedQuantity = InjectionPoints3DThisStep[index].ActualReleases.Last().ArtificiallyInjectedQuantity + 0.1;
+                    InjectionPoints3DThisStep[index].ActualReleases.Last().ArtificiallyInjectedQuantity = InjectionPoints3DThisStep[index].ActualReleases.Last().ArtificiallyInjectedQuantity + 0.5;
                     InjectionPoints3DThisStep[index].RefreshQuantities();
                 }
             }
@@ -3086,6 +3181,11 @@ namespace BeautySim2023
             AppControl.Instance.WindowTeacher.Navigate(new CaseTeacherFrame());
 
             MainStudentFrame.tbCaseName.Text = CurrentCase.Name;
+
+            ResultCaseToSave = new ResultToSave();
+            ResultCaseToSave.IsBotoxCase = CurrentCase.Module == Enum_Modules.Botox;
+            ResultCaseToSave.CaseName = CurrentCase.Name;
+            ResultCaseToSave.CaseDescription = CurrentCase.Description;
         }
 
         public void LogOut()
@@ -3315,15 +3415,8 @@ namespace BeautySim2023
             }
 
             string filePath = baseFolder + "\\CaseSaved.xml";
-            ResultToSave resToSave = new ResultToSave();
-            resToSave.NumberOfNeedleInsertions = InsertionNeedle;
 
-            resToSave.IsMultipleNeedleInjections = true;
-            resToSave.WrongInjections = TargetMissedNerve_Injections;
-
-            resToSave.IsMultipleNeedleInjections = false;
-
-            resToSave.Save<ResultToSave>(filePath);
+            ResultCaseToSave.Save<ResultToSave>(filePath);
             result.FilePath = filePath;
             DBConnector.Instance.InsertRow<Results>(result);
         }
@@ -3380,10 +3473,9 @@ namespace BeautySim2023
 
                 SetTimer(false);
             }
-            if (IhaveToSaveResults)
+            if ((IhaveToSaveResults) && (CurrentTeacher != null) && (CurrentStudent != null) && ResultCaseToSave != null)
             {
-                Results resultToSave = new Results();
-                //AppControl.Instance.SaveResult(SelectedCase);
+                AppControl.Instance.SaveResult();
             }
             CurrentCase.ClearAllUserRelatedFields();
             //AppControl.Instance.WindowTeacher.SetCase("");
@@ -3517,8 +3609,8 @@ namespace BeautySim2023
                     //ORBILULAR RIGHT!
                     Vis3DFrameStudent.hvView3D.Camera.UpDirection = new Vector3D(.7, .30, 0);
                     Vis3DFrameStudent.hvView3D.Camera.LookDirection = new Vector3D(-.3, .7, -.7);
-                    Vis3DFrameStudent.hvView3D.Camera.Position = new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -300 + AppControl.Instance.TranslationPointModel.Y, 300 + AppControl.Instance.TranslationPointModel.Z);
-                    Vis3DFrameStudent.hvView3D.LookAt(new Point3D(250 + AppControl.Instance.TranslationPointModel.X, -250 + AppControl.Instance.TranslationPointModel.Y, 130 + AppControl.Instance.TranslationPointModel.Z), 3000);
+                    Vis3DFrameStudent.hvView3D.Camera.Position = new Point3D(300 + AppControl.Instance.TranslationPointModel.X, -200 + AppControl.Instance.TranslationPointModel.Y, 300 + AppControl.Instance.TranslationPointModel.Z);
+                    Vis3DFrameStudent.hvView3D.LookAt(new Point3D(250 + AppControl.Instance.TranslationPointModel.X, -150 + AppControl.Instance.TranslationPointModel.Y, 130 + AppControl.Instance.TranslationPointModel.Z), 3000);
                     break;
 
                 case Enum_AreaDefinition.NASAL:
@@ -3689,11 +3781,11 @@ namespace BeautySim2023
                         }
                         else
                         {
-                            if (ijP.ActuallyChosenOrPerformedQuantity > ijP.PrescribedQuantity)
+                            if (ijP.ActuallyChosenOrPerformedQuantity > ijP.PrescribedQuantity*1.5)
                             {
                                 aa.Material = DiffuseMaterials.Orange;
                             }
-                            else if (ijP.ActuallyChosenOrPerformedQuantity < ijP.PrescribedQuantity)
+                            else if (ijP.ActuallyChosenOrPerformedQuantity < ijP.PrescribedQuantity*0.7)
                             {
                                 aa.Material = DiffuseMaterials.Yellow;
                             }
@@ -3817,8 +3909,8 @@ namespace BeautySim2023
 
                     //((Visualization3DFrameStudent)StudentFrame).bModelView.DataContext = ((Visualization3DFrame)TeacherFrame).MainGrid;
 
-                    double h = ((Visualization3DFrame)TeacherFrame).MainGrid.ActualHeight;
-                    double w = ((Visualization3DFrame)TeacherFrame).MainGrid.ActualWidth;
+                    double h = ((Visualization3DFrame)TeacherFrame).grInteractive3D.ActualHeight;
+                    double w = ((Visualization3DFrame)TeacherFrame).grInteractive3D.ActualWidth;
                     //double hs = ((Visualization3DFrameStudent)StudentFrame).bModelView.ActualHeight;
                     //double ws = ((Visualization3DFrameStudent)StudentFrame).bModelView.ActualWidth;
                     //((Visualization3DFrameStudent)StudentFrame).bModelView.Height = hs;
@@ -3832,7 +3924,6 @@ namespace BeautySim2023
 
         internal void ManageViewImagesOn3D()
         {
-            // PIRINI TO ADD HERE VISUALIZATION OF IMAGES FOR THE USER
             if (AppControl.Instance.AreImagesVisualizedOn3D)
             {
                 CloseWindowImages();
@@ -3944,46 +4035,50 @@ namespace BeautySim2023
 
             CurrentArea = caseStepCurrent.AreaDefinition;
 
+
+            List<Enum_AreaDefinition> areasToChek = new List<Enum_AreaDefinition>();
+            areasToChek.Add(caseStepCurrent.AreaDefinition);
+            if (areasToChek.Contains(Enum_AreaDefinition.CENTRAL))
+            {
+                areasToChek.Add(Enum_AreaDefinition.NASAL);
+            }
             for (int i = 0; i < AppControl.Instance.InjectionPoints3D.Count; i++)
             {
-                if (AppControl.Instance.InjectionPoints3D[i].AreaDef == caseStepCurrent.AreaDefinition)
+                if (areasToChek.Contains(AppControl.Instance.InjectionPoints3D[i].AreaDef))
                 {
                     AppControl.Instance.InjectionPoints3DThisStep.Add(AppControl.Instance.InjectionPoints3D[i]);
                 }
             }
 
-            //var vertices = new List<Vertex4Triangulation>();
-
-            //foreach (InjectionPoint3D item in AppControl.Instance.InjectionPoints3DThisStep)
-            //{
-            //    vertices.Add(new Vertex4Triangulation(item.X, item.Y, item.Z));
-            //}
-
-            //// Create a convex hull from the vertices
-            //ConvexHullCreationResult<Vertex4Triangulation, DefaultConvexFace<Vertex4Triangulation>> convexHull = ConvexHull.Create(vertices);
-
-            //ConvexHull<Vertex4Triangulation, DefaultConvexFace<Vertex4Triangulation>> delaunayTriangulation = convexHull.Result;
-
-            //foreach (DefaultConvexFace<Vertex4Triangulation> item in delaunayTriangulation.Faces)
-            //{
-            //}
-
             foreach (InjectionPoint3D toCalc in AppControl.Instance.InjectionPoints3DThisStep)
             {
-                double minDistance = 1000000;
+                // Find the nearest point in the grid with the SmartGridAssigner algorithm
+                //      Initialize variables to track the nearest and second nearest points
+                double minimumDistance = Double.MaxValue; // Smallest distance found
+                double secondMinimumDistance = Double.MaxValue; // Second smallest distance found
                 foreach (InjectionPoint3D toCalc2 in AppControl.Instance.InjectionPoints3DThisStep)
                 {
                     if (toCalc != toCalc2)
                     {
-                        double distance = Math.Sqrt(Math.Pow(toCalc.X - toCalc2.X, 2) + Math.Pow(toCalc.Y - toCalc2.Y, 2) + Math.Pow(toCalc.Z - toCalc2.Z, 2));
-                        if (distance < minDistance)
+                        double distance = Math.Sqrt(Math.Pow(toCalc2.X - toCalc.X, 2) + Math.Pow(toCalc2.Y - toCalc.Y, 2) + Math.Pow(toCalc2.Z - toCalc.Z, 2));
+
+                        if (distance < minimumDistance)
                         {
-                            minDistance = distance;
+                            // Update second nearest with the previous nearest
+                            secondMinimumDistance = minimumDistance;
+
+                            // Update nearest with the new nearest
+                            minimumDistance = distance;
+                        }
+                        else if (distance < secondMinimumDistance && distance != minimumDistance)
+                        {
+                            // Update second nearest if this point is closer than the current second nearest but not equal to the current nearest
+                            secondMinimumDistance = distance;
                         }
                     }
                 }
 
-                toCalc.MinDistanceFromNeighbours = minDistance;
+                toCalc.MinDistanceFromNeighbours = Math.Max(minimumDistance,secondMinimumDistance);
             }
 
             foreach (InjectionPoint3D item3D in AppControl.Instance.InjectionPoints3DThisStep)
@@ -4076,6 +4171,38 @@ namespace BeautySim2023
                 }
             }
         }
+
+        internal void UpdateTheConsequences3D()
+        {
+            if (StudentFrame is Visualization3DFrameStudent)
+            {
+                ((Visualization3DFrameStudent)StudentFrame).UpdateTheConsequence();
+            }
+            if (TeacherFrame is Visualization3DFrame)
+            {
+                ((Visualization3DFrame)TeacherFrame).UpdateTheConsequence();
+            }
+
+            CaseStudentFrame csf = (CaseStudentFrame)WindowStudent.PageContainer.Content;
+            if (CurrentClinicalCaseStep_Face3DInteraction.SelectedConsequenceIndex >= CurrentClinicalCaseStep_Face3DInteraction.Consequences.Count - 1)
+            {
+                csf.bOk.Visibility = Visibility.Visible;
+                CurrentClinicalCaseStep_Face3DInteraction.AlreadyCheckedAllConsequencies = true;
+            }
+            else
+            {
+                if (!(CurrentClinicalCaseStep_Face3DInteraction.AlreadyCheckedAllConsequencies))
+                {
+                    csf.bOk.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    csf.bOk.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        public ClinicalCaseStep_Face3DInteraction CurrentClinicalCaseStep_Face3DInteraction { get; private set; }
 
         internal void UpdateTranslationManikin3D()
         {
@@ -4609,7 +4736,16 @@ namespace BeautySim2023
                                                     DepthInjection = absDepth;
 
                                                     //Update injected volume
-                                                    // PIRINI
+
+                                                    if (SelectedPoint3DIndex != -1)
+                                                    {
+                                                        if (InjectionPoints3DThisStep[SelectedPoint3DIndex].ActualReleases.Count > 0)
+                                                        {
+                                                            InjectionPoints3DThisStep[SelectedPoint3DIndex].ActualReleases.Last().InjectedQuantity = BeautySimController.Instance.Simulator.CurrentVolume>=0? (BeautySimController.Instance.Simulator.CurrentVolume * Properties.Settings.Default.MultiplierMlToU):0;
+
+                                                            InjectionPoints3DThisStep[SelectedPoint3DIndex].RefreshQuantities();
+                                                        }
+                                                    }
 
                                                     break;
                                                 }
@@ -4633,41 +4769,33 @@ namespace BeautySim2023
 
                                             Debug.WriteLine(entData.ToReadableString());
 
-
                                             ImpactPointToShow = pointHit.Point;
 
-                                            // Find the nearest point in the grid with the SmartGridAssigner algorithm
+                                            
                                             //      Initialize variables to track the nearest and second nearest points
-                                            double minimumDistance = Double.MaxValue; // Smallest distance found
+                                            double minimumDistancePoint = Double.MaxValue; // Smallest distance found
                                             int minimumDistancePointIndex = -1; // Index of the nearest point
-                                            double secondMinimumDistance = Double.MaxValue; // Second smallest distance found
-                                            int secondMinimumDistancePointIndex = -1; // Index of the second nearest point
+                                            
+                                           
 
                                             for (int ww = 0; ww < InjectionPoints3DThisStep.Count; ww++)
                                             {
                                                 Point3D toCheck = InjectionPoints3DThisStep[ww].GetRotoTransatedPoint(TransformGroupMankin);
                                                 double distance = CalcDistance(toCheck, PointEntrance);
 
-                                                if (distance < minimumDistance)
+                                                if (distance < minimumDistancePoint)
                                                 {
                                                     // Update second nearest with the previous nearest
-                                                    secondMinimumDistance = minimumDistance;
-                                                    secondMinimumDistancePointIndex = minimumDistancePointIndex;
+
 
                                                     // Update nearest with the new nearest
-                                                    minimumDistance = distance;
+                                                    minimumDistancePoint = distance;
                                                     minimumDistancePointIndex = ww;
-                                                }
-                                                else if (distance < secondMinimumDistance && distance != minimumDistance)
-                                                {
-                                                    // Update second nearest if this point is closer than the current second nearest but not equal to the current nearest
-                                                    secondMinimumDistance = distance;
-                                                    secondMinimumDistancePointIndex = ww;
                                                 }
                                             }
 
                                             //  Check if the nearest point is close enough to the second nearest point to be considered a good match and if so, select it
-                                            if (minDistance < Math.Max(InjectionPoints3DThisStep[minimumDistancePointIndex].MinDistanceFromNeighbours * 0.55, InjectionPoints3DThisStep[secondMinimumDistancePointIndex].MinDistanceFromNeighbours * 0.55))
+                                            if (minimumDistancePoint < (InjectionPoints3DThisStep[minimumDistancePointIndex].MinDistanceFromNeighbours*0.8))
                                             {
                                                 //Point3D toCheck = new Point3D(toEval.X + TranslationPointModel.X, toEval.Y + TranslationPointModel.Y, toEval.Z + TranslationPointModel.Z);
                                                 SelectedPoint3DIndex = minimumDistancePointIndex;
@@ -4735,22 +4863,19 @@ namespace BeautySim2023
 
                                                     if (SelectedPoint3DIndex != -1)
                                                     {
-
-
                                                         AppControl.instance.Vis3DFrame.InjectionPointListView.SelectedIndex = -1;
                                                         SelectedPoint3DIndex = -1;
                                                         ImpactPointToShow = new Point3D(0, 0, 0);
-
                                                     }
                                                     break;
                                                 }
                                             }
                                         }
                                         DepthInjection = 0;
+                                        ZeroVolume();
                                     }
                                 }
-                                
-                                
+
                                 if (EntranceDataList.Count > 0)
                                 {
                                     if (EntranceDataList.Last().ToBeClosed)

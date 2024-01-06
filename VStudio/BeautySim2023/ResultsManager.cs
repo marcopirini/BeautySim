@@ -138,6 +138,74 @@ namespace BeautySim2023
 
         private static void AddSpecificResult_PDF(Document doc, ResultToSave cc, ObjectRecord h, Enum_ResultType tableType, int indexItem)
         {
+            try
+            {
+
+                foreach (ResultPhaseToSave phase in cc.ResultPhases)
+                {
+
+                        // Create a new table for each phase
+                        Table table = new Table();
+                        table.Borders.Width = 0.25;
+                        Column column = table.AddColumn(Unit.FromCentimeter(5)); column.Format.Alignment = ParagraphAlignment.Center;// Adjust widths as necessary
+                        table.AddColumn(Unit.FromCentimeter(10)); column.Format.Alignment = ParagraphAlignment.Center;
+                        
+
+                        // Add phase name header
+                        Paragraph p = new Paragraph();
+                        Row phaseNameRow = table.AddRow();
+                        p = phaseNameRow.Cells[0].AddParagraph("Phase Name:"); p.Style = "TableHeader";
+                        p = phaseNameRow.Cells[1].AddParagraph(phase.PhaseName); p.Style = "TableHeader";
+
+                        // Depending on PhaseType, add different rows
+                        switch (phase.PhaseType)
+                        {
+                            case Enum_ClinicalCaseStepType.QUESTIONNAIRE:
+                            case Enum_ClinicalCaseStepType.ANALYSIS_STATIC_FACE:
+                                AddRow(table, "Total Score", phase.TotalScore.ToString());
+                                AddRow(table, "Number of Errors in Questionnaire", phase.NumErrorsQuestionnaire.ToString());
+                                break;
+                            case Enum_ClinicalCaseStepType.DIDACTIC_DYNAMIC_FACE:
+                                AddRow(table, "Total Score", phase.TotalScore.ToString());
+                                AddRow(table, "Sub: Action Score (weigth 75%)", phase.ActionScore.ToString());
+                                AddRow(table, "Sub: Questionnaire Score (weigth 25%)", phase.QuestionnaireScore.ToString());
+                                AddRow(table, "Number of Errors in Questionnaire", phase.NumErrorsQuestionnaire.ToString());
+                                int i = 0;
+                                foreach (string actionError in phase.ActionsOnError)
+                                {
+                                    i++;
+                                    AddRow(table, "Action on Error #" + i.ToString(), actionError);
+                                }
+                                break;
+                            case Enum_ClinicalCaseStepType.FACE3D_INTERACTION:
+                                AddRow(table, "Total Score", phase.TotalScore.ToString());
+                                int i2 = 0;
+                                foreach (string actionError in phase.ActionsOnError)
+                                {
+                                    i2++;
+                                    AddRow(table, "Action on Error" + i2.ToString(), actionError);
+                                }
+                                break;
+                        }
+
+                        // Add table to document
+                        doc.LastSection.Add(table);
+
+                    Paragraph spacerParagraph = doc.LastSection.AddParagraph();
+                    spacerParagraph.Format.SpaceBefore = 10; // space in points before
+                    spacerParagraph.Format.SpaceAfter = 10; // space in points after
+                }
+              
+
+            }
+            catch (Exception ex)
+            {
+            }
+          
+
+            
+
+
             //Paragraph p = new Paragraph();
             //if (cc != null)
             //{
@@ -248,6 +316,15 @@ namespace BeautySim2023
             //        doc.LastSection.Add(table);
             //    }
             //}
+        }
+
+        // Helper method to add a row to the table
+        private static void AddRow(Table table, string label, string value)
+        {
+            Paragraph p = new Paragraph();
+            Row row = table.AddRow();
+            p=row.Cells[0].AddParagraph(label); p.Style = "TableHeader";
+            p = row.Cells[1].AddParagraph(value); p.Style = "TableHeader";
         }
 
         private static MigraDoc.DocumentObjectModel.Color colorOK = new MigraDoc.DocumentObjectModel.Color(170, 0, 150, 136);

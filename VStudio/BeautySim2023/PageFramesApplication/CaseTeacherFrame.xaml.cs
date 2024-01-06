@@ -25,8 +25,6 @@ namespace BeautySim2023
             AppControl.Instance.WindowTeacher.bLogOut.Visibility = Visibility.Collapsed;
 
             AppControl.Instance.AreImagesVisualizedOn3D = false;
-            // PIRINI UPDATE THE LABEL OF THE BUTTON FOR IMAGE VISUALIZATION
-
         }
 
          private void bNextStep_Click(object sender, RoutedEventArgs e)

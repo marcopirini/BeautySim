@@ -26,9 +26,9 @@
 
         <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Name="bMessage" BorderBrush="Transparent" CornerRadius="4" BorderThickness="10" Margin="10" 
                 VerticalAlignment="Center">
-        <TextBlock Name="tbMessage" 
-                   Text="Questo è un messaggio di prova" FontSize="60" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center">
-        </TextBlock>
+            <TextBlock Name="tbMessage" 
+                Text="Questo è un messaggio di prova" FontSize="35" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center">
+            </TextBlock>
         </Border>
 
         <StackPanel Name="spOperativity" Grid.Column="1" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch"  VerticalAlignment="Center">
@@ -40,8 +40,7 @@
                 <RowDefinition Height="9*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            
-            
+
             <Grid.Resources>
                 <local:WidthConverter x:Key="WidthConverter" />
             </Grid.Resources>
@@ -140,20 +139,20 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
-
-
             </Grid.ColumnDefinitions>
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Border Grid.Column="0" Grid.Row="0" Margin="10" Grid.RowSpan="4" HorizontalAlignment="Center"  BorderBrush="#00bfa5" BorderThickness="3">
-                <Image  Name="ImConsequence"  >
-
+            
+            <Border Grid.Column="0" Grid.Row="0"  Grid.RowSpan="4" HorizontalAlignment="Center"  BorderBrush="#00bfa5" BorderThickness="3">
+                <Image Name="ImConsequence">
                 </Image>
             </Border>
+            
             <TextBlock TextWrapping="Wrap" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Name="tbNumber" FontSize="30" Margin="10"/>
             <TextBlock TextWrapping="Wrap" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Name="tbWhatYouDid" FontSize="25" Margin="10"/>
             <TextBlock TextWrapping="Wrap" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Name="tbConsequence" FontSize="25" Margin="10"/>
@@ -172,21 +171,20 @@
             <StackPanel x:Name="spOperativityFeedback" Orientation="Vertical" Visibility="Collapsed" Margin="0,0,0,30">
                 <TextBlock TextWrapping="Wrap" Name="tbOperativityFeedback" FontSize="30"/>
             </StackPanel>
+            
             <StackPanel x:Name="spOperativityFeedbackItems" Orientation="Vertical" Visibility="Collapsed">
                 <TextBlock TextWrapping="Wrap" Name="tbOperativityFeedbackItems" FontSize="22"  Margin="20,0,0,30"/>
             </StackPanel>
-            <TextBlock TextWrapping="Wrap" Name="tbFinalFeedback" FontSize="30" Margin="10"/>
             
+            <TextBlock TextWrapping="Wrap" Name="tbFinalFeedback" FontSize="30" Margin="10"/>
+         
         </StackPanel>
 
         <Border Name="bImageAndPoints" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" BorderBrush="#00bfa5" BorderThickness="3">
-
             <Grid Background="LightGray">
                 <Image x:Name="imCaseImage" Stretch="Uniform" SizeChanged="faceImage_SizeChanged_1"/>
                 <Canvas x:Name="injectionPointsCanvas" MouseLeftButtonDown="FaceImage_MouseLeftButtonDown" Background="Transparent" />
             </Grid>
-
-            <!--Image Name="imCaseImage" />-->
         </Border>
         
     </Grid>

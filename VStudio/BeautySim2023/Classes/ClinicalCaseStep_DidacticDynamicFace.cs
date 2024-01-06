@@ -31,6 +31,7 @@ namespace BeautySim2023
             AdditionalIndications = new List<AdditionalIndication>();
             ErrorCases = new List<AnalysResult>();
             Questions = new List<Question>();
+            ErrorsActive= new List<string>();
         }
 
         public string ImageName { get; set; }
@@ -140,6 +141,7 @@ namespace BeautySim2023
         public string MessageToStudentConsequences { get; private set; }
         public string MessageToTeacherConsequences { get; private set; }
         public List<AnalysResult> Consequences { get; internal set; }
+        public List<string> ErrorsActive { get; internal set; }
 
         public override void ImportMaterial(string folderMaterial)
         {

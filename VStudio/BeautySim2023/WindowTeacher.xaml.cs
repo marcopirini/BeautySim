@@ -224,8 +224,6 @@ namespace BeautySim2023
 
             AppControl.Instance.LoadedCase = false;
 
-
-            //PIRINI
             AppControl.Instance.ConnectPDI();
             AppControl.Instance.ConnectBeautySim();
             AppControl.Instance.WindowTeacher.Navigate(new StartPageFrame());

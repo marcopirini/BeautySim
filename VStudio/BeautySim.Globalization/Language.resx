@@ -1240,7 +1240,7 @@
     <value>Needle information</value>
   </data>
   <data name="str_insertAnestetic_ctrl" xml:space="preserve">
-    <value>insert 0.1 ml</value>
+    <value>insert 0.5 u</value>
   </data>
   <data name="str_learning3D" xml:space="preserve">
     <value>Learning on 3D</value>

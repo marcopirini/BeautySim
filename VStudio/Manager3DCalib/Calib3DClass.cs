@@ -630,7 +630,6 @@ namespace Calib3DApp
                 WindowMain.hvView3D.Items.Add(aa);
             }
 
-            //PIRINI
             EffectsManager = new DefaultEffectsManager();
 
             InitializeModels("C:\\BeautySim\\Models3D");
